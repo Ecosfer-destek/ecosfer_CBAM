@@ -1,0 +1,202 @@
+{
+  "common": {
+    "appName": "Ecosfer SKDM Platform",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "loading": "Loading...",
+    "noData": "No data found",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "download": "Download",
+    "upload": "Upload",
+    "yes": "Yes",
+    "no": "No",
+    "status": "Status",
+    "actions": "Actions",
+    "total": "Total",
+    "date": "Date",
+    "name": "Name",
+    "description": "Description",
+    "notes": "Notes",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "companies": "Companies",
+    "installations": "Installations",
+    "installationData": "Installation Data",
+    "emissions": "Emissions",
+    "balance": "Balance",
+    "reports": "Reports",
+    "declarations": "Declarations",
+    "certificates": "Certificates",
+    "suppliers": "Suppliers",
+    "supplierSurvey": "Supplier Surveys",
+    "aiAnalysis": "AI Analysis",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "register": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password",
+    "loginTitle": "Sign in to your account",
+    "registerTitle": "Create a new account"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "totalEmissions": "Total Emissions",
+    "totalInstallations": "Total Installations",
+    "pendingDeclarations": "Pending Declarations",
+    "pendingSurveys": "Pending Surveys"
+  },
+  "company": {
+    "title": "Companies",
+    "name": "Company Name",
+    "officialName": "Official Name",
+    "taxNumber": "Tax Number",
+    "address": "Address",
+    "country": "Country",
+    "city": "City",
+    "district": "District",
+    "createTitle": "New Company",
+    "editTitle": "Edit Company"
+  },
+  "installation": {
+    "title": "Installations",
+    "name": "Installation Name",
+    "company": "Company",
+    "country": "Country",
+    "address": "Address",
+    "createTitle": "New Installation",
+    "editTitle": "Edit Installation"
+  },
+  "installationData": {
+    "title": "Installation Data",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "tabs": {
+      "general": "General",
+      "emissions": "Emissions",
+      "balance": "Balance",
+      "processes": "Processes",
+      "precursors": "Precursors"
+    }
+  },
+  "emission": {
+    "title": "Emissions",
+    "sourceStream": "Source Stream",
+    "type": "Emission Type",
+    "method": "Method",
+    "activityData": "Activity Data",
+    "co2eFossil": "CO2e Fossil",
+    "co2eBio": "CO2e Bio",
+    "energyTJ": "Energy (TJ)"
+  },
+  "declaration": {
+    "title": "Annual Declarations",
+    "year": "Year",
+    "status": "Status",
+    "totalEmissions": "Total Emissions",
+    "certificates": "Certificates",
+    "submissionDate": "Submission Date",
+    "createTitle": "New Declaration",
+    "wizard": "Declaration Wizard",
+    "wizardTitle": "Annual Declaration Wizard",
+    "wizardDesc": "Create CBAM annual declaration in 7 steps",
+    "statuses": {
+      "DRAFT": "Draft",
+      "SUBMITTED": "Submitted",
+      "UNDER_REVIEW": "Under Review",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected",
+      "AMENDED": "Amended"
+    }
+  },
+  "supplier": {
+    "title": "Suppliers",
+    "name": "Supplier Name",
+    "email": "Email",
+    "phone": "Phone",
+    "country": "Country",
+    "contactPerson": "Contact Person",
+    "invitationStatus": "Invitation Status",
+    "createTitle": "New Supplier",
+    "invite": "Send Invitation",
+    "inviteTitle": "Invite Supplier",
+    "inviteDesc": "Invite supplier via email",
+    "portal": {
+      "title": "Supplier Portal",
+      "welcome": "Welcome to Supplier Portal",
+      "dashboard": "Dashboard",
+      "surveys": "My Surveys",
+      "goods": "My Goods",
+      "profile": "My Profile"
+    },
+    "survey": {
+      "title": "Emission Survey",
+      "reportingPeriod": "Reporting Period",
+      "specificEmissions": "Specific Embedded Emissions",
+      "directEmissions": "Direct Emissions",
+      "indirectEmissions": "Indirect Emissions",
+      "productionVolume": "Production Volume",
+      "electricityConsumption": "Electricity Consumption",
+      "heatConsumption": "Heat Consumption",
+      "emissionFactorSource": "Emission Factor Source",
+      "monitoringMethodology": "Monitoring Methodology",
+      "submitSurvey": "Submit Survey",
+      "statuses": {
+        "DRAFT": "Draft",
+        "SUBMITTED": "Submitted",
+        "APPROVED": "Approved",
+        "REJECTED": "Rejected"
+      }
+    },
+    "statuses": {
+      "PENDING": "Pending",
+      "INVITED": "Invited",
+      "REGISTERED": "Registered",
+      "ACTIVE": "Active"
+    }
+  },
+  "excel": {
+    "import": "Excel Import",
+    "importTitle": "CBAM Excel Import",
+    "importDesc": "Import data from 5 sheets of a CBAM Excel file",
+    "selectFile": "Select Excel File",
+    "uploading": "Uploading...",
+    "processing": "Processing...",
+    "results": "Import Results"
+  },
+  "xml": {
+    "generate": "Generate XML",
+    "generateTitle": "CBAM XML Generation",
+    "download": "Download XML",
+    "validationSuccess": "XML validation successful",
+    "validationWarnings": "Validation Warnings"
+  },
+  "pdf": {
+    "generate": "Generate PDF",
+    "generateTitle": "PDF Report Generation",
+    "download": "Download PDF",
+    "reportTypes": {
+      "installation-summary": "Installation Summary Report",
+      "declaration": "CBAM Declaration Report",
+      "emission-detail": "Emission Detail Report",
+      "supplier-survey": "Supplier Survey Report",
+      "custom": "Custom Report"
+    }
+  }
+}

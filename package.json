@@ -1,0 +1,30 @@
+{
+  "name": "ecosfer-skdm-v2",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Ecosfer SKDM Platform v2.0 - CBAM Sustainability Data Management",
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "start": "npm run start --workspace=frontend",
+    "lint": "npm run lint --workspace=frontend",
+    "db:generate": "npm run db:generate --workspace=frontend",
+    "db:push": "npm run db:push --workspace=frontend",
+    "db:migrate": "npm run db:migrate --workspace=frontend",
+    "db:seed": "npm run db:seed --workspace=frontend",
+    "db:studio": "npm run db:studio --workspace=frontend",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:build": "docker compose up --build -d",
+    "test": "npm run test --workspace=frontend",
+    "test:watch": "npm run test:watch --workspace=frontend",
+    "test:coverage": "npm run test:coverage --workspace=frontend",
+    "test:e2e": "npm run test:e2e --workspace=frontend",
+    "test:dotnet": "dotnet test services/dotnet/tests/EcosferServices.Tests.csproj",
+    "test:python": "cd services/ai && python -m pytest",
+    "test:all": "npm run test && npm run test:dotnet && npm run test:python"
+  },
+  "workspaces": [
+    "frontend"
+  ]
+}

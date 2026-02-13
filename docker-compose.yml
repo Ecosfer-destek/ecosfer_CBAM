@@ -1,0 +1,98 @@
+services:
+  # PostgreSQL 16
+  db:
+    image: postgres:16-alpine
+    container_name: ecosfer-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ecosfer
+      POSTGRES_PASSWORD: ecosfer_dev_2026
+      POSTGRES_DB: ecosfer_skdm
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ecosfer -d ecosfer_skdm"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis 7.x
+  redis:
+    image: redis:7-alpine
+    container_name: ecosfer-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ecosfer-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://ecosfer:ecosfer_dev_2026@db:5432/ecosfer_skdm?schema=public
+      REDIS_URL: redis://redis:6379
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: ecosfer-skdm-dev-secret-change-in-production-2026
+      AUTH_SECRET: ecosfer-skdm-dev-secret-change-in-production-2026
+      DOTNET_SERVICE_URL: http://dotnet:5100
+      AI_SERVICE_URL: http://ai:8000
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # .NET 9 Microservice (Excel Import/Export, XML Generation, PDF Reports)
+  dotnet:
+    build:
+      context: ./services/dotnet
+      dockerfile: Dockerfile
+    container_name: ecosfer-dotnet
+    restart: unless-stopped
+    ports:
+      - "5100:5100"
+    environment:
+      ASPNETCORE_URLS: http://+:5100
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=ecosfer_skdm;Username=ecosfer;Password=ecosfer_dev_2026
+      Redis__ConnectionString: redis:6379
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Python FastAPI AI Service
+  ai:
+    build:
+      context: ./services/ai
+      dockerfile: Dockerfile
+    container_name: ecosfer-ai
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://ecosfer:ecosfer_dev_2026@db:5432/ecosfer_skdm
+      REDIS_URL: redis://redis:6379
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,117 @@
+groups:
+  - name: service_health
+    rules:
+      # Service down alerts
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.job }} service is down"
+          description: "{{ $labels.instance }} has been down for more than 1 minute."
+
+      # High error rate
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_requests_total{status=~"5.."}[5m])) by (job)
+          /
+          sum(rate(http_requests_total[5m])) by (job)
+          > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate on {{ $labels.job }}"
+          description: "Error rate is above 5% for {{ $labels.job }}."
+
+      # High response time
+      - alert: HighResponseTime
+        expr: |
+          histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, job))
+          > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time on {{ $labels.job }}"
+          description: "95th percentile response time is above 5s for {{ $labels.job }}."
+
+  - name: resource_usage
+    rules:
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: |
+          (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)
+          / node_memory_MemTotal_bytes * 100
+          > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is above 85%."
+
+      # High CPU usage
+      - alert: HighCpuUsage
+        expr: |
+          100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+          > 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is above 80% for 10 minutes."
+
+      # Disk space low
+      - alert: DiskSpaceLow
+        expr: |
+          (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100
+          < 15
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Low disk space"
+          description: "Less than 15% disk space remaining."
+
+  - name: database
+    rules:
+      # Database connection pool exhaustion
+      - alert: DbConnectionPoolHigh
+        expr: |
+          dotnet_db_connections_active
+          / dotnet_db_connections_max
+          > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Database connection pool running high"
+          description: "Active DB connections are above 80% of pool max."
+
+  - name: business_metrics
+    rules:
+      # Excel import failures
+      - alert: ExcelImportFailureSpike
+        expr: |
+          sum(rate(excel_import_failures_total[15m])) > 0.1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Excel import failure rate elevated"
+          description: "Excel import failures are occurring frequently."
+
+      # AI service degradation
+      - alert: AiServiceDegraded
+        expr: |
+          histogram_quantile(0.95, sum(rate(ai_request_duration_seconds_bucket[5m])) by (le))
+          > 30
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "AI service response time degraded"
+          description: "AI service 95th percentile latency exceeds 30s."

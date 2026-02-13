@@ -1,0 +1,202 @@
+{
+  "common": {
+    "appName": "Ecosfer SKDM Plattform",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Loschen",
+    "edit": "Bearbeiten",
+    "create": "Erstellen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "loading": "Laden...",
+    "noData": "Keine Daten gefunden",
+    "confirm": "Bestatigen",
+    "back": "Zuruck",
+    "next": "Weiter",
+    "submit": "Absenden",
+    "download": "Herunterladen",
+    "upload": "Hochladen",
+    "yes": "Ja",
+    "no": "Nein",
+    "status": "Status",
+    "actions": "Aktionen",
+    "total": "Gesamt",
+    "date": "Datum",
+    "name": "Name",
+    "description": "Beschreibung",
+    "notes": "Notizen",
+    "success": "Erfolg",
+    "error": "Fehler",
+    "warning": "Warnung"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "companies": "Unternehmen",
+    "installations": "Anlagen",
+    "installationData": "Anlagendaten",
+    "emissions": "Emissionen",
+    "balance": "Bilanz",
+    "reports": "Berichte",
+    "declarations": "Erklarungen",
+    "certificates": "Zertifikate",
+    "suppliers": "Lieferanten",
+    "supplierSurvey": "Lieferantenumfragen",
+    "aiAnalysis": "KI-Analyse",
+    "settings": "Einstellungen"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "register": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "forgotPassword": "Passwort vergessen",
+    "loginTitle": "In Ihr Konto einloggen",
+    "registerTitle": "Neues Konto erstellen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen",
+    "totalEmissions": "Gesamtemissionen",
+    "totalInstallations": "Gesamtanlagen",
+    "pendingDeclarations": "Ausstehende Erklarungen",
+    "pendingSurveys": "Ausstehende Umfragen"
+  },
+  "company": {
+    "title": "Unternehmen",
+    "name": "Firmenname",
+    "officialName": "Offizieller Name",
+    "taxNumber": "Steuernummer",
+    "address": "Adresse",
+    "country": "Land",
+    "city": "Stadt",
+    "district": "Bezirk",
+    "createTitle": "Neues Unternehmen",
+    "editTitle": "Unternehmen bearbeiten"
+  },
+  "installation": {
+    "title": "Anlagen",
+    "name": "Anlagenname",
+    "company": "Unternehmen",
+    "country": "Land",
+    "address": "Adresse",
+    "createTitle": "Neue Anlage",
+    "editTitle": "Anlage bearbeiten"
+  },
+  "installationData": {
+    "title": "Anlagendaten",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum",
+    "tabs": {
+      "general": "Allgemein",
+      "emissions": "Emissionen",
+      "balance": "Bilanz",
+      "processes": "Prozesse",
+      "precursors": "Vorstufen"
+    }
+  },
+  "emission": {
+    "title": "Emissionen",
+    "sourceStream": "Quellstrom",
+    "type": "Emissionstyp",
+    "method": "Methode",
+    "activityData": "Aktivitatsdaten",
+    "co2eFossil": "CO2e Fossil",
+    "co2eBio": "CO2e Bio",
+    "energyTJ": "Energie (TJ)"
+  },
+  "declaration": {
+    "title": "Jahrliche Erklarungen",
+    "year": "Jahr",
+    "status": "Status",
+    "totalEmissions": "Gesamtemissionen",
+    "certificates": "Zertifikate",
+    "submissionDate": "Einreichungsdatum",
+    "createTitle": "Neue Erklarung",
+    "wizard": "Erklarungsassistent",
+    "wizardTitle": "Jahrlicher Erklarungsassistent",
+    "wizardDesc": "CBAM-Jahreserklarung in 7 Schritten erstellen",
+    "statuses": {
+      "DRAFT": "Entwurf",
+      "SUBMITTED": "Eingereicht",
+      "UNDER_REVIEW": "In Prufung",
+      "APPROVED": "Genehmigt",
+      "REJECTED": "Abgelehnt",
+      "AMENDED": "Geandert"
+    }
+  },
+  "supplier": {
+    "title": "Lieferanten",
+    "name": "Lieferantenname",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "country": "Land",
+    "contactPerson": "Kontaktperson",
+    "invitationStatus": "Einladungsstatus",
+    "createTitle": "Neuer Lieferant",
+    "invite": "Einladung senden",
+    "inviteTitle": "Lieferant einladen",
+    "inviteDesc": "Lieferant per E-Mail einladen",
+    "portal": {
+      "title": "Lieferantenportal",
+      "welcome": "Willkommen im Lieferantenportal",
+      "dashboard": "Dashboard",
+      "surveys": "Meine Umfragen",
+      "goods": "Meine Waren",
+      "profile": "Mein Profil"
+    },
+    "survey": {
+      "title": "Emissionsumfrage",
+      "reportingPeriod": "Berichtszeitraum",
+      "specificEmissions": "Spezifische eingebettete Emissionen",
+      "directEmissions": "Direkte Emissionen",
+      "indirectEmissions": "Indirekte Emissionen",
+      "productionVolume": "Produktionsvolumen",
+      "electricityConsumption": "Stromverbrauch",
+      "heatConsumption": "Warmeverbrauch",
+      "emissionFactorSource": "Emissionsfaktor-Quelle",
+      "monitoringMethodology": "Uberwachungsmethodik",
+      "submitSurvey": "Umfrage absenden",
+      "statuses": {
+        "DRAFT": "Entwurf",
+        "SUBMITTED": "Eingereicht",
+        "APPROVED": "Genehmigt",
+        "REJECTED": "Abgelehnt"
+      }
+    },
+    "statuses": {
+      "PENDING": "Ausstehend",
+      "INVITED": "Eingeladen",
+      "REGISTERED": "Registriert",
+      "ACTIVE": "Aktiv"
+    }
+  },
+  "excel": {
+    "import": "Excel-Import",
+    "importTitle": "CBAM Excel-Import",
+    "importDesc": "Daten aus 5 Blattern einer CBAM-Excel-Datei importieren",
+    "selectFile": "Excel-Datei auswahlen",
+    "uploading": "Hochladen...",
+    "processing": "Verarbeiten...",
+    "results": "Importergebnisse"
+  },
+  "xml": {
+    "generate": "XML generieren",
+    "generateTitle": "CBAM XML-Erzeugung",
+    "download": "XML herunterladen",
+    "validationSuccess": "XML-Validierung erfolgreich",
+    "validationWarnings": "Validierungswarnungen"
+  },
+  "pdf": {
+    "generate": "PDF generieren",
+    "generateTitle": "PDF-Berichterstellung",
+    "download": "PDF herunterladen",
+    "reportTypes": {
+      "installation-summary": "Anlagenzusammenfassungsbericht",
+      "declaration": "CBAM-Erklarungsbericht",
+      "emission-detail": "Emissionsdetailbericht",
+      "supplier-survey": "Lieferantenumfragebericht",
+      "custom": "Benutzerdefinierter Bericht"
+    }
+  }
+}

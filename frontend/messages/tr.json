@@ -1,0 +1,202 @@
+{
+  "common": {
+    "appName": "Ecosfer SKDM Platform",
+    "save": "Kaydet",
+    "cancel": "Iptal",
+    "delete": "Sil",
+    "edit": "Duzenle",
+    "create": "Olustur",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "loading": "Yukleniyor...",
+    "noData": "Veri bulunamadi",
+    "confirm": "Onayla",
+    "back": "Geri",
+    "next": "Devam",
+    "submit": "Gonder",
+    "download": "Indir",
+    "upload": "Yukle",
+    "yes": "Evet",
+    "no": "Hayir",
+    "status": "Durum",
+    "actions": "Islemler",
+    "total": "Toplam",
+    "date": "Tarih",
+    "name": "Ad",
+    "description": "Aciklama",
+    "notes": "Notlar",
+    "success": "Basarili",
+    "error": "Hata",
+    "warning": "Uyari"
+  },
+  "nav": {
+    "dashboard": "Kontrol Paneli",
+    "companies": "Sirketler",
+    "installations": "Tesisler",
+    "installationData": "Tesis Verileri",
+    "emissions": "Emisyonlar",
+    "balance": "Denge",
+    "reports": "Raporlar",
+    "declarations": "Beyannameler",
+    "certificates": "Sertifikalar",
+    "suppliers": "Tedarikciler",
+    "supplierSurvey": "Tedarikci Anketleri",
+    "aiAnalysis": "AI Analiz",
+    "settings": "Ayarlar"
+  },
+  "auth": {
+    "login": "Giris Yap",
+    "logout": "Cikis Yap",
+    "register": "Kayit Ol",
+    "email": "E-posta",
+    "password": "Sifre",
+    "forgotPassword": "Sifremi Unuttum",
+    "loginTitle": "Hesabiniza Giris Yapin",
+    "registerTitle": "Yeni Hesap Olusturun"
+  },
+  "dashboard": {
+    "title": "Kontrol Paneli",
+    "welcome": "Hosgeldiniz",
+    "totalEmissions": "Toplam Emisyon",
+    "totalInstallations": "Toplam Tesis",
+    "pendingDeclarations": "Bekleyen Beyanname",
+    "pendingSurveys": "Bekleyen Anket"
+  },
+  "company": {
+    "title": "Sirketler",
+    "name": "Sirket Adi",
+    "officialName": "Resmi Ad",
+    "taxNumber": "Vergi Numarasi",
+    "address": "Adres",
+    "country": "Ulke",
+    "city": "Sehir",
+    "district": "Ilce",
+    "createTitle": "Yeni Sirket",
+    "editTitle": "Sirketi Duzenle"
+  },
+  "installation": {
+    "title": "Tesisler",
+    "name": "Tesis Adi",
+    "company": "Sirket",
+    "country": "Ulke",
+    "address": "Adres",
+    "createTitle": "Yeni Tesis",
+    "editTitle": "Tesisi Duzenle"
+  },
+  "installationData": {
+    "title": "Tesis Verileri",
+    "startDate": "Baslangic Tarihi",
+    "endDate": "Bitis Tarihi",
+    "tabs": {
+      "general": "Genel",
+      "emissions": "Emisyonlar",
+      "balance": "Denge",
+      "processes": "Prosesler",
+      "precursors": "Prekursorler"
+    }
+  },
+  "emission": {
+    "title": "Emisyonlar",
+    "sourceStream": "Kaynak Akimi",
+    "type": "Emisyon Tipi",
+    "method": "Yontem",
+    "activityData": "Faaliyet Verisi",
+    "co2eFossil": "CO2e Fosil",
+    "co2eBio": "CO2e Bio",
+    "energyTJ": "Enerji (TJ)"
+  },
+  "declaration": {
+    "title": "Yillik Beyannameler",
+    "year": "Yil",
+    "status": "Durum",
+    "totalEmissions": "Toplam Emisyon",
+    "certificates": "Sertifikalar",
+    "submissionDate": "Gonderim Tarihi",
+    "createTitle": "Yeni Beyanname",
+    "wizard": "Beyanname Sihirbazi",
+    "wizardTitle": "Yillik Beyanname Sihirbazi",
+    "wizardDesc": "7 adimda CBAM yillik beyanname olusturun",
+    "statuses": {
+      "DRAFT": "Taslak",
+      "SUBMITTED": "Gonderildi",
+      "UNDER_REVIEW": "Incelemede",
+      "APPROVED": "Onaylandi",
+      "REJECTED": "Reddedildi",
+      "AMENDED": "Duzeltildi"
+    }
+  },
+  "supplier": {
+    "title": "Tedarikciler",
+    "name": "Tedarikci Adi",
+    "email": "E-posta",
+    "phone": "Telefon",
+    "country": "Ulke",
+    "contactPerson": "Ilgili Kisi",
+    "invitationStatus": "Davet Durumu",
+    "createTitle": "Yeni Tedarikci",
+    "invite": "Davet Gonder",
+    "inviteTitle": "Tedarikci Davet Et",
+    "inviteDesc": "Tedarikciyi e-posta ile davet edin",
+    "portal": {
+      "title": "Tedarikci Portali",
+      "welcome": "Tedarikci Portalina Hosgeldiniz",
+      "dashboard": "Kontrol Paneli",
+      "surveys": "Anketlerim",
+      "goods": "Mallarim",
+      "profile": "Profilim"
+    },
+    "survey": {
+      "title": "Emisyon Anketi",
+      "reportingPeriod": "Raporlama Donemi",
+      "specificEmissions": "Spesifik Gomulu Emisyon",
+      "directEmissions": "Dogrudan Emisyonlar",
+      "indirectEmissions": "Dolayli Emisyonlar",
+      "productionVolume": "Uretim Hacmi",
+      "electricityConsumption": "Elektrik Tuketimi",
+      "heatConsumption": "Isi Tuketimi",
+      "emissionFactorSource": "Emisyon Faktoru Kaynagi",
+      "monitoringMethodology": "Izleme Metodolojisi",
+      "submitSurvey": "Anketi Gonder",
+      "statuses": {
+        "DRAFT": "Taslak",
+        "SUBMITTED": "Gonderildi",
+        "APPROVED": "Onaylandi",
+        "REJECTED": "Reddedildi"
+      }
+    },
+    "statuses": {
+      "PENDING": "Bekliyor",
+      "INVITED": "Davet Edildi",
+      "REGISTERED": "Kayit Oldu",
+      "ACTIVE": "Aktif"
+    }
+  },
+  "excel": {
+    "import": "Excel Import",
+    "importTitle": "CBAM Excel Import",
+    "importDesc": "CBAM Excel dosyasini yukleyerek 5 sayfadaki verileri iceri aktarin",
+    "selectFile": "Excel Dosyasi Sec",
+    "uploading": "Yukleniyor...",
+    "processing": "Isleniyor...",
+    "results": "Import Sonuclari"
+  },
+  "xml": {
+    "generate": "XML Olustur",
+    "generateTitle": "CBAM XML Uretimi",
+    "download": "XML Indir",
+    "validationSuccess": "XML dogrulama basarili",
+    "validationWarnings": "Dogrulama Uyarilari"
+  },
+  "pdf": {
+    "generate": "PDF Olustur",
+    "generateTitle": "PDF Rapor Uretimi",
+    "download": "PDF Indir",
+    "reportTypes": {
+      "installation-summary": "Tesis Ozet Raporu",
+      "declaration": "CBAM Beyanname Raporu",
+      "emission-detail": "Emisyon Detay Raporu",
+      "supplier-survey": "Tedarikci Anket Raporu",
+      "custom": "Ozel Rapor"
+    }
+  }
+}

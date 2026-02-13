@@ -1,0 +1,1626 @@
+// Ecosfer SKDM Platform v2.0 - Prisma Schema
+// 81 MVP entities - Multi-tenant CBAM sustainability data management
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum RouteType {
+  UNDEFINED
+  ALL_PRODUCTION_ROUTES
+  DEFINED_ROUTES
+}
+
+enum ReportPart {
+  UNDEFINED
+  PART1
+  PART2
+  PART3
+}
+
+enum ReportSectionLevel {
+  UNDEFINED
+  HEADING
+  SUB_HEADING
+}
+
+enum ReportSectionContentType {
+  UNDEFINED
+  TEXT
+  IMAGE
+  CBAM_TABLE
+}
+
+enum CbamFileSendStatus {
+  UNDEFINED
+  PREPARING
+  WAITING_FOR_APPROVAL
+  READY
+  SENDING_IN_PROCESS
+  SENT
+}
+
+enum SpecificEmbeddedEmissionSource {
+  UNDEFINED
+  UNKNOWN
+  MEASURED
+  DEFAULT
+}
+
+enum ElectricityEmissionFactor {
+  UNDEFINED
+  D400A
+  D400B
+  D410
+  D420
+  D431
+  D432
+  MIX
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  COMPANY_ADMIN
+  OPERATOR
+  SUPPLIER
+  CBAM_DECLARANT
+  VERIFIER
+}
+
+enum DeclarationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  AMENDED
+}
+
+enum CertificateStatus {
+  ACTIVE
+  SURRENDERED
+  EXPIRED
+  CANCELLED
+}
+
+enum AuthorisationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+  REVOKED
+}
+
+enum VerificationOpinion {
+  UNQUALIFIED
+  QUALIFIED
+  ADVERSE
+  DISCLAIMER
+}
+
+// ============================================================================
+// TENANT & AUTH (5 entities)
+// ============================================================================
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  domain    String?  @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users      User[]
+  companies  Company[]
+  appSettings AppSetting[]
+
+  @@map("tenants")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String
+  passwordHash   String
+  role           UserRole  @default(OPERATOR)
+  isActive       Boolean   @default(true)
+  emailVerified  DateTime?
+  lastLoginAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+
+  loginInfos  UserLoginInfo[]
+  permissions UserPermission[]
+  suppliers   Supplier[]
+
+  @@index([tenantId])
+  @@index([email])
+  @@map("users")
+}
+
+model UserLoginInfo {
+  id           String   @id @default(cuid())
+  loginProvider String
+  providerKey  String
+  createdAt    DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([loginProvider, providerKey])
+  @@map("user_login_infos")
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  isSystem    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  permissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  resource    String
+  action      String
+  createdAt   DateTime @default(now())
+
+  rolePermissions RolePermission[]
+  userPermissions UserPermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model UserPermission {
+  userId       String
+  permissionId String
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([userId, permissionId])
+  @@map("user_permissions")
+}
+
+// ============================================================================
+// REFERENCE DATA (9 entities)
+// ============================================================================
+
+model Country {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  nameTr    String?
+  nameDe    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  cities                City[]
+  companies             Company[]
+  installations         Installation[]
+  purchasedPrecursors   PurchasedPrecursor[]
+  importers             Importer[]
+  suppliers             Supplier[]
+
+  @@map("countries")
+}
+
+model City {
+  id        String   @id @default(cuid())
+  name      String
+  code      String?
+  createdAt DateTime @default(now())
+
+  countryId String
+  country   Country @relation(fields: [countryId], references: [id])
+
+  districts     District[]
+  companies     Company[]
+  installations Installation[]
+
+  @@unique([name, countryId])
+  @@index([countryId])
+  @@map("cities")
+}
+
+model District {
+  id        String   @id @default(cuid())
+  name      String
+  code      String?
+  createdAt DateTime @default(now())
+
+  cityId String
+  city   City   @relation(fields: [cityId], references: [id])
+
+  companies     Company[]
+  installations Installation[]
+
+  @@unique([name, cityId])
+  @@index([cityId])
+  @@map("districts")
+}
+
+model TaxOffice {
+  id        String   @id @default(cuid())
+  name      String
+  code      String?
+  createdAt DateTime @default(now())
+
+  companies Company[]
+
+  @@map("tax_offices")
+}
+
+model Currency {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  symbol    String?
+  createdAt DateTime @default(now())
+
+  @@map("currencies")
+}
+
+model GoodsCategory {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  cnCodes                          CnCode[]
+  installationGoodsCategoryAndRoutes InstallationGoodsCategoryAndRoute[]
+  relevantProductionProcesses      RelevantProductionProcess[]
+  purchasedPrecursors              PurchasedPrecursor[]
+  supplierGoods                    SupplierGood[]
+
+  @@map("goods_categories")
+}
+
+model CnCode {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  goodsCategoryId String
+  goodsCategory   GoodsCategory @relation(fields: [goodsCategoryId], references: [id])
+
+  @@index([goodsCategoryId])
+  @@map("cn_codes")
+}
+
+model ProductionRoute {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("production_routes")
+}
+
+model ProductionProcess {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("production_processes")
+}
+
+// ============================================================================
+// CORE ENTITIES (4 entities)
+// ============================================================================
+
+model Company {
+  id                String   @id @default(cuid())
+  name              String
+  officialName      String?
+  taxNumber         String?
+  address           String?
+  postCode          String?
+  latitude          String?
+  longitude         String?
+  unlocode          String?
+  poBox             String?
+  email             String?
+  phone             String?
+  economicActivity  String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  tenantId    String
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
+  countryId   String?
+  country     Country?  @relation(fields: [countryId], references: [id])
+  cityId      String?
+  city        City?     @relation(fields: [cityId], references: [id])
+  districtId  String?
+  district    District? @relation(fields: [districtId], references: [id])
+  taxOfficeId String?
+  taxOffice   TaxOffice? @relation(fields: [taxOfficeId], references: [id])
+
+  installations             Installation[]
+  companyProductionActivities CompanyProductionActivity[]
+  suppliers                 Supplier[]
+
+  @@index([tenantId])
+  @@map("companies")
+}
+
+model Installation {
+  id        String   @id @default(cuid())
+  name      String
+  address   String?
+  postCode  String?
+  poBox     String?
+  email     String?
+  phone     String?
+  latitude  String?
+  longitude String?
+  unlocode  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId   String
+  companyId  String
+  company    Company  @relation(fields: [companyId], references: [id])
+  countryId  String?
+  country    Country? @relation(fields: [countryId], references: [id])
+  cityId     String?
+  city       City?    @relation(fields: [cityId], references: [id])
+  districtId String?
+  district   District? @relation(fields: [districtId], references: [id])
+
+  installationDatas InstallationData[]
+
+  @@index([tenantId])
+  @@index([companyId])
+  @@map("installations")
+}
+
+model CompanyProductionActivity {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@map("company_production_activities")
+}
+
+model Person {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String?
+  phone     String?
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String
+
+  installationDatasAsRepresentative InstallationData[] @relation("InstallationRepresentative")
+
+  @@index([tenantId])
+  @@map("persons")
+}
+
+// ============================================================================
+// CBAM CENTER - AGGREGATE ROOT (2 entities)
+// ============================================================================
+
+model InstallationData {
+  id            String    @id @default(cuid())
+  startDate     DateTime?
+  endDate       DateTime?
+  isInImportFromExcelProcess Boolean @default(false)
+  cbamFileStatus CbamFileSendStatus @default(UNDEFINED)
+  reportCoverTitle   String?
+  reportCoverContent String?
+  reportCoverImageUrl String?
+  companyLogoUrl      String?
+  excelFileUrl        String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  tenantId String
+
+  installationId String
+  installation   Installation @relation(fields: [installationId], references: [id])
+
+  representativeId String?
+  representative   Person? @relation("InstallationRepresentative", fields: [representativeId], references: [id])
+
+  reportVerifierCompanyId String?
+  reportVerifierCompany   ReportVerifierCompany? @relation(fields: [reportVerifierCompanyId], references: [id])
+
+  reportVerifierRepresentativeId String?
+  reportVerifierRepresentative   ReportVerifierRepresentative? @relation(fields: [reportVerifierRepresentativeId], references: [id])
+
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+
+  generalInfoOnDataQualityId String?  @unique
+  generalInfoOnDataQuality   GeneralInfoOnDataQuality? @relation(fields: [generalInfoOnDataQualityId], references: [id])
+
+  justificationForDefaultValueId String? @unique
+  justificationForDefaultValue   JustificationForDefaultValue? @relation(fields: [justificationForDefaultValueId], references: [id])
+
+  infoOnQualityAssuranceId String? @unique
+  infoOnQualityAssurance   InfoOnQualityAssurance? @relation(fields: [infoOnQualityAssuranceId], references: [id])
+
+  // Collections (aggregated)
+  installationGoodsCategoryAndRoutes InstallationGoodsCategoryAndRoute[]
+  relevantProductionProcesses        RelevantProductionProcess[]
+  purchasedPrecursors                PurchasedPrecursor[]
+  emissions                          Emission[]
+  fuelBalances                       FuelBalance[]
+  ghgBalanceByTypes                  GhgBalanceByType[]
+  ghgBalanceByMonitoringMethodologyTypes GhgBalanceByMonitoringMethodologyType[]
+  cbamReports                        CbamReport[]
+  reportSections                     ReportSection[]
+
+  @@index([tenantId])
+  @@index([installationId])
+  @@map("installation_datas")
+}
+
+model InstallationGoodsCategoryAndRoute {
+  id        String    @id @default(cuid())
+  routeType RouteType @default(UNDEFINED)
+  route1    String?
+  route2    String?
+  route3    String?
+  route4    String?
+  route5    String?
+  route6    String?
+  route7    String?
+  route8    String?
+  route9    String?
+  route10   String?
+  createdAt DateTime  @default(now())
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  goodsCategoryId String?
+  goodsCategory   GoodsCategory? @relation(fields: [goodsCategoryId], references: [id])
+
+  @@index([installationDataId])
+  @@map("installation_goods_category_and_routes")
+}
+
+// ============================================================================
+// EMISSION DATA (6 entities)
+// ============================================================================
+
+model Emission {
+  id               String   @id @default(cuid())
+  sourceStreamName String?
+  technologyType   String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  emissionTypeId String?
+  emissionType   EmissionType? @relation(fields: [emissionTypeId], references: [id])
+
+  emissionMethodId String?
+  emissionMethod   EmissionMethod? @relation(fields: [emissionMethodId], references: [id])
+
+  emissionMethod2Id String?
+  emissionMethod2   EmissionMethod2? @relation(fields: [emissionMethod2Id], references: [id])
+
+  emissionMethod3Id String?
+  emissionMethod3   EmissionMethod3? @relation(fields: [emissionMethod3Id], references: [id])
+
+  typeOfGhgId String?
+  typeOfGhg   TypeOfGhg? @relation(fields: [typeOfGhgId], references: [id])
+
+  // Activity Data + Units
+  adActivityData    Decimal? @db.Decimal(28, 10)
+  adUnitId          String?
+  adUnit            ADUnit?  @relation(fields: [adUnitId], references: [id])
+
+  ncvNetCalorificValue Decimal? @db.Decimal(28, 10)
+  ncvUnitId            String?
+  ncvUnit              NCVUnit? @relation(fields: [ncvUnitId], references: [id])
+
+  efEmissionFactor  Decimal? @db.Decimal(28, 10)
+  efUnitId          String?
+  efUnit            EFUnit?  @relation(fields: [efUnitId], references: [id])
+
+  ccCarbonContent   Decimal? @db.Decimal(28, 10)
+  ccUnitId          String?
+  ccUnit            CContentUnit? @relation(fields: [ccUnitId], references: [id])
+
+  oxfOxidationFactor Decimal? @db.Decimal(28, 10)
+  oxfUnitId          String?
+  oxfUnit            OxFUnit? @relation(fields: [oxfUnitId], references: [id])
+
+  convfConversionFactor Decimal? @db.Decimal(28, 10)
+  convfUnitId           String?
+  convfUnit             ConvFUnit? @relation(fields: [convfUnitId], references: [id])
+
+  biocBiomassContent Decimal? @db.Decimal(28, 10)
+  biocUnitId         String?
+  biocUnit           BioCUnit? @relation(fields: [biocUnitId], references: [id])
+
+  // GHG Emission Calculations
+  tCf4Emission      Decimal? @db.Decimal(28, 10)
+  tC2f6Emission     Decimal? @db.Decimal(28, 10)
+  tCo2eGwpCf4       Decimal? @db.Decimal(28, 10)
+  tCo2eGwpC2f6      Decimal? @db.Decimal(28, 10)
+  tCo2eCf4Emission  Decimal? @db.Decimal(28, 10)
+  tCo2eC2f6Emission Decimal? @db.Decimal(28, 10)
+
+  // CO2e
+  collectionEfficiency Decimal? @db.Decimal(28, 10)
+  co2eFossil           Decimal? @db.Decimal(28, 10)
+  co2eBio              Decimal? @db.Decimal(28, 10)
+
+  // Energy Content
+  energyContentBioTJ Decimal? @db.Decimal(28, 10)
+  energyContentTJ    Decimal? @db.Decimal(28, 10)
+
+  // Continuous Monitoring (MBA)
+  hourlyGhgConcAverage   Decimal? @db.Decimal(28, 10)
+  hourlyGhgConcUnitId    String?
+  hourlyGhgConcUnit      GhgConcUnit? @relation(fields: [hourlyGhgConcUnitId], references: [id])
+
+  hoursOperating         Decimal? @db.Decimal(28, 10)
+  hoursOperatingUnitId   String?
+  hoursOperatingUnit     HoursOperatingUnit? @relation(fields: [hoursOperatingUnitId], references: [id])
+
+  flueGasFlowAverage     Decimal? @db.Decimal(28, 10)
+  flueGasFlowUnitId      String?
+  flueGasFlowUnit        FlueGasFlowUnit? @relation(fields: [flueGasFlowUnitId], references: [id])
+
+  annualAmountOfGhg      Decimal? @db.Decimal(28, 10)
+  annualAmountOfGhgUnitId String?
+  annualAmountOfGhgUnit  AnnualAmountOfGhgUnit? @relation(fields: [annualAmountOfGhgUnitId], references: [id])
+
+  // GWP
+  gwpTco2e Decimal? @db.Decimal(28, 10)
+
+  // PFC Parameters
+  aFrequency Decimal? @db.Decimal(28, 10)
+  aDuration  Decimal? @db.Decimal(28, 10)
+  aSefCf4    Decimal? @db.Decimal(28, 10)
+  bAeo       Decimal? @db.Decimal(28, 10)
+  bCe        Decimal? @db.Decimal(28, 10)
+  bOvc       Decimal? @db.Decimal(28, 10)
+  fC2f6      Decimal? @db.Decimal(28, 10)
+
+  @@index([installationDataId])
+  @@map("emissions")
+}
+
+model EmissionType {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  emissions Emission[]
+
+  @@map("emission_types")
+}
+
+model EmissionMethod {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  emissions Emission[]
+
+  @@map("emission_methods")
+}
+
+model EmissionMethod2 {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  emissions Emission[]
+
+  @@map("emission_methods_2")
+}
+
+model EmissionMethod3 {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  emissions Emission[]
+
+  @@map("emission_methods_3")
+}
+
+model TypeOfGhg {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  gwp       Decimal? @db.Decimal(18, 6)
+  createdAt DateTime @default(now())
+
+  emissions Emission[]
+
+  @@map("types_of_ghg")
+}
+
+// ============================================================================
+// 14 UNIT LOOKUPS
+// ============================================================================
+
+model ADUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("ad_units")
+}
+
+model NCVUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("ncv_units")
+}
+
+model EFUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("ef_units")
+}
+
+model CContentUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("ccontent_units")
+}
+
+model OxFUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("oxf_units")
+}
+
+model ConvFUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("convf_units")
+}
+
+model BioCUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("bioc_units")
+}
+
+model FuelBalanceUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  fuelBalances FuelBalance[]
+  @@map("fuel_balance_units")
+}
+
+model GhgBalanceUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  ghgBalanceByTypes                    GhgBalanceByType[]
+  ghgBalanceByMonitoringMethodologyTypes GhgBalanceByMonitoringMethodologyType[]
+  @@map("ghg_balance_units")
+}
+
+model GhgConcUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("ghg_conc_units")
+}
+
+model HoursOperatingUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("hours_operating_units")
+}
+
+model FlueGasFlowUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("flue_gas_flow_units")
+}
+
+model AnnualAmountOfGhgUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  emissions Emission[]
+  @@map("annual_amount_of_ghg_units")
+}
+
+model SourceStreamName {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  @@map("source_stream_names")
+}
+
+// ============================================================================
+// BALANCE (3 entities)
+// ============================================================================
+
+model FuelBalance {
+  id                        String   @id @default(cuid())
+  name                      String?
+  totalFuelInput             Decimal? @db.Decimal(28, 10)
+  directFuelForCbamGoods     Decimal? @db.Decimal(28, 10)
+  fuelForElectricity         Decimal? @db.Decimal(28, 10)
+  directFuelForNonCbamGoods  Decimal? @db.Decimal(28, 10)
+  rest                       Decimal? @db.Decimal(28, 10)
+  createdAt                  DateTime @default(now())
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  unitId String?
+  unit   FuelBalanceUnit? @relation(fields: [unitId], references: [id])
+
+  @@index([installationDataId])
+  @@map("fuel_balances")
+}
+
+model GhgBalanceByType {
+  id                    String   @id @default(cuid())
+  name                  String?
+  totalCo2Emissions     Decimal? @db.Decimal(28, 10)
+  biomassEmissions      Decimal? @db.Decimal(28, 10)
+  totalN2oEmissions     Decimal? @db.Decimal(28, 10)
+  totalPfcEmissions     Decimal? @db.Decimal(28, 10)
+  totalDirectEmissions  Decimal? @db.Decimal(28, 10)
+  totalIndirectEmissions Decimal? @db.Decimal(28, 10)
+  totalEmissions        Decimal? @db.Decimal(28, 10)
+  createdAt             DateTime @default(now())
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  unitId String?
+  unit   GhgBalanceUnit? @relation(fields: [unitId], references: [id])
+
+  @@index([installationDataId])
+  @@map("ghg_balance_by_types")
+}
+
+model GhgBalanceByMonitoringMethodologyType {
+  id                               String   @id @default(cuid())
+  name                             String?
+  calculationBasedExclPfcEmissions Decimal? @db.Decimal(28, 10)
+  totalPfcEmissions                Decimal? @db.Decimal(28, 10)
+  measurementBased                 Decimal? @db.Decimal(28, 10)
+  other                            Decimal? @db.Decimal(28, 10)
+  createdAt                        DateTime @default(now())
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  unitId String?
+  unit   GhgBalanceUnit? @relation(fields: [unitId], references: [id])
+
+  @@index([installationDataId])
+  @@map("ghg_balance_by_monitoring_methodology_types")
+}
+
+// ============================================================================
+// PRODUCTION (3 entities)
+// ============================================================================
+
+model RelevantProductionProcess {
+  id          String   @id @default(cuid())
+  name        String?
+  errorMessage String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  goodsCategoryId String?
+  goodsCategory   GoodsCategory? @relation(fields: [goodsCategoryId], references: [id])
+
+  // Up to 10 production process references (stored as IDs)
+  productionProcess1  String?
+  productionProcess2  String?
+  productionProcess3  String?
+  productionProcess4  String?
+  productionProcess5  String?
+  productionProcess6  String?
+  productionProcess7  String?
+  productionProcess8  String?
+  productionProcess9  String?
+  productionProcess10 String?
+
+  // D Section - Production Level Data
+  dTotalProductionLevelTotalProductionWithinInstallation Decimal? @db.Decimal(28, 10)
+  dProducedForTheMarket                                  Decimal? @db.Decimal(28, 10)
+  dShareOfTotalUnderProducedForTheMarket                 Decimal? @db.Decimal(28, 10)
+  dConsumedForNonCbamGoodsWithinTheInstallation          Decimal? @db.Decimal(28, 10)
+  control                                                 Decimal? @db.Decimal(28, 10)
+
+  // D Applicable Elements
+  dApplicableElementsMeasurableHeat      Boolean @default(false)
+  dApplicableElementsWasteGases          Boolean @default(false)
+  dApplicableElementsIndirectEmissions   Boolean @default(true)
+
+  // D Directly Attributable Emissions
+  dDirectlyAttributableEmissionsValue    Decimal? @db.Decimal(28, 10)
+
+  // D Emissions from Heat Balance (NEW in v2.0 - BUG FIX from v1.0 L65)
+  dEmissionsFromHeatBalanceValue         Decimal? @db.Decimal(28, 10)
+
+  // D Emissions from Waste Gases Balance (NEW in v2.0 - BUG FIX from v1.0 L66)
+  dEmissionsFromWasteGasesBalanceValue   Decimal? @db.Decimal(28, 10)
+
+  // D Measurable Heat
+  dMeasurableHeatAmountImported                 Decimal? @db.Decimal(28, 10)
+  dMeasurableHeatAmountExported                 Decimal? @db.Decimal(28, 10)
+  dMeasurableHeatEmissionsFactorImported        Decimal? @db.Decimal(28, 10)
+  dMeasurableHeatEmissionsFactorExported        Decimal? @db.Decimal(28, 10)
+
+  // D Waste Gases
+  dWasteGasesAmountImported                     Decimal? @db.Decimal(28, 10)
+  dWasteGasesAmountExported                     Decimal? @db.Decimal(28, 10)
+  dWasteGasesEmissionsFactorImported            Decimal? @db.Decimal(28, 10)
+  dWasteGasesEmissionsFactorExported            Decimal? @db.Decimal(28, 10)
+
+  // D Indirect Emissions from Electricity
+  dIndirectEmissionsElectricityConsumption       Decimal? @db.Decimal(28, 10)
+  dIndirectEmissionsEmissionFactorValue          Decimal? @db.Decimal(28, 10)
+  dIndirectEmissionsSourceOfEmissionFactor       ElectricityEmissionFactor @default(UNDEFINED)
+
+  // D Electricity Exported
+  dElectricityExportedAmountsExported            Decimal? @db.Decimal(28, 10)
+  dElectricityExportedEmissionFactorValue        Decimal? @db.Decimal(28, 10)
+
+  // Collections
+  dTotalProductionLevels                         DTotalProductionLevel[]
+  dConsumedInOtherProductionProcesses            DConsumedInOther[]
+
+  @@index([installationDataId])
+  @@map("relevant_production_processes")
+}
+
+model DTotalProductionLevel {
+  id        String   @id @default(cuid())
+  amount    Decimal? @db.Decimal(28, 10)
+  createdAt DateTime @default(now())
+
+  relevantProductionProcessId String
+  relevantProductionProcess   RelevantProductionProcess @relation(fields: [relevantProductionProcessId], references: [id], onDelete: Cascade)
+
+  @@index([relevantProductionProcessId])
+  @@map("d_total_production_levels")
+}
+
+model DConsumedInOther {
+  id        String   @id @default(cuid())
+  amount    Decimal? @db.Decimal(28, 10)
+  createdAt DateTime @default(now())
+
+  relevantProductionProcessId String
+  relevantProductionProcess   RelevantProductionProcess @relation(fields: [relevantProductionProcessId], references: [id], onDelete: Cascade)
+
+  @@index([relevantProductionProcessId])
+  @@map("d_consumed_in_other")
+}
+
+// ============================================================================
+// PRECURSOR (3 entities)
+// ============================================================================
+
+model PurchasedPrecursor {
+  id           String   @id @default(cuid())
+  name         String?
+  errorMessage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  goodsCategoryId String?
+  goodsCategory   GoodsCategory? @relation(fields: [goodsCategoryId], references: [id])
+
+  countryId String?
+  country   Country? @relation(fields: [countryId], references: [id])
+
+  // Up to 10 route references (stored as IDs)
+  route1  String?
+  route2  String?
+  route3  String?
+  route4  String?
+  route5  String?
+  route6  String?
+  route7  String?
+  route8  String?
+  route9  String?
+  route10 String?
+
+  // E Section - Purchased Precursor Data
+  eTotalPurchaseForPossibleConsumption    Decimal? @db.Decimal(28, 10)
+  eConsumedForOtherPurposesForNonCbam    Decimal? @db.Decimal(28, 10)
+  control                                 Decimal? @db.Decimal(28, 10)
+
+  eSpecificEmbedEmissions                String?
+  eSpecificEmbedDirectEmissionsValue     Decimal? @db.Decimal(28, 10)
+  eSpecificEmbedDirectEmissionsSource    SpecificEmbeddedEmissionSource @default(UNDEFINED)
+
+  eSpecificElectricityConsumptionValue   Decimal? @db.Decimal(28, 10)
+  eSpecificElectricityConsumptionSource  SpecificEmbeddedEmissionSource @default(UNDEFINED)
+
+  eElectricityEmissionFactorValue        Decimal? @db.Decimal(28, 10)
+  eElectricityEmissionFactorSource       ElectricityEmissionFactor @default(UNDEFINED)
+
+  eSpecificEmbeddedIndirectEmissionsValue Decimal? @db.Decimal(28, 10)
+
+  eJustificationId String? @unique
+  eJustification   EJustificationForDefaultValue? @relation(fields: [eJustificationId], references: [id])
+
+  // Collections
+  eConsumedInProductionProcesses ETotalPurchasedLevel[]
+  eTotalPurchasedLevels          EConsumedInProduction[]
+
+  @@index([installationDataId])
+  @@map("purchased_precursors")
+}
+
+model ETotalPurchasedLevel {
+  id        String   @id @default(cuid())
+  amount    Decimal? @db.Decimal(28, 10)
+  createdAt DateTime @default(now())
+
+  purchasedPrecursorId String
+  purchasedPrecursor   PurchasedPrecursor @relation(fields: [purchasedPrecursorId], references: [id], onDelete: Cascade)
+
+  @@index([purchasedPrecursorId])
+  @@map("e_total_purchased_levels")
+}
+
+model EConsumedInProduction {
+  id        String   @id @default(cuid())
+  amount    Decimal? @db.Decimal(28, 10)
+  createdAt DateTime @default(now())
+
+  purchasedPrecursorId String
+  purchasedPrecursor   PurchasedPrecursor @relation(fields: [purchasedPrecursorId], references: [id], onDelete: Cascade)
+
+  @@index([purchasedPrecursorId])
+  @@map("e_consumed_in_production")
+}
+
+// ============================================================================
+// REPORTING (5 entities)
+// ============================================================================
+
+model CbamReport {
+  id             String   @id @default(cuid())
+  reportPeriod   String?
+  reportTemplate String?
+  downloadUrl    String?
+  excelFileUrl   String?
+  createdAt      DateTime @default(now())
+
+  installationDataId String
+  installationData   InstallationData @relation(fields: [installationDataId], references: [id], onDelete: Cascade)
+
+  @@index([installationDataId])
+  @@map("cbam_reports")
+}
+
+model Report {
+  id           String   @id @default(cuid())
+  coverTitle   String?
+  coverContent String?
+  coverImageUrl String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tenantId String
+
+  reportSections ReportSection[]
+
+  @@index([tenantId])
+  @@map("reports")
+}
+
+model ReportSection {
+  id            String             @id @default(cuid())
+  part          ReportPart         @default(UNDEFINED)
+  sectionCode   String?
+  sectionTitle  String?
+  sectionLevel  ReportSectionLevel @default(UNDEFINED)
+  orderNo       Int                @default(0)
+  isEditable    Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+
+  installationDataId String?
+  installationData   InstallationData? @relation(fields: [installationDataId], references: [id])
+
+  reportId String?
+  report   Report? @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  reportSectionContents ReportSectionContent[]
+
+  @@index([installationDataId])
+  @@index([reportId])
+  @@map("report_sections")
+}
+
+model ReportSectionContent {
+  id          String                   @id @default(cuid())
+  contentType ReportSectionContentType @default(UNDEFINED)
+  orderNo     Int                      @default(0)
+  textContent String?
+  imageUrl    String?
+  createdAt   DateTime                 @default(now())
+
+  reportSectionId String
+  reportSection   ReportSection @relation(fields: [reportSectionId], references: [id], onDelete: Cascade)
+
+  @@index([reportSectionId])
+  @@map("report_section_contents")
+}
+
+model ReportTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  content     String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenantId String
+
+  @@index([tenantId])
+  @@map("report_templates")
+}
+
+// ============================================================================
+// VERIFICATION (2 entities)
+// ============================================================================
+
+model ReportVerifierCompany {
+  id        String   @id @default(cuid())
+  name      String
+  address   String?
+  email     String?
+  phone     String?
+  createdAt DateTime @default(now())
+
+  tenantId String
+
+  installationDatas              InstallationData[]
+  reportVerifierRepresentatives ReportVerifierRepresentative[]
+
+  @@index([tenantId])
+  @@map("report_verifier_companies")
+}
+
+model ReportVerifierRepresentative {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String?
+  phone     String?
+  title     String?
+  createdAt DateTime @default(now())
+
+  verifierCompanyId String?
+  verifierCompany   ReportVerifierCompany? @relation(fields: [verifierCompanyId], references: [id])
+
+  installationDatas InstallationData[]
+
+  @@index([verifierCompanyId])
+  @@map("report_verifier_representatives")
+}
+
+// ============================================================================
+// DATA QUALITY (4 entities)
+// ============================================================================
+
+model GeneralInfoOnDataQuality {
+  id               String   @id @default(cuid())
+  description      String?
+  qualityLevel     String?
+  methodDescription String?
+  createdAt        DateTime @default(now())
+
+  installationData InstallationData?
+
+  @@map("general_info_on_data_quality")
+}
+
+model JustificationForDefaultValue {
+  id            String   @id @default(cuid())
+  justification String?
+  source        String?
+  reference     String?
+  createdAt     DateTime @default(now())
+
+  installationData InstallationData?
+
+  @@map("justification_for_default_values")
+}
+
+model InfoOnQualityAssurance {
+  id          String   @id @default(cuid())
+  description String?
+  methodology String?
+  frequency   String?
+  createdAt   DateTime @default(now())
+
+  installationData InstallationData?
+
+  @@map("info_on_quality_assurance")
+}
+
+model EJustificationForDefaultValue {
+  id            String   @id @default(cuid())
+  justification String?
+  source        String?
+  reference     String?
+  createdAt     DateTime @default(now())
+
+  purchasedPrecursor PurchasedPrecursor?
+
+  @@map("e_justification_for_default_values")
+}
+
+// ============================================================================
+// SUPPLIER (5 entities)
+// ============================================================================
+
+model Supplier {
+  id               String   @id @default(cuid())
+  name             String
+  email            String?
+  phone            String?
+  address          String?
+  taxNumber        String?
+  taxOffice        String?
+  contactPerson    String?
+  invitationStatus String   @default("PENDING") // PENDING, INVITED, REGISTERED, ACTIVE
+  invitedAt        DateTime?
+  invitationToken  String?  @unique
+  registeredAt     DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  tenantId String
+
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  userId String?
+  user   User?  @relation(fields: [userId], references: [id])
+
+  countryId String?
+  country   Country? @relation(fields: [countryId], references: [id])
+
+  installationDatas InstallationData[]
+  supplierSurveys   SupplierSurvey[]
+  supplierGoods     SupplierGood[]
+
+  @@index([tenantId])
+  @@index([companyId])
+  @@map("suppliers")
+}
+
+model SupplierSurvey {
+  id                         String   @id @default(cuid())
+  status                     String   @default("DRAFT") // DRAFT, SUBMITTED, APPROVED, REJECTED
+  reportingPeriodStart       DateTime?
+  reportingPeriodEnd         DateTime?
+  specificEmbeddedEmissions  Decimal? @db.Decimal(28, 10)
+  directEmissions            Decimal? @db.Decimal(28, 10)
+  indirectEmissions          Decimal? @db.Decimal(28, 10)
+  productionVolume           Decimal? @db.Decimal(28, 10)
+  electricityConsumption     Decimal? @db.Decimal(28, 10)
+  heatConsumption            Decimal? @db.Decimal(28, 10)
+  emissionFactorSource       String?
+  monitoringMethodology      String?
+  value1                     Decimal? @db.Decimal(28, 10)
+  value2                     Decimal? @db.Decimal(28, 10)
+  notes                      String?
+  submittedAt                DateTime?
+  createdAt                  DateTime @default(now())
+
+  supplierId String
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  supplierGoodId String?
+  supplierGood   SupplierGood? @relation(fields: [supplierGoodId], references: [id])
+
+  supplierUnitId String?
+  supplierUnit   SupplierUnit? @relation(fields: [supplierUnitId], references: [id])
+
+  supplierCalId String?
+  supplierCal   SupplierCal? @relation(fields: [supplierCalId], references: [id])
+
+  @@index([supplierId])
+  @@map("supplier_surveys")
+}
+
+model SupplierGood {
+  id          String   @id @default(cuid())
+  name        String
+  code        String?
+  description String?
+  cnCode      String?
+  createdAt   DateTime @default(now())
+
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+
+  goodsCategoryId String?
+  goodsCategory   GoodsCategory? @relation(fields: [goodsCategoryId], references: [id])
+
+  supplierSurveys SupplierSurvey[]
+
+  @@index([supplierId])
+  @@map("supplier_goods")
+}
+
+model SupplierUnit {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  supplierSurveys SupplierSurvey[]
+
+  @@map("supplier_units")
+}
+
+model SupplierCal {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  name      String
+  createdAt DateTime @default(now())
+
+  supplierSurveys SupplierSurvey[]
+
+  @@map("supplier_cals")
+}
+
+// ============================================================================
+// CONFIGURATION (3 entities)
+// ============================================================================
+
+model AppSetting {
+  id        String   @id @default(cuid())
+  key       String
+  value     String?
+  category  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenantId String?
+  tenant   Tenant? @relation(fields: [tenantId], references: [id])
+
+  @@unique([tenantId, key])
+  @@map("app_settings")
+}
+
+model AppSetup {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String?
+  description String?
+  isSystem    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("app_setups")
+}
+
+model Scope {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  description String?
+  createdAt DateTime @default(now())
+
+  @@map("scopes")
+}
+
+// ============================================================================
+// NEW DEFINITIVE PERIOD ENTITIES (12 entities - v2.0)
+// ============================================================================
+
+model AnnualDeclaration {
+  id              String            @id @default(cuid())
+  year            Int
+  status          DeclarationStatus @default(DRAFT)
+  submissionDate  DateTime?
+  totalEmissions  Decimal?          @db.Decimal(28, 10)
+  totalCertificates Int?
+  notes           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  tenantId String
+
+  certificateSurrenders     CertificateSurrender[]
+  freeAllocationAdjustments FreeAllocationAdjustment[]
+
+  @@index([tenantId])
+  @@unique([tenantId, year])
+  @@map("annual_declarations")
+}
+
+model CbamCertificate {
+  id              String            @id @default(cuid())
+  certificateNo   String            @unique
+  status          CertificateStatus @default(ACTIVE)
+  issueDate       DateTime
+  expiryDate      DateTime?
+  pricePerTonne   Decimal?          @db.Decimal(18, 4)
+  quantity        Int               @default(1)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  tenantId String
+
+  surrenders CertificateSurrender[]
+
+  @@index([tenantId])
+  @@map("cbam_certificates")
+}
+
+model CertificateSurrender {
+  id             String   @id @default(cuid())
+  quantity       Int
+  surrenderDate  DateTime
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  certificateId String
+  certificate   CbamCertificate @relation(fields: [certificateId], references: [id])
+
+  declarationId String
+  declaration   AnnualDeclaration @relation(fields: [declarationId], references: [id])
+
+  @@index([certificateId])
+  @@index([declarationId])
+  @@map("certificate_surrenders")
+}
+
+model FreeAllocationAdjustment {
+  id              String   @id @default(cuid())
+  adjustmentType  String
+  amount          Decimal? @db.Decimal(28, 10)
+  description     String?
+  effectiveDate   DateTime?
+  createdAt       DateTime @default(now())
+
+  declarationId String
+  declaration   AnnualDeclaration @relation(fields: [declarationId], references: [id])
+
+  @@index([declarationId])
+  @@map("free_allocation_adjustments")
+}
+
+model MonitoringPlan {
+  id              String   @id @default(cuid())
+  name            String
+  version         String?
+  status          String   @default("DRAFT")
+  validFrom       DateTime?
+  validTo         DateTime?
+  description     String?
+  documentUrl     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  tenantId String
+
+  @@index([tenantId])
+  @@map("monitoring_plans")
+}
+
+model VerificationDocument {
+  id                 String              @id @default(cuid())
+  verificationPeriod String?
+  opinion            VerificationOpinion @default(UNQUALIFIED)
+  documentUrl        String?
+  verifierName       String?
+  verifierAccreditation String?
+  issueDate          DateTime?
+  notes              String?
+  createdAt          DateTime            @default(now())
+
+  tenantId String
+
+  @@index([tenantId])
+  @@map("verification_documents")
+}
+
+model AuthorisationApplication {
+  id              String              @id @default(cuid())
+  applicationNo   String?             @unique
+  status          AuthorisationStatus @default(PENDING)
+  applicantName   String
+  applicantType   String?
+  submissionDate  DateTime?
+  approvalDate    DateTime?
+  notes           String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  tenantId String
+
+  @@index([tenantId])
+  @@map("authorisation_applications")
+}
+
+model OperatorRegistration {
+  id               String   @id @default(cuid())
+  operatorName     String
+  registrationNo   String?  @unique
+  registrationDate DateTime?
+  installationName String?
+  country          String?
+  status           String   @default("ACTIVE")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  tenantId String
+
+  @@index([tenantId])
+  @@map("operator_registrations")
+}
+
+model AccreditedVerifier {
+  id                 String   @id @default(cuid())
+  name               String
+  accreditationNo    String?  @unique
+  accreditationBody  String?
+  validFrom          DateTime?
+  validTo            DateTime?
+  contactEmail       String?
+  contactPhone       String?
+  createdAt          DateTime @default(now())
+
+  tenantId String
+
+  @@index([tenantId])
+  @@map("accredited_verifiers")
+}
+
+model IndirectCustomsRepresentative {
+  id              String   @id @default(cuid())
+  name            String
+  eoriNumber      String?  @unique
+  representedParty String?
+  authorizationRef String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  tenantId String
+
+  @@index([tenantId])
+  @@map("indirect_customs_representatives")
+}
+
+model Importer {
+  id               String   @id @default(cuid())
+  name             String
+  eoriNumber       String?  @unique
+  isDeMinimis      Boolean  @default(false)
+  deMinimisAmount  Decimal? @db.Decimal(18, 4)
+  address          String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  tenantId  String
+  countryId String?
+  country   Country? @relation(fields: [countryId], references: [id])
+
+  @@index([tenantId])
+  @@map("importers")
+}
+
+model DefaultValueTable {
+  id          String   @id @default(cuid())
+  category    String
+  subCategory String?
+  region      String?
+  value       Decimal? @db.Decimal(28, 10)
+  unit        String?
+  source      String?
+  validFrom   DateTime?
+  validTo     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("default_value_tables")
+}

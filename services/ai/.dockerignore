@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+.venv
+venv
+tests
+.git
+*.md
+.vscode
+.idea
+.pytest_cache
+.coverage
+.coveragerc
+pytest.ini
+requirements-test.txt
+htmlcov
