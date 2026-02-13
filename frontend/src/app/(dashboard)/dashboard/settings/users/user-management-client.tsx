@@ -35,12 +35,12 @@ import { Plus, Trash2, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const ROLE_LABELS: Record<string, string> = {
-  SUPER_ADMIN: "Sistem Yoneticisi",
-  COMPANY_ADMIN: "Sirket Yoneticisi",
-  OPERATOR: "Operator",
-  SUPPLIER: "Tedarikci",
-  CBAM_DECLARANT: "CBAM Beyancisi",
-  VERIFIER: "Dogrulayici",
+  SUPER_ADMIN: "Sistem Yöneticisi",
+  COMPANY_ADMIN: "Şirket Yöneticisi",
+  OPERATOR: "Operatör",
+  SUPPLIER: "Tedarikçi",
+  CBAM_DECLARANT: "CBAM Beyancısı",
+  VERIFIER: "Doğrulayıcı",
 };
 
 const ROLES = Object.entries(ROLE_LABELS).map(([value, label]) => ({
@@ -79,7 +79,7 @@ export function UserManagementClient({
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Kullanici olusturuldu");
+      toast.success("Kullanıcı oluşturuldu");
       setShowCreateDialog(false);
       setNewUser({ name: "", email: "", password: "", role: "OPERATOR" });
       router.refresh();
@@ -93,19 +93,19 @@ export function UserManagementClient({
       toast.error(result.error);
     } else {
       toast.success(
-        currentActive ? "Kullanici devre disi birakildi" : "Kullanici aktif edildi"
+        currentActive ? "Kullanıcı devre dışı bırakıldı" : "Kullanıcı aktif edildi"
       );
       router.refresh();
     }
   }
 
   async function handleDelete(userId: string) {
-    if (!confirm("Bu kullaniciyi silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu kullanıcıyı silmek istediğinizden emin misiniz?")) return;
     const result = await deleteUser(userId);
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Kullanici silindi");
+      toast.success("Kullanıcı silindi");
       router.refresh();
     }
   }
@@ -115,7 +115,7 @@ export function UserManagementClient({
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Kullanici rolu guncellendi");
+      toast.success("Kullanıcı rolü güncellendi");
       router.refresh();
     }
   }
@@ -127,14 +127,14 @@ export function UserManagementClient({
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Yeni Kullanici
+              Yeni Kullanıcı
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni Kullanici Olustur</DialogTitle>
+              <DialogTitle>Yeni Kullanıcı Oluştur</DialogTitle>
               <DialogDescription>
-                Sirketinize yeni bir kullanici ekleyin
+                Şirketinize yeni bir kullanıcı ekleyin
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
@@ -158,7 +158,7 @@ export function UserManagementClient({
                 />
               </div>
               <div className="space-y-2">
-                <Label>Sifre</Label>
+                <Label>Şifre</Label>
                 <Input
                   type="password"
                   value={newUser.password}
@@ -193,10 +193,10 @@ export function UserManagementClient({
                 variant="outline"
                 onClick={() => setShowCreateDialog(false)}
               >
-                Iptal
+                İptal
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Olusturuluyor..." : "Olustur"}
+                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -211,15 +211,15 @@ export function UserManagementClient({
               <TableHead>E-posta</TableHead>
               <TableHead>Rol</TableHead>
               <TableHead>Durum</TableHead>
-              <TableHead>Son Giris</TableHead>
-              <TableHead className="text-right">Islemler</TableHead>
+              <TableHead>Son Giriş</TableHead>
+              <TableHead className="text-right">İşlemler</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {initialUsers.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                  Henuz kullanici bulunmuyor
+                  Henüz kullanıcı bulunmuyor
                 </TableCell>
               </TableRow>
             ) : (

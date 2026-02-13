@@ -34,7 +34,7 @@ export function InstallationDataTabs({ data }: { data: any }) {
       <Button variant="outline" size="sm" asChild>
         <Link href="/dashboard/installation-data">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Listeye Don
+          Listeye Dön
         </Link>
       </Button>
 
@@ -44,14 +44,14 @@ export function InstallationDataTabs({ data }: { data: any }) {
           <TabsTrigger value="emissions">B: Emisyonlar</TabsTrigger>
           <TabsTrigger value="energy">C: Enerji&Denge</TabsTrigger>
           <TabsTrigger value="processes">D: Prosesler</TabsTrigger>
-          <TabsTrigger value="precursors">E: Prekursorler</TabsTrigger>
+          <TabsTrigger value="precursors">E: Prekürsörler</TabsTrigger>
         </TabsList>
 
         {/* Tab A: Installation Info */}
         <TabsContent value="info" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Tesis ve Donem Bilgileri</CardTitle>
+              <CardTitle>Tesis ve Dönem Bilgileri</CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
@@ -59,13 +59,13 @@ export function InstallationDataTabs({ data }: { data: any }) {
                 <p className="font-medium">{data.installation?.name}</p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Sirket</p>
+                <p className="text-sm text-muted-foreground">Şirket</p>
                 <p className="font-medium">
                   {data.installation?.company?.name}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Baslangic</p>
+                <p className="text-sm text-muted-foreground">Başlangıç</p>
                 <p className="font-medium">
                   {data.startDate
                     ? new Date(data.startDate).toLocaleDateString("tr-TR")
@@ -73,7 +73,7 @@ export function InstallationDataTabs({ data }: { data: any }) {
                 </p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Bitis</p>
+                <p className="text-sm text-muted-foreground">Bitiş</p>
                 <p className="font-medium">
                   {data.endDate
                     ? new Date(data.endDate).toLocaleDateString("tr-TR")
@@ -88,7 +88,7 @@ export function InstallationDataTabs({ data }: { data: any }) {
               <div>
                 <CardTitle>Mal Kategorileri ve Rotalar</CardTitle>
                 <CardDescription>
-                  InstallationGoodsCategoryAndRoute ({data.installationGoodsCategoryAndRoutes?.length || 0} kayit)
+                  InstallationGoodsCategoryAndRoute ({data.installationGoodsCategoryAndRoutes?.length || 0} kayıt)
                 </CardDescription>
               </div>
               <Button size="sm" variant="outline">
@@ -105,14 +105,14 @@ export function InstallationDataTabs({ data }: { data: any }) {
                     <TableHead>Rota 1</TableHead>
                     <TableHead>Rota 2</TableHead>
                     <TableHead>Rota 3</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {data.installationGoodsCategoryAndRoutes?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center text-muted-foreground py-4">
-                        Kayit yok
+                        Kayıt yok
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -145,9 +145,9 @@ export function InstallationDataTabs({ data }: { data: any }) {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Emisyon Kayitlari</CardTitle>
+                <CardTitle>Emisyon Kayıtları</CardTitle>
                 <CardDescription>
-                  B_EmInst - Emisyon verileri ({data.emissions?.length || 0} kayit)
+                  B_EmInst - Emisyon verileri ({data.emissions?.length || 0} kayıt)
                 </CardDescription>
               </div>
               <Button size="sm" asChild>
@@ -163,13 +163,13 @@ export function InstallationDataTabs({ data }: { data: any }) {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Kaynak Akisi</TableHead>
+                    <TableHead>Kaynak Akışı</TableHead>
                     <TableHead>Emisyon Tipi</TableHead>
                     <TableHead>AD</TableHead>
                     <TableHead>NCV</TableHead>
                     <TableHead>EF</TableHead>
                     <TableHead>CO2e Fosil</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -228,11 +228,11 @@ export function InstallationDataTabs({ data }: { data: any }) {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Isim</TableHead>
-                    <TableHead>Toplam Yakit Girisi</TableHead>
-                    <TableHead>CBAM Mallari Icin</TableHead>
-                    <TableHead>Elektrik Icin</TableHead>
-                    <TableHead>Non-CBAM Icin</TableHead>
+                    <TableHead>İsim</TableHead>
+                    <TableHead>Toplam Yakıt Girişi</TableHead>
+                    <TableHead>CBAM Malları İçin</TableHead>
+                    <TableHead>Elektrik İçin</TableHead>
+                    <TableHead>Non-CBAM İçin</TableHead>
                     <TableHead>Kalan</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -240,7 +240,7 @@ export function InstallationDataTabs({ data }: { data: any }) {
                   {data.fuelBalances?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center text-muted-foreground py-4">
-                        Kayit yok
+                        Kayıt yok
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -269,7 +269,7 @@ export function InstallationDataTabs({ data }: { data: any }) {
 
           <Card>
             <CardHeader>
-              <CardTitle>GHG Dengesi (Tipe Gore)</CardTitle>
+              <CardTitle>GHG Dengesi (Tipe Göre)</CardTitle>
               <CardDescription>
                 {data.ghgBalanceByTypes?.length || 0} kayit
               </CardDescription>
@@ -278,13 +278,13 @@ export function InstallationDataTabs({ data }: { data: any }) {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Isim</TableHead>
+                    <TableHead>İsim</TableHead>
                     <TableHead>CO2</TableHead>
                     <TableHead>Biyokitle</TableHead>
                     <TableHead>N2O</TableHead>
                     <TableHead>PFC</TableHead>
-                    <TableHead>Dogrudan</TableHead>
-                    <TableHead>Dolayli</TableHead>
+                    <TableHead>Doğrudan</TableHead>
+                    <TableHead>Dolaylı</TableHead>
                     <TableHead>Toplam</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -292,7 +292,7 @@ export function InstallationDataTabs({ data }: { data: any }) {
                   {data.ghgBalanceByTypes?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={8} className="text-center text-muted-foreground py-4">
-                        Kayit yok
+                        Kayıt yok
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -335,9 +335,9 @@ export function InstallationDataTabs({ data }: { data: any }) {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Ilgili Uretim Surecleri</CardTitle>
+                <CardTitle>İlgili Üretim Süreçleri</CardTitle>
                 <CardDescription>
-                  RelevantProductionProcess ({data.relevantProductionProcesses?.length || 0} kayit)
+                  RelevantProductionProcess ({data.relevantProductionProcesses?.length || 0} kayıt)
                 </CardDescription>
               </div>
               <Button size="sm" variant="outline">
@@ -350,17 +350,17 @@ export function InstallationDataTabs({ data }: { data: any }) {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Mal Kategorisi</TableHead>
-                    <TableHead>Uretim Sureci 1</TableHead>
-                    <TableHead>Uretim Sureci 2</TableHead>
-                    <TableHead>Uretim Sureci 3</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead>Üretim Süreci 1</TableHead>
+                    <TableHead>Üretim Süreci 2</TableHead>
+                    <TableHead>Üretim Süreci 3</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {data.relevantProductionProcesses?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center text-muted-foreground py-4">
-                        Kayit yok
+                        Kayıt yok
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -392,9 +392,9 @@ export function InstallationDataTabs({ data }: { data: any }) {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Satin Alinan Prekursorler</CardTitle>
+                <CardTitle>Satın Alınan Prekürsörler</CardTitle>
                 <CardDescription>
-                  PurchasedPrecursor ({data.purchasedPrecursors?.length || 0} kayit)
+                  PurchasedPrecursor ({data.purchasedPrecursors?.length || 0} kayıt)
                 </CardDescription>
               </div>
               <Button size="sm" variant="outline">
@@ -407,18 +407,18 @@ export function InstallationDataTabs({ data }: { data: any }) {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Mal Kategorisi</TableHead>
-                    <TableHead>Ulke</TableHead>
+                    <TableHead>Ülke</TableHead>
                     <TableHead>Rota 1</TableHead>
                     <TableHead>Rota 2</TableHead>
                     <TableHead>Rota 3</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {data.purchasedPrecursors?.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center text-muted-foreground py-4">
-                        Kayit yok
+                        Kayıt yok
                       </TableCell>
                     </TableRow>
                   ) : (

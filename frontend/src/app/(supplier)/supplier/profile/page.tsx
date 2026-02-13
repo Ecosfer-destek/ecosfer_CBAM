@@ -66,12 +66,12 @@ export default function SupplierProfilePage() {
         }),
       });
       if (res.ok) {
-        toast.success("Profil guncellendi");
+        toast.success("Profil güncellendi");
       } else {
-        toast.error("Profil guncellenirken bir hata olustu");
+        toast.error("Profil güncellenirken bir hata oluştu");
       }
     } catch {
-      toast.error("Profil guncellenirken bir hata olustu");
+      toast.error("Profil güncellenirken bir hata oluştu");
     }
     setIsSaving(false);
   }
@@ -81,7 +81,7 @@ export default function SupplierProfilePage() {
       <div>
         <h1 className="text-3xl font-bold">Profilim</h1>
         <p className="text-muted-foreground">
-          Tedarikci bilgilerinizi goruntuleyin ve guncelleyin
+          Tedarikçi bilgilerinizi görüntüleyin ve güncelleyin
         </p>
       </div>
 
@@ -89,20 +89,20 @@ export default function SupplierProfilePage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="h-5 w-5" />
-            Tedarikci Bilgileri
+            Tedarikçi Bilgileri
           </CardTitle>
           <CardDescription>
-            CBAM beyannamelerinde kullanilacak tedarikci bilgileriniz
+            CBAM beyannamelerinde kullanılacak tedarikçi bilgileriniz
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Sirket Adi</Label>
+              <Label>Şirket Adı</Label>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Tedarikci sirket adi"
+                placeholder="Tedarikçi şirket adı"
               />
             </div>
             <div className="space-y-2">
@@ -111,7 +111,7 @@ export default function SupplierProfilePage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="iletisim@firma.com"
+                placeholder="iletişim@firma.com"
               />
             </div>
             <div className="space-y-2">
@@ -123,7 +123,7 @@ export default function SupplierProfilePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Yetkili Kisi</Label>
+              <Label>Yetkili Kişi</Label>
               <Input
                 value={contactPerson}
                 onChange={(e) => setContactPerson(e.target.value)}
@@ -131,11 +131,11 @@ export default function SupplierProfilePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label>Vergi Numarasi</Label>
+              <Label>Vergi Numarası</Label>
               <Input
                 value={taxNumber}
                 onChange={(e) => setTaxNumber(e.target.value)}
-                placeholder="Vergi numarasi"
+                placeholder="Vergi numarası"
               />
             </div>
             <div className="space-y-2">
@@ -152,7 +152,7 @@ export default function SupplierProfilePage() {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 rows={2}
-                placeholder="Sirket adresi"
+                placeholder="Şirket adresi"
               />
             </div>
           </div>

@@ -9,7 +9,7 @@ export default async function InstallationDataPage() {
       <div>
         <h1 className="text-3xl font-bold">Tesis Verileri</h1>
         <p className="text-muted-foreground">
-          CBAM raporlama donemlerine ait tesis verilerini yonetin
+          CBAM raporlama dönemlerine ait tesis verilerini yönetin
         </p>
       </div>
       <InstallationDataListClient dataList={dataList} />

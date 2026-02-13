@@ -22,33 +22,33 @@ import { toast } from "sonner";
 const REPORT_TYPES = [
   {
     value: "installation-summary",
-    label: "Tesis Ozet Raporu",
-    description: "Tesis, emisyon, denge ve uretim verilerinin ozeti",
+    label: "Tesis Özet Raporu",
+    description: "Tesis, emisyon, denge ve üretim verilerinin özeti",
   },
   {
     value: "declaration",
     label: "CBAM Beyanname Raporu",
-    description: "Yillik beyanname ozeti ve sertifika bilgileri",
+    description: "Yıllık beyanname özeti ve sertifika bilgileri",
   },
   {
     value: "emission-detail",
     label: "Emisyon Detay Raporu",
-    description: "Tum emisyon kaynaklarinin detayli listesi (yatay format)",
+    description: "Tüm emisyon kaynaklarının detaylı listesi (yatay format)",
   },
   {
     value: "supplier-survey",
-    label: "Tedarikci Anket Raporu",
-    description: "Tedarikci bilgileri ve anket durumu",
+    label: "Tedarikçi Anket Raporu",
+    description: "Tedarikçi bilgileri ve anket durumu",
   },
   {
     value: "custom",
-    label: "Ozel Rapor",
-    description: "Rapor sablonu ve bolumlerinden olusturulan rapor",
+    label: "Özel Rapor",
+    description: "Rapor şablonu ve bölümlerinden oluşturulan rapor",
   },
 ];
 
 const LANGUAGES = [
-  { value: "tr", label: "Turkce" },
+  { value: "tr", label: "Türkçe" },
   { value: "en", label: "English" },
   { value: "de", label: "Deutsch" },
 ];
@@ -76,8 +76,8 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: "PDF olusturma hatasi" }));
-        toast.error(errorData.error || "PDF olusturma hatasi");
+        const errorData = await response.json().catch(() => ({ error: "PDF oluşturma hatası" }));
+        toast.error(errorData.error || "PDF oluşturma hatası");
         return;
       }
 
@@ -97,7 +97,7 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
 
       toast.success("PDF rapor indirildi");
     } catch (error) {
-      toast.error("PDF olusturma sirasinda hata olustu");
+      toast.error("PDF oluşturma sırasında hata oluştu");
       console.error("PDF generation error:", error);
     } finally {
       setLoading(false);
@@ -111,10 +111,10 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="h-5 w-5" />
-          PDF Rapor Uretimi
+          PDF Rapor Üretimi
         </CardTitle>
         <CardDescription>
-          5 farkli rapor tipinde PDF dosyasi olusturun
+          5 farklı rapor tipinde PDF dosyası oluşturun
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -164,12 +164,12 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Olusturuluyor...
+                  Oluşturuluyor...
                 </>
               ) : (
                 <>
                   <Download className="mr-2 h-4 w-4" />
-                  PDF Indir
+                  PDF İndir
                 </>
               )}
             </Button>

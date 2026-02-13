@@ -40,11 +40,11 @@ import { toast } from "sonner";
 
 const STATUS_LABELS: Record<string, string> = {
   DRAFT: "Taslak",
-  SUBMITTED: "Gonderildi",
-  UNDER_REVIEW: "Incelemede",
-  APPROVED: "Onaylandi",
+  SUBMITTED: "Gönderildi",
+  UNDER_REVIEW: "İncelemede",
+  APPROVED: "Onaylandı",
   REJECTED: "Reddedildi",
-  AMENDED: "Duzeltildi",
+  AMENDED: "Düzeltildi",
 };
 
 const STATUS_VARIANTS: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
@@ -74,7 +74,7 @@ export default function DeclarationsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Beyanname olusturuldu");
+      toast.success("Beyanname oluşturuldu");
       setShowCreate(false);
       setNotes("");
       getDeclarations().then(setDeclarations);
@@ -83,7 +83,7 @@ export default function DeclarationsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu beyannameyi silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu beyannameyi silmek istediğinizden emin misiniz?")) return;
     const result = await deleteDeclaration(id);
     if (result.error) {
       toast.error(result.error);
@@ -97,32 +97,32 @@ export default function DeclarationsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Yillik Beyannameler</h1>
+          <h1 className="text-3xl font-bold">Yıllık Beyannameler</h1>
           <p className="text-muted-foreground">
-            CBAM yillik beyannamelerini yonetin
+            CBAM yıllık beyannamelerini yönetin
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" asChild>
             <Link href="/dashboard/declarations/wizard">
               <Wand2 className="mr-2 h-4 w-4" />
-              Sihirbaz ile Olustur
+              Sihirbaz ile Oluştur
             </Link>
           </Button>
           <Dialog open={showCreate} onOpenChange={setShowCreate}>
             <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
-                Hizli Olustur
+                Hızlı Oluştur
               </Button>
             </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni Yillik Beyanname</DialogTitle>
+              <DialogTitle>Yeni Yıllık Beyanname</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Yil *</Label>
+                <Label>Yıl *</Label>
                 <Input
                   type="number"
                   value={year}
@@ -142,10 +142,10 @@ export default function DeclarationsPage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                Iptal
+                İptal
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Olusturuluyor..." : "Olustur"}
+                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -167,19 +167,19 @@ export default function DeclarationsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Yil</TableHead>
+                <TableHead>Yıl</TableHead>
                 <TableHead>Durum</TableHead>
                 <TableHead>Toplam Emisyon</TableHead>
                 <TableHead>Sertifika</TableHead>
-                <TableHead>Gonderim Tarihi</TableHead>
-                <TableHead className="text-right">Islemler</TableHead>
+                <TableHead>Gönderim Tarihi</TableHead>
+                <TableHead className="text-right">İşlemler</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {declarations.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                    Henuz beyanname bulunmuyor
+                    Henüz beyanname bulunmuyor
                   </TableCell>
                 </TableRow>
               ) : (

@@ -26,13 +26,13 @@ function ActionsCell({ company }: { company: Company }) {
   const router = useRouter();
 
   async function handleDelete() {
-    if (!confirm(`"${company.name}" sirketini silmek istediginizden emin misiniz?`))
+    if (!confirm(`"${company.name}" şirketini silmek istediğinizden emin misiniz?`))
       return;
     const result = await deleteCompany(company.id);
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Sirket silindi");
+      toast.success("Şirket silindi");
       router.refresh();
     }
   }
@@ -60,7 +60,7 @@ const columns: ColumnDef<Company>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Sirket Adi" />
+      <DataTableColumnHeader column={column} title="Şirket Adı" />
     ),
   },
   {
@@ -72,14 +72,14 @@ const columns: ColumnDef<Company>[] = [
   },
   {
     accessorKey: "country",
-    header: "Ulke",
+    header: "Ülke",
     cell: ({ row }) => (
       <Badge variant="outline">{row.original.country?.name || "-"}</Badge>
     ),
   },
   {
     accessorKey: "city",
-    header: "Sehir",
+    header: "Şehir",
     cell: ({ row }) => row.original.city?.name || "-",
   },
   {
@@ -89,7 +89,7 @@ const columns: ColumnDef<Company>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-right">Islemler</div>,
+    header: () => <div className="text-right">İşlemler</div>,
     cell: ({ row }) => <ActionsCell company={row.original} />,
   },
 ];
@@ -100,12 +100,12 @@ export function CompanyListClient({ companies }: { companies: Company[] }) {
       columns={columns}
       data={companies}
       searchKey="name"
-      searchPlaceholder="Sirket ara..."
+      searchPlaceholder="Şirket ara..."
       toolbar={
         <Button asChild>
           <Link href="/dashboard/companies/new">
             <Plus className="mr-2 h-4 w-4" />
-            Yeni Sirket
+            Yeni Şirket
           </Link>
         </Button>
       }

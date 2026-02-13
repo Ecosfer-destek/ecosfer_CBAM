@@ -15,8 +15,8 @@ import { getSupplierSurveys, getSupplierGoods } from "@/actions/supplier";
 
 const SURVEY_STATUS_LABELS: Record<string, string> = {
   DRAFT: "Taslak",
-  SUBMITTED: "Gonderildi",
-  APPROVED: "Onaylandi",
+  SUBMITTED: "Gönderildi",
+  APPROVED: "Onaylandı",
   REJECTED: "Reddedildi",
 };
 
@@ -37,9 +37,9 @@ export default function SupplierDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Tedarikci Portali</h1>
+        <h1 className="text-3xl font-bold">Tedarikçi Portalı</h1>
         <p className="text-muted-foreground">
-          CBAM emisyon verilerinizi yonetin ve anketlerinizi tamamlayin
+          CBAM emisyon verilerinizi yönetin ve anketlerinizi tamamlayın
         </p>
       </div>
 
@@ -65,7 +65,7 @@ export default function SupplierDashboardPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Gonderilen</CardTitle>
+            <CardTitle className="text-sm font-medium">Gönderilen</CardTitle>
             <FileCheck className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
@@ -74,7 +74,7 @@ export default function SupplierDashboardPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Mallarim</CardTitle>
+            <CardTitle className="text-sm font-medium">Mallarım</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -94,7 +94,7 @@ export default function SupplierDashboardPage() {
         <CardContent>
           {surveys.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4">
-              Henuz anketiniz bulunmuyor.
+              Henüz anketiniz bulunmuyor.
             </p>
           ) : (
             <div className="space-y-3">
@@ -125,7 +125,7 @@ export default function SupplierDashboardPage() {
               href="/supplier/surveys"
               className="text-sm text-primary hover:underline"
             >
-              Tum anketleri goruntule →
+              Tüm anketleri görüntüle →
             </Link>
           </div>
         </CardContent>

@@ -60,7 +60,7 @@ export default function CertificatesPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Sertifika olusturuldu");
+      toast.success("Sertifika oluşturuldu");
       setShowCreate(false);
       setCertNo("");
       setPrice("");
@@ -71,7 +71,7 @@ export default function CertificatesPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu sertifikayi silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu sertifikayı silmek istediğinizden emin misiniz?")) return;
     const result = await deleteCertificate(id);
     if (result.error) toast.error(result.error);
     else {
@@ -90,9 +90,9 @@ export default function CertificatesPage() {
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold">CBAM Sertifikalari</h1>
+            <h1 className="text-3xl font-bold">CBAM Sertifikaları</h1>
             <p className="text-muted-foreground">
-              CBAM sertifikalarini yonetin
+              CBAM sertifikalarını yönetin
             </p>
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function CertificatesPage() {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni CBAM Sertifikasi</DialogTitle>
+              <DialogTitle>Yeni CBAM Sertifikası</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
@@ -118,7 +118,7 @@ export default function CertificatesPage() {
                   <Input type="date" value={issueDate} onChange={(e) => setIssueDate(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>Son Gecerlilik</Label>
+                  <Label>Son Geçerlilik</Label>
                   <Input type="date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} />
                 </div>
               </div>
@@ -134,9 +134,9 @@ export default function CertificatesPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowCreate(false)}>Iptal</Button>
+              <Button variant="outline" onClick={() => setShowCreate(false)}>İptal</Button>
               <Button onClick={handleCreate} disabled={isCreating || !certNo}>
-                {isCreating ? "Olusturuluyor..." : "Olustur"}
+                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -157,19 +157,19 @@ export default function CertificatesPage() {
               <TableRow>
                 <TableHead>Sertifika No</TableHead>
                 <TableHead>Verilme Tarihi</TableHead>
-                <TableHead>Son Gecerlilik</TableHead>
+                <TableHead>Son Geçerlilik</TableHead>
                 <TableHead>Fiyat (EUR/tCO2)</TableHead>
                 <TableHead>Adet</TableHead>
                 <TableHead>Durum</TableHead>
                 <TableHead>Teslimat</TableHead>
-                <TableHead className="text-right">Islem</TableHead>
+                <TableHead className="text-right">İşlem</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {certificates.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={8} className="text-center text-muted-foreground py-8">
-                    Henuz sertifika bulunmuyor
+                    Henüz sertifika bulunmuyor
                   </TableCell>
                 </TableRow>
               ) : (

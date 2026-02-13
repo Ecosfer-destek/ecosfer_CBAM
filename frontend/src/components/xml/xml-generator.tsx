@@ -58,14 +58,14 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
 
       if (data.success) {
         setStatus("success");
-        toast.success("XML basariyla olusturuldu");
+        toast.success("XML başarıyla oluşturuldu");
       } else {
         setStatus("error");
-        toast.error(data.error || "XML olusturma hatasi");
+        toast.error(data.error || "XML oluşturma hatası");
       }
     } catch (error) {
       setStatus("error");
-      toast.error("XML olusturma sirasinda hata olustu");
+      toast.error("XML oluşturma sırasında hata oluştu");
       console.error("XML generation error:", error);
     }
   }
@@ -77,7 +77,7 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
       );
 
       if (!response.ok) {
-        toast.error("XML indirme hatasi");
+        toast.error("XML indirme hatası");
         return;
       }
 
@@ -90,9 +90,9 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      toast.success("XML dosyasi indirildi");
+      toast.success("XML dosyası indirildi");
     } catch (error) {
-      toast.error("XML indirme hatasi");
+      toast.error("XML indirme hatası");
       console.error("XML download error:", error);
     }
   }
@@ -100,7 +100,7 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
   function handleCopyHash() {
     if (result?.sha256Hash) {
       navigator.clipboard.writeText(result.sha256Hash);
-      toast.success("SHA-256 hash kopyalandi");
+      toast.success("SHA-256 hash kopyalandı");
     }
   }
 
@@ -109,11 +109,11 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileCode2 className="h-5 w-5" />
-          CBAM XML Uretimi
+          CBAM XML Üretimi
         </CardTitle>
         <CardDescription>
-          Beyanname verilerinden EU uyumlu CBAM XML dosyasi uretin.
-          XSD dogrulama ve SHA-256 butunluk hash hesaplanir.
+          Beyanname verilerinden EU uyumlu CBAM XML dosyası üretin.
+          XSD doğrulama ve SHA-256 bütünlük hash hesaplanır.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -126,12 +126,12 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
             {status === "generating" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Olusturuluyor...
+                Oluşturuluyor...
               </>
             ) : (
               <>
                 <FileCode2 className="mr-2 h-4 w-4" />
-                XML Olustur
+                XML Oluştur
               </>
             )}
           </Button>
@@ -139,12 +139,12 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
           {status === "success" && (
             <Button variant="outline" onClick={handleDownload}>
               <Download className="mr-2 h-4 w-4" />
-              XML Indir
+              XML İndir
             </Button>
           )}
 
           {status === "success" && (
-            <Badge className="bg-green-100 text-green-800">Basarili</Badge>
+            <Badge className="bg-green-100 text-green-800">Başarılı</Badge>
           )}
           {status === "error" && (
             <Badge variant="destructive">Hata</Badge>
@@ -177,7 +177,7 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
               <div className="space-y-1">
                 <div className="flex items-center gap-1 text-sm font-medium text-amber-600">
                   <AlertTriangle className="h-4 w-4" />
-                  Dogrulama Uyarilari ({result.validationErrors.length})
+                  Doğrulama Uyarıları ({result.validationErrors.length})
                 </div>
                 <ul className="text-xs text-muted-foreground space-y-0.5 ml-5 list-disc">
                   {result.validationErrors.map((err, i) => (
@@ -201,7 +201,7 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
             {result.success && result.validationErrors.length === 0 && (
               <div className="flex items-center gap-1 text-sm text-green-600">
                 <CheckCircle2 className="h-4 w-4" />
-                XML dogrulama basarili - hata bulunamadi
+                XML doğrulama başarılı - hata bulunamadı
               </div>
             )}
 
@@ -216,8 +216,8 @@ export function XmlGenerator({ declarationId }: XmlGeneratorProps) {
         )}
 
         <p className="text-xs text-muted-foreground">
-          XML ciktisi EU CBAM regulasyonuna uygun formatta olusturulur.
-          Dijital imza (eIDAS) destegi v3.0 surumunde eklenecektir.
+          XML çıktısı EU CBAM regülasyonuna uygun formatta oluşturulur.
+          Dijital imza (eIDAS) desteği v3.0 sürümünde eklenecektir.
         </p>
       </CardContent>
     </Card>

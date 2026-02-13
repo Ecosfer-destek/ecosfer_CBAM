@@ -59,7 +59,7 @@ import { toast } from "sonner";
 const INVITATION_LABELS: Record<string, string> = {
   PENDING: "Bekliyor",
   INVITED: "Davet Edildi",
-  REGISTERED: "Kayit Oldu",
+  REGISTERED: "Kayıt Oldu",
   ACTIVE: "Aktif",
 };
 
@@ -107,7 +107,7 @@ export default function SuppliersPage() {
 
   async function handleCreate() {
     if (!name.trim()) {
-      toast.error("Tedarikci adi zorunludur");
+      toast.error("Tedarikçi adı zorunludur");
       return;
     }
     setIsCreating(true);
@@ -125,7 +125,7 @@ export default function SuppliersPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Tedarikci olusturuldu");
+      toast.success("Tedarikçi oluşturuldu");
       setShowCreate(false);
       resetForm();
       reload();
@@ -150,17 +150,17 @@ export default function SuppliersPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Davet gonderildi");
+      toast.success("Davet gönderildi");
       reload();
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu tedarikciyi silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu tedarikçiyi silmek istediğinizden emin misiniz?")) return;
     const result = await deleteSupplier(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Tedarikci silindi");
+      toast.success("Tedarikçi silindi");
       reload();
     }
   }
@@ -176,29 +176,29 @@ export default function SuppliersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Tedarikciler</h1>
+          <h1 className="text-3xl font-bold">Tedarikçiler</h1>
           <p className="text-muted-foreground">
-            Tedarikci yonetimi ve CBAM emisyon anketleri
+            Tedarikçi yönetimi ve CBAM emisyon anketleri
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Yeni Tedarikci
+              Yeni Tedarikçi
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>Yeni Tedarikci</DialogTitle>
+              <DialogTitle>Yeni Tedarikçi</DialogTitle>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-4 py-4">
               <div className="space-y-2">
-                <Label>Tedarikci Adi *</Label>
+                <Label>Tedarikçi Adı *</Label>
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Sirket adi"
+                  placeholder="Şirket adı"
                 />
               </div>
               <div className="space-y-2">
@@ -207,7 +207,7 @@ export default function SuppliersPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="iletisim@firma.com"
+                  placeholder="iletişim@firma.com"
                 />
               </div>
               <div className="space-y-2">
@@ -219,7 +219,7 @@ export default function SuppliersPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Yetkili Kisi</Label>
+                <Label>Yetkili Kişi</Label>
                 <Input
                   value={contactPerson}
                   onChange={(e) => setContactPerson(e.target.value)}
@@ -227,7 +227,7 @@ export default function SuppliersPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Vergi Numarasi</Label>
+                <Label>Vergi Numarası</Label>
                 <Input
                   value={taxNumber}
                   onChange={(e) => setTaxNumber(e.target.value)}
@@ -241,10 +241,10 @@ export default function SuppliersPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Ulke</Label>
+                <Label>Ülke</Label>
                 <Select value={countryId} onValueChange={setCountryId}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Ulke secin" />
+                    <SelectValue placeholder="Ülke seçin" />
                   </SelectTrigger>
                   <SelectContent>
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -257,10 +257,10 @@ export default function SuppliersPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Sirket</Label>
+                <Label>Şirket</Label>
                 <Select value={companyId} onValueChange={setCompanyId}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Sirket secin" />
+                    <SelectValue placeholder="Şirket seçin" />
                   </SelectTrigger>
                   <SelectContent>
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -283,10 +283,10 @@ export default function SuppliersPage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                Iptal
+                İptal
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Olusturuluyor..." : "Olustur"}
+                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -298,21 +298,21 @@ export default function SuppliersPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Users className="h-5 w-5" />
-            Tedarikci Listesi
+            Tedarikçi Listesi
           </CardTitle>
-          <CardDescription>Toplam {suppliers.length} tedarikci</CardDescription>
+          <CardDescription>Toplam {suppliers.length} tedarikçi</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Tedarikci</TableHead>
+                <TableHead>Tedarikçi</TableHead>
                 <TableHead>E-posta</TableHead>
-                <TableHead>Ulke</TableHead>
+                <TableHead>Ülke</TableHead>
                 <TableHead>Anket</TableHead>
                 <TableHead>Mal</TableHead>
                 <TableHead>Davet Durumu</TableHead>
-                <TableHead className="text-right">Islemler</TableHead>
+                <TableHead className="text-right">İşlemler</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -322,7 +322,7 @@ export default function SuppliersPage() {
                     colSpan={7}
                     className="text-center text-muted-foreground py-8"
                   >
-                    Henuz tedarikci bulunmuyor
+                    Henüz tedarikçi bulunmuyor
                   </TableCell>
                 </TableRow>
               ) : (
@@ -383,7 +383,7 @@ export default function SuppliersPage() {
                               variant="outline"
                               size="sm"
                               onClick={() => handleInvite(s.id)}
-                              title="Davet Gonder"
+                              title="Davet Gönder"
                             >
                               <Mail className="h-3 w-3 mr-1" />
                               Davet
@@ -435,7 +435,7 @@ export default function SuppliersPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Ulke</p>
+                  <p className="text-muted-foreground">Ülke</p>
                   <p className="font-medium">
                     {selectedSupplier.country?.name || "-"}
                   </p>
@@ -479,7 +479,7 @@ export default function SuppliersPage() {
                 <CardContent className="py-0 pb-3">
                   {supplierSurveys.length === 0 ? (
                     <p className="text-sm text-muted-foreground py-2">
-                      Henuz anket yok
+                      Henüz anket yok
                     </p>
                   ) : (
                     <div className="space-y-2">
@@ -519,9 +519,9 @@ export default function SuppliersPage() {
                                 {survey.status === "DRAFT"
                                   ? "Taslak"
                                   : survey.status === "SUBMITTED"
-                                    ? "Gonderildi"
+                                    ? "Gönderildi"
                                     : survey.status === "APPROVED"
-                                      ? "Onaylandi"
+                                      ? "Onaylandı"
                                       : survey.status}
                               </Badge>
                               {survey.specificEmbeddedEmissions && (

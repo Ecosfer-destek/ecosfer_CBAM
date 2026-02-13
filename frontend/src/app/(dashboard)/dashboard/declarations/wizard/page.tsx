@@ -27,9 +27,9 @@ export default function DeclarationWizardPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold">Yillik Beyanname Sihirbazi</h1>
+          <h1 className="text-3xl font-bold">Yıllık Beyanname Sihirbazı</h1>
           <p className="text-muted-foreground">
-            7 adimda CBAM yillik beyanname olusturun
+            7 adımda CBAM yıllık beyanname oluşturun
           </p>
         </div>
       </div>

@@ -8,8 +8,8 @@ export const annualDeclarationSchema = z.object({
 export type AnnualDeclarationInput = z.infer<typeof annualDeclarationSchema>;
 
 export const certificateSchema = z.object({
-  certificateNo: z.string().min(1, "Sertifika numarasi gereklidir"),
-  issueDate: z.string().min(1, "Verilis tarihi gereklidir"),
+  certificateNo: z.string().min(1, "Sertifika numarası gereklidir"),
+  issueDate: z.string().min(1, "Veriliş tarihi gereklidir"),
   expiryDate: z.string().optional().nullable(),
   pricePerTonne: z
     .union([z.string(), z.number()])
@@ -20,15 +20,15 @@ export const certificateSchema = z.object({
       const num = typeof val === "string" ? parseFloat(val) : val;
       return isNaN(num) ? null : num;
     }),
-  quantity: z.number().min(1, "Miktar en az 1 olmalidir").default(1),
+  quantity: z.number().min(1, "Miktar en az 1 olmalıdır").default(1),
 });
 
 export type CertificateInput = z.infer<typeof certificateSchema>;
 
 export const certificateSurrenderSchema = z.object({
-  certificateId: z.string().min(1, "Sertifika secimi gereklidir"),
-  declarationId: z.string().min(1, "Beyanname secimi gereklidir"),
-  quantity: z.number().min(1, "Miktar en az 1 olmalidir"),
+  certificateId: z.string().min(1, "Sertifika seçimi gereklidir"),
+  declarationId: z.string().min(1, "Beyanname seçimi gereklidir"),
+  quantity: z.number().min(1, "Miktar en az 1 olmalıdır"),
   surrenderDate: z.string().min(1, "Teslim tarihi gereklidir"),
   notes: z.string().optional().nullable(),
 });
@@ -36,7 +36,7 @@ export const certificateSurrenderSchema = z.object({
 export type CertificateSurrenderInput = z.infer<typeof certificateSurrenderSchema>;
 
 export const monitoringPlanSchema = z.object({
-  name: z.string().min(1, "Plan adi gereklidir"),
+  name: z.string().min(1, "Plan adı gereklidir"),
   version: z.string().optional().nullable(),
   validFrom: z.string().optional().nullable(),
   validTo: z.string().optional().nullable(),
@@ -46,7 +46,7 @@ export const monitoringPlanSchema = z.object({
 export type MonitoringPlanInput = z.infer<typeof monitoringPlanSchema>;
 
 export const authorisationSchema = z.object({
-  applicantName: z.string().min(1, "Basvuru sahibi adi gereklidir"),
+  applicantName: z.string().min(1, "Başvuru sahibi adı gereklidir"),
   applicantType: z.string().optional().nullable(),
   notes: z.string().optional().nullable(),
 });

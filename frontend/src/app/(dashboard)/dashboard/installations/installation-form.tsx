@@ -112,7 +112,7 @@ export function InstallationForm({
       toast.error(result.error);
     } else {
       toast.success(
-        isEditing ? "Tesis guncellendi" : "Tesis olusturuldu"
+        isEditing ? "Tesis güncellendi" : "Tesis oluşturuldu"
       );
       router.push("/dashboard/installations");
       router.refresh();
@@ -130,7 +130,7 @@ export function InstallationForm({
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Tesis Adi *</Label>
+              <Label htmlFor="name">Tesis Adı *</Label>
               <Input id="name" {...register("name")} />
               {errors.name && (
                 <p className="text-sm text-destructive">
@@ -139,13 +139,13 @@ export function InstallationForm({
               )}
             </div>
             <div className="space-y-2">
-              <Label>Sirket *</Label>
+              <Label>Şirket *</Label>
               <Select
                 value={watch("companyId") || ""}
                 onValueChange={(v) => setValue("companyId", v)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Sirket secin" />
+                  <SelectValue placeholder="Şirket seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {companies.map((c) => (
@@ -172,13 +172,13 @@ export function InstallationForm({
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label>Ulke</Label>
+              <Label>Ülke</Label>
               <Select
                 value={countryId || ""}
                 onValueChange={(v) => setValue("countryId", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Ulke secin" />
+                  <SelectValue placeholder="Ülke seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {countries.map((c) => (
@@ -190,14 +190,14 @@ export function InstallationForm({
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Sehir</Label>
+              <Label>Şehir</Label>
               <Select
                 value={cityId || ""}
                 onValueChange={(v) => setValue("cityId", v || null)}
                 disabled={!countryId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Sehir secin" />
+                  <SelectValue placeholder="Şehir seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {cities.map((c) => (
@@ -209,14 +209,14 @@ export function InstallationForm({
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Ilce</Label>
+              <Label>İlçe</Label>
               <Select
                 value={watch("districtId") || ""}
                 onValueChange={(v) => setValue("districtId", v || null)}
                 disabled={!cityId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Ilce secin" />
+                  <SelectValue placeholder="İlçe seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {districts.map((d) => (
@@ -264,7 +264,7 @@ export function InstallationForm({
 
       <Card>
         <CardHeader>
-          <CardTitle>Iletisim Bilgileri</CardTitle>
+          <CardTitle>İletişim Bilgileri</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -290,14 +290,14 @@ export function InstallationForm({
           {isSubmitting && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}
-          {isEditing ? "Guncelle" : "Olustur"}
+          {isEditing ? "Güncelle" : "Oluştur"}
         </Button>
         <Button
           type="button"
           variant="outline"
           onClick={() => router.push("/dashboard/installations")}
         >
-          Iptal
+          İptal
         </Button>
       </div>
     </form>

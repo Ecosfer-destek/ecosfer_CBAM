@@ -57,33 +57,33 @@ function getMenuGroups(role: UserRole): MenuGroup[] {
       ],
     },
     {
-      label: "CBAM Yonetimi",
+      label: "CBAM Yönetimi",
       items: [
-        { title: "Sirketler", href: "/dashboard/companies", icon: Building2, visible: perms.showCompanies },
+        { title: "Şirketler", href: "/dashboard/companies", icon: Building2, visible: perms.showCompanies },
         { title: "Tesisler", href: "/dashboard/installations", icon: Factory, visible: perms.showInstallations },
         { title: "Tesis Verileri", href: "/dashboard/installation-data", icon: FileSpreadsheet, visible: perms.showInstallationData },
         { title: "Emisyonlar", href: "/dashboard/emissions", icon: Flame, visible: perms.showEmissions },
-        { title: "Uretim Surecleri", href: "/dashboard/production-processes", icon: Package, visible: perms.showProductionProcesses },
+        { title: "Üretim Süreçleri", href: "/dashboard/production-processes", icon: Package, visible: perms.showProductionProcesses },
       ],
     },
     {
       label: "Raporlama",
       items: [
-        { title: "CBAM Raporlari", href: "/dashboard/reports", icon: FileText, visible: perms.showReports },
-        { title: "Yillik Beyannameler", href: "/dashboard/declarations", icon: Globe, visible: perms.showDeclarations },
-        { title: "Dogrulama", href: "/dashboard/verification", icon: ShieldCheck, visible: perms.showVerification },
+        { title: "CBAM Raporları", href: "/dashboard/reports", icon: FileText, visible: perms.showReports },
+        { title: "Yıllık Beyannameler", href: "/dashboard/declarations", icon: Globe, visible: perms.showDeclarations },
+        { title: "Doğrulama", href: "/dashboard/verification", icon: ShieldCheck, visible: perms.showVerification },
       ],
     },
     {
-      label: "Tedarikci & AI",
+      label: "Tedarikçi & AI",
       items: [
-        { title: "Tedarikciler", href: "/dashboard/suppliers", icon: Users, visible: perms.showSuppliers },
-        { title: "Tedarikci Anketi", href: "/dashboard/supplier-survey", icon: ClipboardList, visible: perms.showSupplierPortal },
+        { title: "Tedarikçiler", href: "/dashboard/suppliers", icon: Users, visible: perms.showSuppliers },
+        { title: "Tedarikçi Anketi", href: "/dashboard/supplier-survey", icon: ClipboardList, visible: perms.showSupplierPortal },
         { title: "AI Analiz", href: "/dashboard/ai-analysis", icon: BarChart3, visible: perms.showAiAnalysis },
       ],
     },
     {
-      label: "Yonetim",
+      label: "Yönetim",
       items: [
         { title: "Ayarlar", href: "/dashboard/settings", icon: Settings, visible: perms.showSettings },
       ],

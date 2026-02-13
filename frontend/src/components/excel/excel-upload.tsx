@@ -50,7 +50,7 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
     if (!file) return;
 
     if (!file.name.endsWith(".xlsx") && !file.name.endsWith(".xls")) {
-      toast.error("Lutfen bir Excel dosyasi (.xlsx) secin");
+      toast.error("Lütfen bir Excel dosyası (.xlsx) seçin");
       return;
     }
 
@@ -87,16 +87,16 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
           (importResult.sheetD?.recordsUpdated || 0) +
           (importResult.sheetE?.recordsUpdated || 0);
         toast.success(
-          `Import basarili! ${totalCreated} kayit olusturuldu, ${totalUpdated} guncellendi`
+          `Import başarılı! ${totalCreated} kayıt oluşturuldu, ${totalUpdated} güncellendi`
         );
         onImportComplete?.();
       } else {
         setStatus("error");
-        toast.error(importResult.error || "Import sirasinda bir hata olustu");
+        toast.error(importResult.error || "Import sırasında bir hata oluştu");
       }
     } catch (error) {
       setStatus("error");
-      toast.error("Excel import sirasinda bir hata olustu");
+      toast.error("Excel import sırasında bir hata oluştu");
       console.error("Import error:", error);
     }
 
@@ -119,8 +119,8 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
           CBAM Excel Import
         </CardTitle>
         <CardDescription>
-          CBAM Excel dosyasini yukleyerek 5 sayfadaki verileri iceri aktarin
-          (A: Tesis, B: Emisyon, C: Denge, D: Prosesler, E: Prekursorler)
+          CBAM Excel dosyasını yükleyerek 5 sayfadaki verileri içeri aktarın
+          (A: Tesis, B: Emisyon, C: Denge, D: Prosesler, E: Prekursörler)
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -142,12 +142,12 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
             {status === "uploading" || status === "processing" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {status === "uploading" ? "Yukleniyor..." : "Isleniyor..."}
+                {status === "uploading" ? "Yükleniyor..." : "İşleniyor..."}
               </>
             ) : (
               <>
                 <Upload className="mr-2 h-4 w-4" />
-                Excel Dosyasi Sec
+                Excel Dosyası Seç
               </>
             )}
           </Button>
@@ -155,7 +155,7 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
             <span className="text-sm text-muted-foreground">{fileName}</span>
           )}
           {status === "success" && (
-            <Badge className="bg-green-100 text-green-800">Basarili</Badge>
+            <Badge className="bg-green-100 text-green-800">Başarılı</Badge>
           )}
           {status === "error" && (
             <Badge variant="destructive">Hata</Badge>
@@ -165,14 +165,14 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
         {/* Results */}
         {result && (
           <div className="border rounded-lg p-4 space-y-3">
-            <h4 className="font-medium text-sm">Import Sonuclari</h4>
+            <h4 className="font-medium text-sm">Import Sonuçları</h4>
             <div className="grid grid-cols-5 gap-3 text-sm">
               {[
                 { name: "A: Tesis", sheet: result.sheetA },
                 { name: "B: Emisyon", sheet: result.sheetB },
                 { name: "C: Denge", sheet: result.sheetC },
                 { name: "D: Prosesler", sheet: result.sheetD },
-                { name: "E: Prekursor", sheet: result.sheetE },
+                { name: "E: Prekursör", sheet: result.sheetE },
               ].map(({ name, sheet }) => (
                 <div key={name} className="border rounded p-2 space-y-1">
                   <div className="flex items-center gap-1">
@@ -185,11 +185,11 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
                         <div>+{sheet.recordsCreated} yeni</div>
                       )}
                       {sheet.recordsUpdated > 0 && (
-                        <div>~{sheet.recordsUpdated} guncellendi</div>
+                        <div>~{sheet.recordsUpdated} güncellendi</div>
                       )}
                       {sheet.warnings.length > 0 && (
                         <div className="text-amber-600">
-                          {sheet.warnings.length} uyari
+                          {sheet.warnings.length} uyarı
                         </div>
                       )}
                       {sheet.errors.length > 0 && (

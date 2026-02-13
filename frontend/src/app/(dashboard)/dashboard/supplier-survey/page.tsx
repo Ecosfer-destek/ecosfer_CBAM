@@ -50,8 +50,8 @@ type StatusFilter = "ALL" | "DRAFT" | "SUBMITTED" | "APPROVED";
 
 const STATUS_LABELS: Record<string, string> = {
   DRAFT: "Taslak",
-  SUBMITTED: "Gonderildi",
-  APPROVED: "Onaylandi",
+  SUBMITTED: "Gönderildi",
+  APPROVED: "Onaylandı",
 };
 
 const STATUS_VARIANTS: Record<
@@ -91,7 +91,7 @@ export default function SupplierSurveyPage() {
       const data = await getSupplierSurveysForAdmin();
       setSurveys(data);
     } catch {
-      toast.error("Anketler yuklenirken bir hata olustu");
+      toast.error("Anketler yüklenirken bir hata oluştu");
     } finally {
       setIsLoading(false);
     }
@@ -119,7 +119,7 @@ export default function SupplierSurveyPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Anket onaylandi");
+      toast.success("Anket onaylandı");
       // Update local state
       setSurveys((prev) =>
         prev.map((s) => (s.id === surveyId ? { ...s, status: "APPROVED" } : s))
@@ -137,9 +137,9 @@ export default function SupplierSurveyPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Tedarikci Anketi</h1>
+        <h1 className="text-3xl font-bold">Tedarikçi Anketi</h1>
         <p className="text-muted-foreground">
-          CBAM kapsaminda tedarikci emisyon anketlerini inceleyin ve onaylayin
+          CBAM kapsamında tedarikçi emisyon anketlerini inceleyin ve onaylayın
         </p>
       </div>
 
@@ -150,16 +150,16 @@ export default function SupplierSurveyPage() {
       >
         <TabsList>
           <TabsTrigger value="ALL">
-            Tumu ({statusCounts.ALL})
+            Tümü ({statusCounts.ALL})
           </TabsTrigger>
           <TabsTrigger value="DRAFT">
             Taslak ({statusCounts.DRAFT})
           </TabsTrigger>
           <TabsTrigger value="SUBMITTED">
-            Gonderildi ({statusCounts.SUBMITTED})
+            Gönderildi ({statusCounts.SUBMITTED})
           </TabsTrigger>
           <TabsTrigger value="APPROVED">
-            Onaylandi ({statusCounts.APPROVED})
+            Onaylandı ({statusCounts.APPROVED})
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -180,18 +180,18 @@ export default function SupplierSurveyPage() {
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-              <span className="ml-2 text-muted-foreground">Yukleniyor...</span>
+              <span className="ml-2 text-muted-foreground">Yükleniyor...</span>
             </div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tedarikci</TableHead>
+                  <TableHead>Tedarikçi</TableHead>
                   <TableHead>Mal (CN Kodu)</TableHead>
-                  <TableHead>Donem</TableHead>
+                  <TableHead>Dönem</TableHead>
                   <TableHead>Durum</TableHead>
                   <TableHead>Emisyonlar</TableHead>
-                  <TableHead className="text-right">Islemler</TableHead>
+                  <TableHead className="text-right">İşlemler</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -202,7 +202,7 @@ export default function SupplierSurveyPage() {
                       className="text-center text-muted-foreground py-8"
                     >
                       {statusFilter === "ALL"
-                        ? "Henuz anket bulunmuyor"
+                        ? "Henüz anket bulunmuyor"
                         : `${STATUS_LABELS[statusFilter]} durumunda anket bulunmuyor`}
                     </TableCell>
                   </TableRow>
@@ -316,7 +316,7 @@ export default function SupplierSurveyPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <ClipboardList className="h-5 w-5" />
-              Anket Detayi
+              Anket Detayı
             </DialogTitle>
             <DialogDescription>
               {selectedSurvey?.supplier?.name} -{" "}
@@ -362,13 +362,13 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <User className="h-4 w-4" />
-                    Tedarikci Bilgileri
+                    Tedarikçi Bilgileri
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <p className="text-muted-foreground">Tedarikci</p>
+                      <p className="text-muted-foreground">Tedarikçi</p>
                       <p className="font-medium">
                         {selectedSurvey.supplier?.name || "-"}
                       </p>
@@ -414,19 +414,19 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    Raporlama Donemi
+                    Raporlama Dönemi
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <p className="text-muted-foreground">Baslangic</p>
+                      <p className="text-muted-foreground">Başlangıç</p>
                       <p className="font-medium">
                         {formatDate(selectedSurvey.reportingPeriodStart)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Bitis</p>
+                      <p className="text-muted-foreground">Bitiş</p>
                       <p className="font-medium">
                         {formatDate(selectedSurvey.reportingPeriodEnd)}
                       </p>
@@ -447,7 +447,7 @@ export default function SupplierSurveyPage() {
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <p className="text-muted-foreground">
-                        Spesifik Gomulu Emisyonlar
+                        Spesifik Gömülü Emisyonlar
                       </p>
                       <p className="font-medium">
                         {formatNumber(
@@ -460,7 +460,7 @@ export default function SupplierSurveyPage() {
                     </div>
                     <div>
                       <p className="text-muted-foreground">
-                        Dogrudan Emisyonlar
+                        Doğrudan Emisyonlar
                       </p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.directEmissions)}{" "}
@@ -469,7 +469,7 @@ export default function SupplierSurveyPage() {
                     </div>
                     <div>
                       <p className="text-muted-foreground">
-                        Dolayli Emisyonlar
+                        Dolaylı Emisyonlar
                       </p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.indirectEmissions)}{" "}
@@ -477,7 +477,7 @@ export default function SupplierSurveyPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Uretim Hacmi</p>
+                      <p className="text-muted-foreground">Üretim Hacmi</p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.productionVolume, 2)}{" "}
                         {selectedSurvey.productionVolume ? "t" : ""}
@@ -492,14 +492,14 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Zap className="h-4 w-4" />
-                    Enerji Tuketimi
+                    Enerji Tüketimi
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <p className="text-muted-foreground">
-                        Elektrik Tuketimi
+                        Elektrik Tüketimi
                       </p>
                       <p className="font-medium">
                         {formatNumber(
@@ -510,7 +510,7 @@ export default function SupplierSurveyPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Isi Tuketimi</p>
+                      <p className="text-muted-foreground">Isı Tüketimi</p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.heatConsumption, 2)}{" "}
                         {selectedSurvey.heatConsumption ? "MWh" : ""}
@@ -532,7 +532,7 @@ export default function SupplierSurveyPage() {
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <p className="text-muted-foreground">
-                        Emisyon Faktoru Kaynagi
+                        Emisyon Faktörü Kaynağı
                       </p>
                       <p className="font-medium">
                         {selectedSurvey.emissionFactorSource || "-"}
@@ -540,7 +540,7 @@ export default function SupplierSurveyPage() {
                     </div>
                     <div>
                       <p className="text-muted-foreground">
-                        Izleme Metodolojisi
+                        İzleme Metodolojisi
                       </p>
                       <p className="font-medium">
                         {selectedSurvey.monitoringMethodology || "-"}
@@ -570,15 +570,15 @@ export default function SupplierSurveyPage() {
               {/* Timestamps */}
               <div className="flex gap-4 text-xs text-muted-foreground border-t pt-3">
                 <span>
-                  Olusturulma: {formatDate(selectedSurvey.createdAt)}
+                  Oluşturulma: {formatDate(selectedSurvey.createdAt)}
                 </span>
                 {selectedSurvey.submittedAt && (
                   <span>
-                    Gonderilme: {formatDate(selectedSurvey.submittedAt)}
+                    Gönderilme: {formatDate(selectedSurvey.submittedAt)}
                   </span>
                 )}
                 <span>
-                  Guncelleme: {formatDate(selectedSurvey.updatedAt)}
+                  Güncelleme: {formatDate(selectedSurvey.updatedAt)}
                 </span>
               </div>
             </div>

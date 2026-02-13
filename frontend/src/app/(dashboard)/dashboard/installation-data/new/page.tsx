@@ -50,7 +50,7 @@ export default function NewInstallationDataPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!installationId) {
-      toast.error("Tesis secimi gereklidir");
+      toast.error("Tesis seçimi gereklidir");
       return;
     }
     setIsSubmitting(true);
@@ -64,7 +64,7 @@ export default function NewInstallationDataPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Tesis verisi olusturuldu");
+      toast.success("Tesis verisi oluşturuldu");
       router.push(`/dashboard/installation-data/${result.id}`);
     }
     setIsSubmitting(false);
@@ -75,16 +75,16 @@ export default function NewInstallationDataPage() {
       <div>
         <h1 className="text-3xl font-bold">Yeni Tesis Verisi</h1>
         <p className="text-muted-foreground">
-          Raporlama donemi icin yeni bir tesis veri kaydi olusturun
+          Raporlama dönemi için yeni bir tesis veri kaydı oluşturun
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-xl">
         <Card>
           <CardHeader>
-            <CardTitle>Donem Bilgileri</CardTitle>
+            <CardTitle>Dönem Bilgileri</CardTitle>
             <CardDescription>
-              Tesis ve raporlama donemini secin
+              Tesis ve raporlama dönemini seçin
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -95,7 +95,7 @@ export default function NewInstallationDataPage() {
                 onValueChange={setInstallationId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Tesis secin" />
+                  <SelectValue placeholder="Tesis seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {installations.map((i) => (
@@ -108,7 +108,7 @@ export default function NewInstallationDataPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="startDate">Baslangic Tarihi</Label>
+                <Label htmlFor="startDate">Başlangıç Tarihi</Label>
                 <Input
                   id="startDate"
                   type="date"
@@ -117,7 +117,7 @@ export default function NewInstallationDataPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="endDate">Bitis Tarihi</Label>
+                <Label htmlFor="endDate">Bitiş Tarihi</Label>
                 <Input
                   id="endDate"
                   type="date"
@@ -134,14 +134,14 @@ export default function NewInstallationDataPage() {
             {isSubmitting && (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Olustur
+            Oluştur
           </Button>
           <Button
             type="button"
             variant="outline"
             onClick={() => router.push("/dashboard/installation-data")}
           >
-            Iptal
+            İptal
           </Button>
         </div>
       </form>

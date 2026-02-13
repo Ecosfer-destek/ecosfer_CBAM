@@ -13,7 +13,7 @@ export default function NewEmissionPage() {
       <div>
         <h1 className="text-3xl font-bold">Yeni Emisyon</h1>
         <p className="text-muted-foreground">
-          Yeni bir emisyon kaydi olusturun
+          Yeni bir emisyon kaydı oluşturun
         </p>
       </div>
       <EmissionForm defaultInstallationDataId={installationDataId} />

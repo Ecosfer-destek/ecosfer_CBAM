@@ -66,12 +66,12 @@ export default function TenantSettingsPage() {
         }),
       });
       if (res.ok) {
-        toast.success("Tenant ayarlari guncellendi");
+        toast.success("Tenant ayarları güncellendi");
       } else {
-        toast.error("Ayarlar guncellenirken hata olustu");
+        toast.error("Ayarlar güncellenirken hata oluştu");
       }
     } catch {
-      toast.error("Ayarlar guncellenirken hata olustu");
+      toast.error("Ayarlar güncellenirken hata oluştu");
     }
     setIsSaving(false);
   }
@@ -79,9 +79,9 @@ export default function TenantSettingsPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-3xl font-bold">Tenant Ayarlari</h1>
+        <h1 className="text-3xl font-bold">Tenant Ayarları</h1>
         <p className="text-muted-foreground">
-          Organizasyon ayarlarini yonetin
+          Organizasyon ayarlarını yönetin
         </p>
       </div>
 
@@ -92,17 +92,17 @@ export default function TenantSettingsPage() {
             Organizasyon Bilgileri
           </CardTitle>
           <CardDescription>
-            Tenant ve organizasyon yapilandirmasi
+            Tenant ve organizasyon yapılandırması
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Organizasyon Adi</Label>
+              <Label>Organizasyon Adı</Label>
               <Input
                 value={tenantName}
                 onChange={(e) => setTenantName(e.target.value)}
-                placeholder="Sirket adi"
+                placeholder="Şirket adı"
               />
             </div>
             <div className="space-y-2">
@@ -110,7 +110,7 @@ export default function TenantSettingsPage() {
               <Input
                 value={domain}
                 onChange={(e) => setDomain(e.target.value)}
-                placeholder="ornegin: ecosfer.com"
+                placeholder="örneğin: ecosfer.com"
               />
             </div>
           </div>
@@ -121,13 +121,13 @@ export default function TenantSettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Globe className="h-5 w-5" />
-            Bolgesel Ayarlar
+            Bölgesel Ayarlar
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Varsayilan Dil</Label>
+              <Label>Varsayılan Dil</Label>
               <Select
                 value={defaultLanguage}
                 onValueChange={setDefaultLanguage}
@@ -136,7 +136,7 @@ export default function TenantSettingsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="tr">Turkce</SelectItem>
+                  <SelectItem value="tr">Türkçe</SelectItem>
                   <SelectItem value="en">English</SelectItem>
                   <SelectItem value="de">Deutsch</SelectItem>
                 </SelectContent>
@@ -190,7 +190,7 @@ export default function TenantSettingsPage() {
               </div>
               <div>
                 <Label className="text-muted-foreground">
-                  Olusturulma Tarihi
+                  Oluşturulma Tarihi
                 </Label>
                 <p className="mt-1">
                   {tenantInfo.createdAt

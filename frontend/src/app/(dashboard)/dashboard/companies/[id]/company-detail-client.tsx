@@ -58,7 +58,7 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Sirket Duzenle</h1>
+          <h1 className="text-3xl font-bold">Şirket Düzenle</h1>
           <p className="text-muted-foreground">{company.name}</p>
         </div>
         <CompanyForm company={company} />
@@ -85,7 +85,7 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
         <Button asChild>
           <Link href={`/dashboard/companies/${company.id}?edit=true`}>
             <Pencil className="mr-2 h-4 w-4" />
-            Duzenle
+            Düzenle
           </Link>
         </Button>
       </div>
@@ -99,7 +99,7 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
             </CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
-            <InfoRow label="Sirket Adi" value={company.name} />
+            <InfoRow label="Şirket Adı" value={company.name} />
             <InfoRow label="Resmi Ad" value={company.officialName} />
             <InfoRow label="Vergi No" value={company.taxNumber} />
             <InfoRow label="Ekonomik Faaliyet" value={company.economicActivity} />
@@ -111,9 +111,9 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
             <CardTitle>Konum</CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
-            <InfoRow label="Ulke" value={company.country?.name} />
-            <InfoRow label="Sehir" value={company.city?.name} />
-            <InfoRow label="Ilce" value={company.district?.name} />
+            <InfoRow label="Ülke" value={company.country?.name} />
+            <InfoRow label="Şehir" value={company.city?.name} />
+            <InfoRow label="İlçe" value={company.district?.name} />
             <InfoRow label="Vergi Dairesi" value={company.taxOffice?.name} />
             <InfoRow label="Adres" value={company.address} />
             <InfoRow label="Posta Kodu" value={company.postCode} />
@@ -122,7 +122,7 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Iletisim</CardTitle>
+            <CardTitle>İletişim</CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
             <InfoRow label="E-posta" value={company.email} />
@@ -137,13 +137,13 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
               Tesisler
             </CardTitle>
             <CardDescription>
-              Bu sirkete ait {company.installations.length} tesis
+              Bu şirkete ait {company.installations.length} tesis
             </CardDescription>
           </CardHeader>
           <CardContent>
             {company.installations.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                Henuz tesis bulunmuyor
+                Henüz tesis bulunmuyor
               </p>
             ) : (
               <div className="space-y-2">

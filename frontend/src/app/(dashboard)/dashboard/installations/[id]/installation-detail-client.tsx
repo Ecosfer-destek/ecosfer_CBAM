@@ -67,7 +67,7 @@ export function InstallationDetailClient({
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Tesis Duzenle</h1>
+          <h1 className="text-3xl font-bold">Tesis Düzenle</h1>
           <p className="text-muted-foreground">{installation.name}</p>
         </div>
         <InstallationForm installation={installation} />
@@ -97,7 +97,7 @@ export function InstallationDetailClient({
         <Button asChild>
           <Link href={`/dashboard/installations/${installation.id}?edit=true`}>
             <Pencil className="mr-2 h-4 w-4" />
-            Duzenle
+            Düzenle
           </Link>
         </Button>
       </div>
@@ -111,8 +111,8 @@ export function InstallationDetailClient({
             </CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
-            <InfoRow label="Tesis Adi" value={installation.name} />
-            <InfoRow label="Sirket" value={installation.company?.name} />
+            <InfoRow label="Tesis Adı" value={installation.name} />
+            <InfoRow label="Şirket" value={installation.company?.name} />
             <InfoRow label="E-posta" value={installation.email} />
             <InfoRow label="Telefon" value={installation.phone} />
           </CardContent>
@@ -123,9 +123,9 @@ export function InstallationDetailClient({
             <CardTitle>Konum</CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
-            <InfoRow label="Ulke" value={installation.country?.name} />
-            <InfoRow label="Sehir" value={installation.city?.name} />
-            <InfoRow label="Ilce" value={installation.district?.name} />
+            <InfoRow label="Ülke" value={installation.country?.name} />
+            <InfoRow label="Şehir" value={installation.city?.name} />
+            <InfoRow label="İlçe" value={installation.district?.name} />
             <InfoRow label="Adres" value={installation.address} />
             <InfoRow label="Posta Kodu" value={installation.postCode} />
             <InfoRow label="UN/LOCODE" value={installation.unlocode} />
@@ -139,13 +139,13 @@ export function InstallationDetailClient({
               Tesis Verileri
             </CardTitle>
             <CardDescription>
-              Bu tesise ait {installation.installationDatas.length} veri kaydi
+              Bu tesise ait {installation.installationDatas.length} veri kaydı
             </CardDescription>
           </CardHeader>
           <CardContent>
             {installation.installationDatas.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                Henuz veri kaydi bulunmuyor
+                Henüz veri kaydı bulunmuyor
               </p>
             ) : (
               <div className="space-y-2">
@@ -176,7 +176,7 @@ export function InstallationDetailClient({
                 <Link
                   href={`/dashboard/installation-data/new?installationId=${installation.id}`}
                 >
-                  Yeni Veri Kaydi Ekle
+                  Yeni Veri Kaydı Ekle
                 </Link>
               </Button>
             </div>

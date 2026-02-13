@@ -82,7 +82,7 @@ export function StepSelectInstallation() {
 
   function handleNext() {
     if (!selectedInstId || !selectedDataId) {
-      toast.error("Tesis ve veri donemi secin");
+      toast.error("Tesis ve veri dönemi seçin");
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,16 +101,16 @@ export function StepSelectInstallation() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Building className="h-5 w-5" />
-          Adim 1: Tesis ve Raporlama Yili Sec
+          Adım 1: Tesis ve Raporlama Yılı Seç
         </CardTitle>
         <CardDescription>
-          Beyanname icin tesis, veri donemi ve raporlama yilini secin
+          Beyanname için tesis, veri dönemi ve raporlama yılını seçin
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label>Raporlama Yili *</Label>
+            <Label>Raporlama Yılı *</Label>
             <Input
               type="number"
               value={year}
@@ -124,7 +124,7 @@ export function StepSelectInstallation() {
             <Label>Tesis *</Label>
             <Select value={selectedInstId} onValueChange={setSelectedInstId}>
               <SelectTrigger>
-                <SelectValue placeholder="Tesis secin" />
+                <SelectValue placeholder="Tesis seçin" />
               </SelectTrigger>
               <SelectContent>
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -138,10 +138,10 @@ export function StepSelectInstallation() {
           </div>
 
           <div className="space-y-2">
-            <Label>Veri Donemi *</Label>
+            <Label>Veri Dönemi *</Label>
             <Select value={selectedDataId} onValueChange={setSelectedDataId}>
               <SelectTrigger>
-                <SelectValue placeholder="Donem secin" />
+                <SelectValue placeholder="Dönem seçin" />
               </SelectTrigger>
               <SelectContent>
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -164,7 +164,7 @@ export function StepSelectInstallation() {
         {installation && (
           <div className="border rounded-lg p-3 bg-muted/50">
             <p className="text-sm">
-              <span className="font-medium">Secili:</span>{" "}
+              <span className="font-medium">Seçili:</span>{" "}
               {installation.companyName} / {installation.installationName}
             </p>
           </div>
@@ -214,7 +214,7 @@ export function StepReviewGoods() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Package className="h-5 w-5" />
-          Adim 2: Ithal Mallari Gozden Gecir
+          Adım 2: İthal Malları Gözden Geçir
         </CardTitle>
         <CardDescription>
           Tesis verisinden elde edilen ithal mal kategorileri
@@ -223,11 +223,11 @@ export function StepReviewGoods() {
       <CardContent className="space-y-4">
         {loading ? (
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" /> Yukleniyor...
+            <Loader2 className="h-4 w-4 animate-spin" /> Yükleniyor...
           </div>
         ) : goods.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            Ithal mal verisi bulunamadi. Excel import ile veri yukleyin.
+            İthal mal verisi bulunamadı. Excel import ile veri yükleyin.
           </p>
         ) : (
           <Table>
@@ -298,20 +298,20 @@ export function StepReviewEmissions() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Flame className="h-5 w-5" />
-          Adim 3: Gomulu Emisyonlari Gozden Gecir
+          Adım 3: Gömülü Emisyonları Gözden Geçir
         </CardTitle>
         <CardDescription>
-          Tesis verisindeki emisyon kaynaklari
+          Tesis verisindeki emisyon kaynakları
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {loading ? (
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" /> Yukleniyor...
+            <Loader2 className="h-4 w-4 animate-spin" /> Yükleniyor...
           </div>
         ) : emissions.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            Emisyon verisi bulunamadi.
+            Emisyon verisi bulunamadı.
           </p>
         ) : (
           <>
@@ -320,7 +320,7 @@ export function StepReviewEmissions() {
                 <TableRow>
                   <TableHead>Kaynak</TableHead>
                   <TableHead>Tip</TableHead>
-                  <TableHead>Yontem</TableHead>
+                  <TableHead>Yöntem</TableHead>
                   <TableHead className="text-right">CO2e Fosil</TableHead>
                   <TableHead className="text-right">CO2e Bio</TableHead>
                 </TableRow>
@@ -377,7 +377,7 @@ export function StepCertificateSurrender() {
 
   function handleAdd() {
     if (!certId) {
-      toast.error("Sertifika secin");
+      toast.error("Sertifika seçin");
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -399,10 +399,10 @@ export function StepCertificateSurrender() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileCheck className="h-5 w-5" />
-          Adim 4: Sertifika Teslimi Tahsisi
+          Adım 4: Sertifika Teslimi Tahsisi
         </CardTitle>
         <CardDescription>
-          CBAM sertifikalarini beyanname ile iliskilendirin
+          CBAM sertifikalarını beyanname ile ilişkilendirin
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -412,7 +412,7 @@ export function StepCertificateSurrender() {
             <Label className="text-xs">Sertifika</Label>
             <Select value={certId} onValueChange={setCertId}>
               <SelectTrigger>
-                <SelectValue placeholder="Sec" />
+                <SelectValue placeholder="Seç" />
               </SelectTrigger>
               <SelectContent>
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -526,10 +526,10 @@ export function StepFreeAllocation() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Scale className="h-5 w-5" />
-          Adim 5: Ucretsiz Tahsis Duzeltmesi
+          Adım 5: Ücretsiz Tahsis Düzeltmesi
         </CardTitle>
         <CardDescription>
-          AB ucretsiz tahsis duzeltmelerini ekleyin
+          AB ücretsiz tahsis düzeltmelerini ekleyin
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -538,12 +538,12 @@ export function StepFreeAllocation() {
             <Label className="text-xs">Tip</Label>
             <Select value={adjType} onValueChange={setAdjType}>
               <SelectTrigger>
-                <SelectValue placeholder="Sec" />
+                <SelectValue placeholder="Seç" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="DEDUCTION">Dusurme</SelectItem>
+                <SelectItem value="DEDUCTION">Düşürme</SelectItem>
                 <SelectItem value="CREDIT">Kredi</SelectItem>
-                <SelectItem value="ADJUSTMENT">Duzeltme</SelectItem>
+                <SelectItem value="ADJUSTMENT">Düzeltme</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -557,7 +557,7 @@ export function StepFreeAllocation() {
             />
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Aciklama</Label>
+            <Label className="text-xs">Açıklama</Label>
             <Input value={adjDesc} onChange={(e) => setAdjDesc(e.target.value)} />
           </div>
           <Button onClick={handleAdd} size="sm">
@@ -571,7 +571,7 @@ export function StepFreeAllocation() {
               <TableRow>
                 <TableHead>Tip</TableHead>
                 <TableHead>Tutar</TableHead>
-                <TableHead>Aciklama</TableHead>
+                <TableHead>Açıklama</TableHead>
                 <TableHead className="text-right">Sil</TableHead>
               </TableRow>
             </TableHeader>
@@ -617,16 +617,16 @@ export function StepVerification() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ShieldCheck className="h-5 w-5" />
-          Adim 6: Dogrulama Beyani
+          Adım 6: Doğrulama Beyanı
         </CardTitle>
         <CardDescription>
-          Akredite dogrulayici bilgilerini girin
+          Akredite doğrulayıcı bilgilerini girin
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Dogrulayici Adi</Label>
+            <Label>Doğrulayıcı Adı</Label>
             <Input
               value={verification.verifierName}
               onChange={(e) => setVerification({ verifierName: e.target.value })}
@@ -640,7 +640,7 @@ export function StepVerification() {
             />
           </div>
           <div className="space-y-2">
-            <Label>Gorus</Label>
+            <Label>Görüş</Label>
             <Select
               value={verification.opinion}
               onValueChange={(v) => setVerification({ opinion: v })}
@@ -649,19 +649,19 @@ export function StepVerification() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="UNQUALIFIED">Sinirsiz (Unqualified)</SelectItem>
-                <SelectItem value="QUALIFIED">Sinirli (Qualified)</SelectItem>
+                <SelectItem value="UNQUALIFIED">Sınırsız (Unqualified)</SelectItem>
+                <SelectItem value="QUALIFIED">Sınırlı (Qualified)</SelectItem>
                 <SelectItem value="ADVERSE">Olumsuz (Adverse)</SelectItem>
-                <SelectItem value="DISCLAIMER">Gorus Bildirmeme (Disclaimer)</SelectItem>
+                <SelectItem value="DISCLAIMER">Görüş Bildirmeme (Disclaimer)</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="space-y-2">
-            <Label>Dogrulama Donemi</Label>
+            <Label>Doğrulama Dönemi</Label>
             <Input
               value={verification.period}
               onChange={(e) => setVerification({ period: e.target.value })}
-              placeholder="ornegin: 2025-Q1 - 2025-Q4"
+              placeholder="örneğin: 2025-Q1 - 2025-Q4"
             />
           </div>
         </div>
@@ -702,7 +702,7 @@ export function StepReviewSubmit() {
 
   async function handleSubmit() {
     if (!store.installation) {
-      toast.error("Tesis secilmedi");
+      toast.error("Tesis seçilmedi");
       return;
     }
 
@@ -715,7 +715,7 @@ export function StepReviewSubmit() {
       });
 
       if (declResult.error || !declResult.id) {
-        toast.error(declResult.error || "Beyanname olusturulamadi");
+        toast.error(declResult.error || "Beyanname oluşturulamadı");
         setSubmitting(false);
         return;
       }
@@ -750,9 +750,9 @@ export function StepReviewSubmit() {
       });
 
       setSubmitted(true);
-      toast.success("Beyanname basariyla gonderildi!");
+      toast.success("Beyanname başarıyla gönderildi!");
     } catch (error) {
-      toast.error("Gonderim sirasinda hata olustu");
+      toast.error("Gönderim sırasında hata oluştu");
       console.error("Submit error:", error);
     }
     setSubmitting(false);
@@ -763,10 +763,10 @@ export function StepReviewSubmit() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Send className="h-5 w-5" />
-          Adim 7: Inceleme ve Gonder
+          Adım 7: İnceleme ve Gönder
         </CardTitle>
         <CardDescription>
-          Tum bilgileri son kez gozden gecirin ve beyannameyi gonderin
+          Tüm bilgileri son kez gözden geçirin ve beyannameyi gönderin
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -774,7 +774,7 @@ export function StepReviewSubmit() {
           <div className="text-center py-8 space-y-4">
             <CheckCircle2 className="h-16 w-16 text-green-600 mx-auto" />
             <h3 className="text-xl font-bold text-green-700">
-              Beyanname Basariyla Gonderildi!
+              Beyanname Başarıyla Gönderildi!
             </h3>
             <p className="text-muted-foreground">
               Beyanname ID: {store.declarationId}
@@ -801,11 +801,11 @@ export function StepReviewSubmit() {
             {/* Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground">Yil</p>
+                <p className="text-xs text-muted-foreground">Yıl</p>
                 <p className="text-2xl font-bold">{store.year}</p>
               </div>
               <div className="border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground">Ithal Mal</p>
+                <p className="text-xs text-muted-foreground">İthal Mal</p>
                 <p className="text-2xl font-bold">{store.goods.length}</p>
               </div>
               <div className="border rounded-lg p-3 text-center">
@@ -825,7 +825,7 @@ export function StepReviewSubmit() {
                 <span className="font-medium">{store.installation?.installationName || "-"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Sirket:</span>
+                <span className="text-muted-foreground">Şirket:</span>
                 <span className="font-medium">{store.installation?.companyName || "-"}</span>
               </div>
               <div className="flex justify-between">
@@ -834,14 +834,14 @@ export function StepReviewSubmit() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Sertifika Teslimleri:</span>
-                <span className="font-medium">{store.certificateSurrenders.length} islem ({totalCerts} adet)</span>
+                <span className="font-medium">{store.certificateSurrenders.length} işlem ({totalCerts} adet)</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Tahsis Duzeltmeleri:</span>
-                <span className="font-medium">{store.freeAllocations.length} islem</span>
+                <span className="text-muted-foreground">Tahsis Düzeltmeleri:</span>
+                <span className="font-medium">{store.freeAllocations.length} işlem</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Dogrulayici:</span>
+                <span className="text-muted-foreground">Doğrulayıcı:</span>
                 <span className="font-medium">
                   {store.verification.verifierName || "-"}
                   {store.verification.opinion && (
@@ -867,12 +867,12 @@ export function StepReviewSubmit() {
                 {submitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Gonderiliyor...
+                    Gönderiliyor...
                   </>
                 ) : (
                   <>
                     <Send className="mr-2 h-4 w-4" />
-                    Beyannameyi Gonder
+                    Beyannameyi Gönder
                   </>
                 )}
               </Button>

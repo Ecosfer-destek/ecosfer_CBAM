@@ -34,12 +34,12 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Gecersiz e-posta veya sifre");
+        setError("Geçersiz e-posta veya şifre");
       } else {
         window.location.href = "/dashboard";
       }
     } catch {
-      setError("Bir hata olustu. Lutfen tekrar deneyin.");
+      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setIsLoading(false);
     }
@@ -53,7 +53,7 @@ export default function LoginPage() {
             Ecosfer SKDM
           </CardTitle>
           <CardDescription>
-            Surdurulebilirlik Veri Yonetim Platformu
+            Sürdürülebilirlik Veri Yönetim Platformu
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -68,7 +68,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="ornek@ecosfer.com"
+                placeholder="örnek@ecosfer.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -76,7 +76,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Sifre</Label>
+              <Label htmlFor="password">Şifre</Label>
               <Input
                 id="password"
                 type="password"
@@ -87,15 +87,15 @@ export default function LoginPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Giris yapiliyor..." : "Giris Yap"}
+              {isLoading ? "Giriş yapılıyor..." : "Giriş Yap"}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Hesabiniz yok mu?{" "}
+            Hesabınız yok mu?{" "}
             <Link href="/register" className="text-primary hover:underline">
-              Kayit Ol
+              Kayıt Ol
             </Link>
           </p>
         </CardFooter>

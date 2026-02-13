@@ -79,7 +79,7 @@ export default function AiAnalysisPage() {
 
   async function handleForecast() {
     if (!selectedInstId) {
-      toast.error("Tesis seciniz");
+      toast.error("Tesis seçiniz");
       return;
     }
     setForecastLoading(true);
@@ -95,19 +95,19 @@ export default function AiAnalysisPage() {
       const data = await res.json();
       setForecastData(data);
       if (data.status === "success") {
-        toast.success("Tahmin olusturuldu");
+        toast.success("Tahmin oluşturuldu");
       } else {
         toast.info(data.message);
       }
     } catch {
-      toast.error("Tahmin servisi ile baglanti kurulamadi");
+      toast.error("Tahmin servisi ile bağlantı kurulamadı");
     }
     setForecastLoading(false);
   }
 
   async function handleAnomalies() {
     if (!selectedInstId) {
-      toast.error("Tesis seciniz");
+      toast.error("Tesis seçiniz");
       return;
     }
     setAnomalyLoading(true);
@@ -128,14 +128,14 @@ export default function AiAnalysisPage() {
         toast.info(data.message);
       }
     } catch {
-      toast.error("Anomali servisi ile baglanti kurulamadi");
+      toast.error("Anomali servisi ile bağlantı kurulamadı");
     }
     setAnomalyLoading(false);
   }
 
   async function handleNarrative() {
     if (!selectedInstId) {
-      toast.error("Tesis seciniz");
+      toast.error("Tesis seçiniz");
       return;
     }
     setNarrativeLoading(true);
@@ -152,12 +152,12 @@ export default function AiAnalysisPage() {
       const data = await res.json();
       setNarrativeData(data);
       if (data.status === "success") {
-        toast.success("Rapor olusturuldu");
+        toast.success("Rapor oluşturuldu");
       } else {
         toast.info(data.message);
       }
     } catch {
-      toast.error("Rapor servisi ile baglanti kurulamadi");
+      toast.error("Rapor servisi ile bağlantı kurulamadı");
     }
     setNarrativeLoading(false);
   }
@@ -215,13 +215,13 @@ export default function AiAnalysisPage() {
         <CardContent className="pt-6">
           <div className="flex items-end gap-4">
             <div className="flex-1 space-y-2">
-              <Label>Tesis Secin</Label>
+              <Label>Tesis Seçin</Label>
               <Select
                 value={selectedInstId}
                 onValueChange={setSelectedInstId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Analiz icin tesis secin" />
+                  <SelectValue placeholder="Analiz için tesis seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {installations.map((inst: AnyData) => (
@@ -262,14 +262,14 @@ export default function AiAnalysisPage() {
                 Emisyon Tahmini
               </CardTitle>
               <CardDescription>
-                Gecmis verilere dayali emisyon trendi tahmini (XGBoost /
+                Geçmiş verilere dayalı emisyon trendi tahmini (XGBoost /
                 Linear Regression)
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-end gap-4 mb-6">
                 <div className="space-y-2">
-                  <Label>Tahmin Donemi (yil)</Label>
+                  <Label>Tahmin Dönemi (yıl)</Label>
                   <Select
                     value={forecastPeriods}
                     onValueChange={setForecastPeriods}
@@ -278,9 +278,9 @@ export default function AiAnalysisPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="3">3 Yil</SelectItem>
-                      <SelectItem value="6">6 Yil</SelectItem>
-                      <SelectItem value="12">12 Yil</SelectItem>
+                      <SelectItem value="3">3 Yıl</SelectItem>
+                      <SelectItem value="6">6 Yıl</SelectItem>
+                      <SelectItem value="12">12 Yıl</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -293,7 +293,7 @@ export default function AiAnalysisPage() {
                   ) : (
                     <RefreshCw className="mr-2 h-4 w-4" />
                   )}
-                  Tahmin Olustur
+                  Tahmin Oluştur
                 </Button>
               </div>
 
@@ -314,9 +314,9 @@ export default function AiAnalysisPage() {
                       >
                         Trend:{" "}
                         {forecastData.trend.direction === "increasing"
-                          ? "Artis"
+                          ? "Artış"
                           : forecastData.trend.direction === "decreasing"
-                            ? "Azalis"
+                            ? "Azalış"
                             : "Sabit"}{" "}
                         (%{forecastData.trend.change_pct})
                       </Badge>
@@ -351,14 +351,14 @@ export default function AiAnalysisPage() {
                           dataKey="upper"
                           stroke="none"
                           fill="#e0e7ff"
-                          name="Ust Sinir"
+                          name="Üst Sınır"
                         />
                         <Area
                           type="monotone"
                           dataKey="lower"
                           stroke="none"
                           fill="#ffffff"
-                          name="Alt Sinir"
+                          name="Alt Sınır"
                         />
                         <Line
                           type="monotone"
@@ -366,7 +366,7 @@ export default function AiAnalysisPage() {
                           stroke="#2563eb"
                           strokeWidth={2}
                           dot={{ r: 4 }}
-                          name="Gercek"
+                          name="Gerçek"
                         />
                         <Line
                           type="monotone"
@@ -447,7 +447,7 @@ export default function AiAnalysisPage() {
                       <TableHead>Yil</TableHead>
                       <TableHead>Kaynak</TableHead>
                       <TableHead className="max-w-xs">
-                        Aciklama
+                        Açıklama
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -464,19 +464,19 @@ export default function AiAnalysisPage() {
                               {a.severity === "critical"
                                 ? "Kritik"
                                 : a.severity === "warning"
-                                  ? "Uyari"
+                                  ? "Uyarı"
                                   : "Bilgi"}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-sm">
                             {a.type === "emission_outlier"
-                              ? "Emisyon Aykiri Degeri"
+                              ? "Emisyon Aykırı Değeri"
                               : a.type === "balance_mismatch"
-                                ? "Denge Uyumsuzlugu"
+                                ? "Denge Uyumsuzluğu"
                                 : a.type === "negative_value"
-                                  ? "Negatif Deger"
+                                  ? "Negatif Değer"
                                   : a.type === "sudden_change"
-                                    ? "Ani Degisim"
+                                    ? "Ani Değişim"
                                     : a.type}
                           </TableCell>
                           <TableCell>{a.year || "-"}</TableCell>
@@ -497,7 +497,7 @@ export default function AiAnalysisPage() {
                 anomalyData.anomalies?.length === 0 && (
                   <div className="text-center py-8 text-muted-foreground">
                     <Shield className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p>Anomali tespit edilmedi. Veriler tutarli gorunuyor.</p>
+                    <p>Anomali tespit edilmedi. Veriler tutarlı görünüyor.</p>
                   </div>
                 )}
 
@@ -516,10 +516,10 @@ export default function AiAnalysisPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
-                Akilli Raporlama
+                Akıllı Raporlama
               </CardTitle>
               <CardDescription>
-                LangChain + Claude/GPT-4 ile dogal dil analiz raporu uretimi
+                LangChain + Claude/GPT-4 ile doğal dil analiz raporu üretimi
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -534,9 +534,9 @@ export default function AiAnalysisPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="summary">Ozet</SelectItem>
-                      <SelectItem value="detailed">Detayli</SelectItem>
-                      <SelectItem value="executive">Yonetici</SelectItem>
+                      <SelectItem value="summary">Özet</SelectItem>
+                      <SelectItem value="detailed">Detaylı</SelectItem>
+                      <SelectItem value="executive">Yönetici</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -550,7 +550,7 @@ export default function AiAnalysisPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="tr">Turkce</SelectItem>
+                      <SelectItem value="tr">Türkçe</SelectItem>
                       <SelectItem value="en">English</SelectItem>
                       <SelectItem value="de">Deutsch</SelectItem>
                     </SelectContent>
@@ -565,7 +565,7 @@ export default function AiAnalysisPage() {
                   ) : (
                     <FileText className="mr-2 h-4 w-4" />
                   )}
-                  Rapor Olustur
+                  Rapor Oluştur
                 </Button>
               </div>
 
@@ -578,7 +578,7 @@ export default function AiAnalysisPage() {
                     <Badge variant="outline">
                       Dil:{" "}
                       {narrativeData.language === "tr"
-                        ? "Turkce"
+                        ? "Türkçe"
                         : narrativeData.language === "en"
                           ? "English"
                           : "Deutsch"}

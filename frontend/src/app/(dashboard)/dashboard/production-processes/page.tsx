@@ -11,9 +11,9 @@ export default function ProductionProcessesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Uretim Surecleri</h1>
+        <h1 className="text-3xl font-bold">Üretim Süreçleri</h1>
         <p className="text-muted-foreground">
-          CBAM kapsamindaki uretim sureclerini goruntuleyin
+          CBAM kapsamındaki üretim süreçlerini görüntüleyin
         </p>
       </div>
 
@@ -21,18 +21,18 @@ export default function ProductionProcessesPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Package className="h-5 w-5" />
-            Uretim Sureci Yonetimi
+            Üretim Süreci Yönetimi
           </CardTitle>
           <CardDescription>
-            Uretim surecleri Tesis Verileri (InstallationData) altindaki
-            &quot;D: Prosesler&quot; sekmesinden yonetilir. Ilgili tesis verisini
-            secip oradaki RelevantProductionProcess tablolarini kullanin.
+            Üretim süreçleri Tesis Verileri (InstallationData) altındaki
+            &quot;D: Prosesler&quot; sekmesinden yönetilir. İlgili tesis verisini
+            seçip oradaki RelevantProductionProcess tablolarını kullanın.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Tesis Verileri sayfasina giderek ilgili doneme ait uretim
-            sureclerini goruntuleyin ve duzenleyin.
+            Tesis Verileri sayfasına giderek ilgili döneme ait üretim
+            süreçlerini görüntüleyin ve düzenleyin.
           </p>
         </CardContent>
       </Card>

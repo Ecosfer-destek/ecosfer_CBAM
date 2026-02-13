@@ -47,11 +47,11 @@ import {
 import { toast } from "sonner";
 
 const REPORT_TYPES = [
-  { value: "installation-summary", label: "Tesis Ozet Raporu" },
+  { value: "installation-summary", label: "Tesis Özet Raporu" },
   { value: "declaration", label: "CBAM Beyanname Raporu" },
   { value: "emission-detail", label: "Emisyon Detay Raporu" },
-  { value: "supplier-survey", label: "Tedarikci Anket Raporu" },
-  { value: "custom", label: "Ozel Rapor" },
+  { value: "supplier-survey", label: "Tedarikçi Anket Raporu" },
+  { value: "custom", label: "Özel Rapor" },
 ];
 
 export default function ReportsPage() {
@@ -82,7 +82,7 @@ export default function ReportsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Rapor olusturuldu");
+      toast.success("Rapor oluşturuldu");
       setShowCreate(false);
       setCoverTitle("");
       setCoverContent("");
@@ -92,7 +92,7 @@ export default function ReportsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu raporu silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu raporu silmek istediğinizden emin misiniz?")) return;
     const result = await deleteReport(id);
     if (result.error) {
       toast.error(result.error);
@@ -114,7 +114,7 @@ export default function ReportsPage() {
     if (!selectedReport) return;
     const result = await createReportSection({
       part: "PART1",
-      sectionTitle: "Yeni Bolum",
+      sectionTitle: "Yeni Bölüm",
       sectionLevel: "HEADING",
       orderNo: (selectedReport.reportSections?.length || 0) + 1,
       reportId: selectedReport.id,
@@ -122,7 +122,7 @@ export default function ReportsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Bolum eklendi");
+      toast.success("Bölüm eklendi");
       const updated = await getReport(selectedReport.id);
       setSelectedReport(updated);
     }
@@ -143,7 +143,7 @@ export default function ReportsPage() {
 
       if (!response.ok) {
         const err = await response.json();
-        toast.error(err.error || "PDF olusturulamadi");
+        toast.error(err.error || "PDF oluşturulamadı");
         return;
       }
 
@@ -156,7 +156,7 @@ export default function ReportsPage() {
       window.URL.revokeObjectURL(url);
       toast.success("PDF indirildi");
     } catch {
-      toast.error("PDF olusturulurken bir hata olustu");
+      toast.error("PDF oluşturulurken bir hata oluştu");
     } finally {
       setIsGeneratingPdf(false);
     }
@@ -166,9 +166,9 @@ export default function ReportsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">CBAM Raporlari</h1>
+          <h1 className="text-3xl font-bold">CBAM Raporları</h1>
           <p className="text-muted-foreground">
-            Raporlari olusturun ve yonetin
+            Raporları oluşturun ve yönetin
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
@@ -180,11 +180,11 @@ export default function ReportsPage() {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni Rapor Olustur</DialogTitle>
+              <DialogTitle>Yeni Rapor Oluştur</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Rapor Basligi</Label>
+                <Label>Rapor Başlığı</Label>
                 <Input
                   value={coverTitle}
                   onChange={(e) => setCoverTitle(e.target.value)}
@@ -192,7 +192,7 @@ export default function ReportsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Aciklama</Label>
+                <Label>Açıklama</Label>
                 <Textarea
                   value={coverContent}
                   onChange={(e) => setCoverContent(e.target.value)}
@@ -202,10 +202,10 @@ export default function ReportsPage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                Iptal
+                İptal
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Olusturuluyor..." : "Olustur"}
+                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -217,10 +217,10 @@ export default function ReportsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileDown className="h-5 w-5" />
-            PDF Rapor Olustur
+            PDF Rapor Oluştur
           </CardTitle>
           <CardDescription>
-            Secili rapor tipine gore PDF olusturun
+            Seçili rapor tipine göre PDF oluşturun
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -255,7 +255,7 @@ export default function ReportsPage() {
             </div>
             <Button onClick={handleGeneratePdf} disabled={isGeneratingPdf}>
               <FileDown className="mr-2 h-4 w-4" />
-              {isGeneratingPdf ? "Olusturuluyor..." : "PDF Indir"}
+              {isGeneratingPdf ? "Oluşturuluyor..." : "PDF İndir"}
             </Button>
           </div>
         </CardContent>
@@ -274,10 +274,10 @@ export default function ReportsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Baslik</TableHead>
-                <TableHead>Bolum Sayisi</TableHead>
-                <TableHead>Olusturma</TableHead>
-                <TableHead className="text-right">Islemler</TableHead>
+                <TableHead>Başlık</TableHead>
+                <TableHead>Bölüm Sayısı</TableHead>
+                <TableHead>Oluşturma</TableHead>
+                <TableHead className="text-right">İşlemler</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -287,7 +287,7 @@ export default function ReportsPage() {
                     colSpan={4}
                     className="text-center text-muted-foreground py-8"
                   >
-                    Henuz rapor bulunmuyor
+                    Henüz rapor bulunmuyor
                   </TableCell>
                 </TableRow>
               ) : (
@@ -298,11 +298,11 @@ export default function ReportsPage() {
                     onClick={() => handleViewDetail(r.id)}
                   >
                     <TableCell className="font-medium">
-                      {r.coverTitle || "Isimsiz Rapor"}
+                      {r.coverTitle || "İsimsiz Rapor"}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline">
-                        {r.reportSections?.length || 0} bolum
+                        {r.reportSections?.length || 0} bölüm
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -345,7 +345,7 @@ export default function ReportsPage() {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
-              {selectedReport?.coverTitle || "Rapor Detayi"}
+              {selectedReport?.coverTitle || "Rapor Detayı"}
             </DialogTitle>
           </DialogHeader>
           {selectedReport && (
@@ -356,23 +356,23 @@ export default function ReportsPage() {
                 </p>
               )}
               <div className="text-sm">
-                <span className="font-medium">Olusturma: </span>
+                <span className="font-medium">Oluşturma: </span>
                 {new Date(selectedReport.createdAt).toLocaleDateString("tr-TR")}
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium">
-                    Bolumleri ({selectedReport.reportSections?.length || 0})
+                    Bölümleri ({selectedReport.reportSections?.length || 0})
                   </h4>
                   <Button size="sm" variant="outline" onClick={handleAddSection}>
                     <Plus className="mr-1 h-3 w-3" />
-                    Bolum Ekle
+                    Bölüm Ekle
                   </Button>
                 </div>
                 {selectedReport.reportSections?.length === 0 ? (
                   <p className="text-sm text-muted-foreground py-4 text-center">
-                    Henuz bolum eklenmemis
+                    Henüz bölüm eklenmemiş
                   </p>
                 ) : (
                   <div className="space-y-2">
@@ -391,7 +391,7 @@ export default function ReportsPage() {
                               <Badge variant="outline">{section.part}</Badge>
                               <Badge variant="secondary">
                                 {section.reportSectionContents?.length || 0}{" "}
-                                icerik
+                                içerik
                               </Badge>
                             </div>
                           </div>

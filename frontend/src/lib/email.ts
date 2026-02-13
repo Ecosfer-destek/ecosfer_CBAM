@@ -47,20 +47,20 @@ function getInvitationTemplate(
 ): { subject: string; html: string } {
   const templates: Record<string, { subject: string; html: string }> = {
     tr: {
-      subject: "CBAM Tedarikci Portali - Davet",
+      subject: "CBAM Tedarikçi Portalı - Davet",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #1a1a1a;">CBAM Tedarikci Portali Daveti</h2>
-          <p>Sayin ${supplierName},</p>
-          <p>Ecosfer SKDM CBAM Tedarikci Portali'na davet edildiniz. Bu portal uzerinden emisyon verilerinizi paylasabilirsiniz.</p>
+          <h2 style="color: #1a1a1a;">CBAM Tedarikçi Portalı Daveti</h2>
+          <p>Sayın ${supplierName},</p>
+          <p>Ecosfer SKDM CBAM Tedarikçi Portalı'na davet edildiniz. Bu portal üzerinden emisyon verilerinizi paylaşabilirsiniz.</p>
           <div style="margin: 24px 0;">
             <a href="${inviteUrl}" style="background-color: #0f172a; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
-              Portala Eris
+              Portala Eriş
             </a>
           </div>
-          <p style="color: #666; font-size: 14px;">Bu link tek kullanimliktir. Hesabinizi olusturmak icin lutfen tiklayiniz.</p>
+          <p style="color: #666; font-size: 14px;">Bu link tek kullanımlıktır. Hesabınızı oluşturmak için lütfen tıklayınız.</p>
           <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;" />
-          <p style="color: #999; font-size: 12px;">Ecosfer SKDM Platform - CBAM Surdurulebilirlik Veri Yonetimi</p>
+          <p style="color: #999; font-size: 12px;">Ecosfer SKDM Platform - CBAM Sürdürülebilirlik Veri Yönetimi</p>
         </div>
       `,
     },
@@ -88,7 +88,7 @@ function getInvitationTemplate(
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #1a1a1a;">CBAM Lieferantenportal Einladung</h2>
           <p>Sehr geehrte/r ${supplierName},</p>
-          <p>Sie wurden zum Ecosfer SKDM CBAM Lieferantenportal eingeladen. Uber dieses Portal konnen Sie Ihre Emissionsdaten teilen.</p>
+          <p>Sie wurden zum Ecosfer SKDM CBAM Lieferantenportal eingeladen. Über dieses Portal können Sie Ihre Emissionsdaten teilen.</p>
           <div style="margin: 24px 0;">
             <a href="${inviteUrl}" style="background-color: #0f172a; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
               Portal aufrufen

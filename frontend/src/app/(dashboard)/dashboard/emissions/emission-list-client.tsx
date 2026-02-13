@@ -37,7 +37,7 @@ function ActionsCell({ emission }: { emission: EmissionItem }) {
   const router = useRouter();
 
   async function handleDelete() {
-    if (!confirm("Bu emisyon kaydini silmek istediginizden emin misiniz?"))
+    if (!confirm("Bu emisyon kaydını silmek istediğinizden emin misiniz?"))
       return;
     const result = await deleteEmission(emission.id);
     if (result.error) {
@@ -66,7 +66,7 @@ const columns: ColumnDef<EmissionItem>[] = [
   {
     accessorKey: "sourceStreamName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Kaynak Akisi" />
+      <DataTableColumnHeader column={column} title="Kaynak Akışı" />
     ),
     cell: ({ row }) => row.original.sourceStreamName || "-",
   },
@@ -102,7 +102,7 @@ const columns: ColumnDef<EmissionItem>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-right">Islemler</div>,
+    header: () => <div className="text-right">İşlemler</div>,
     cell: ({ row }) => <ActionsCell emission={row.original} />,
   },
 ];
@@ -117,7 +117,7 @@ export function EmissionListClient({
       columns={columns}
       data={emissions}
       searchKey="sourceStreamName"
-      searchPlaceholder="Kaynak akisi ara..."
+      searchPlaceholder="Kaynak akışı ara..."
       toolbar={
         <Button asChild>
           <Link href="/dashboard/emissions/new">

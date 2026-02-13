@@ -7,9 +7,9 @@ export default async function UsersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Kullanici Yonetimi</h1>
+        <h1 className="text-3xl font-bold">Kullanıcı Yönetimi</h1>
         <p className="text-muted-foreground">
-          Sirketinizdeki kullanicilari yonetin
+          Şirketinizdeki kullanıcıları yönetin
         </p>
       </div>
       <UserManagementClient initialUsers={users} />

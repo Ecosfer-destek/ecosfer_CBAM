@@ -25,7 +25,7 @@ function ActionsCell({ item }: { item: InstallationDataItem }) {
   const router = useRouter();
 
   async function handleDelete() {
-    if (!confirm("Bu veri kaydini silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu veri kaydını silmek istediğinizden emin misiniz?")) return;
     const result = await deleteInstallationData(item.id);
     if (result.error) {
       toast.error(result.error);
@@ -59,13 +59,13 @@ const columns: ColumnDef<InstallationDataItem>[] = [
   },
   {
     id: "company",
-    header: "Sirket",
+    header: "Şirket",
     accessorFn: (row) => row.installation?.company?.name || "-",
   },
   {
     accessorKey: "startDate",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Baslangic" />
+      <DataTableColumnHeader column={column} title="Başlangıç" />
     ),
     cell: ({ row }) =>
       row.original.startDate
@@ -74,7 +74,7 @@ const columns: ColumnDef<InstallationDataItem>[] = [
   },
   {
     accessorKey: "endDate",
-    header: "Bitis",
+    header: "Bitiş",
     cell: ({ row }) =>
       row.original.endDate
         ? new Date(row.original.endDate).toLocaleDateString("tr-TR")
@@ -82,7 +82,7 @@ const columns: ColumnDef<InstallationDataItem>[] = [
   },
   {
     id: "actions",
-    header: () => <div className="text-right">Islemler</div>,
+    header: () => <div className="text-right">İşlemler</div>,
     cell: ({ row }) => <ActionsCell item={row.original} />,
   },
 ];
@@ -102,7 +102,7 @@ export function InstallationDataListClient({
         <Button asChild>
           <Link href="/dashboard/installation-data/new">
             <Plus className="mr-2 h-4 w-4" />
-            Yeni Veri Kaydi
+            Yeni Veri Kaydı
           </Link>
         </Button>
       }

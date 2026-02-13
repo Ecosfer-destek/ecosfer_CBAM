@@ -79,7 +79,7 @@ export const emissionSchema = z.object({
 export type EmissionInput = z.infer<typeof emissionSchema>;
 
 export const installationDataSchema = z.object({
-  installationId: z.string().min(1, "Tesis secimi gereklidir"),
+  installationId: z.string().min(1, "Tesis seçimi gereklidir"),
   startDate: z.string().optional().nullable(),
   endDate: z.string().optional().nullable(),
   representativeId: z.string().optional().nullable(),

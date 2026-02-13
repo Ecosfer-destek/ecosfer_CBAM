@@ -4,34 +4,34 @@
 
 CBAM (Carbon Border Adjustment Mechanism) Sustainability Data Management Platform.
 
-EU CBAM regulasyonuna uyum icin tasarlanmis, tesis emisyon verisi yonetimi, beyanname olusturma, tedarikci yonetimi ve AI destekli analiz platformu.
+EU CBAM regülasyonuna uyum için tasarlanmış, tesis emisyon verisi yönetimi, beyanname oluşturma, tedarikçi yönetimi ve AI destekli analiz platformu.
 
 ## Tech Stack
 
 | Katman | Teknoloji |
 |--------|-----------|
 | Frontend | Next.js 16.1.6, React 19, TypeScript, Tailwind CSS 4, shadcn/ui |
-| Auth | NextAuth.js v5, rol tabanli erisim (6 rol), tenant izolasyonu |
+| Auth | NextAuth.js v5, rol tabanlı erişim (6 rol), tenant izolasyonu |
 | ORM | Prisma 7.3.0 (82 model), PostgreSQL 16 |
-| Dokuman Servisleri | .NET 9 Minimal API, EPPlus 7.5.2, QuestPDF, System.Xml.Linq |
+| Doküman Servisleri | .NET 9 Minimal API, EPPlus 7.5.2, QuestPDF, System.Xml.Linq |
 | AI Servisi | Python FastAPI, XGBoost, scikit-learn, LangChain |
 | Monitoring | Prometheus, Grafana, Loki, Promtail |
 | Cache | Redis 7 |
 | CI/CD | GitHub Actions, Docker, GHCR |
 
-## Proje Yapisi
+## Proje Yapısı
 
 ```
 ecosfer-skdm-v2/
 ├── frontend/                  # Next.js 16 frontend (Prisma, NextAuth, shadcn/ui)
 │   ├── src/
-│   │   ├── app/              # App Router sayfalari
+│   │   ├── app/              # App Router sayfaları
 │   │   │   ├── (auth)/       # Login/Register
-│   │   │   ├── (supplier)/   # Tedarikci portali
-│   │   │   ├── dashboard/    # Ana panel sayfalari
-│   │   │   └── api/          # API route'lari (proxy + health + metrics)
-│   │   ├── actions/          # Server Actions (CRUD islemleri)
-│   │   ├── components/       # UI bilesenleri
+│   │   │   ├── (supplier)/   # Tedarikçi portalı
+│   │   │   ├── dashboard/    # Ana panel sayfaları
+│   │   │   └── api/          # API route'ları (proxy + health + metrics)
+│   │   ├── actions/          # Server Actions (CRUD işlemleri)
+│   │   ├── components/       # UI bileşenleri
 │   │   ├── lib/              # Auth, DB, validasyonlar, roller
 │   │   ├── stores/           # Zustand state management
 │   │   └── i18n/             # next-intl (TR/EN/DE)
@@ -42,24 +42,24 @@ ecosfer-skdm-v2/
 │   │   ├── Services/         # Excel Import, XML, PDF, XSD
 │   │   ├── Metrics/          # Prometheus metrikleri
 │   │   ├── Models/           # DTO'lar
-│   │   ├── Helpers/          # Excel yardimci fonksiyonlar
+│   │   ├── Helpers/          # Excel yardımcı fonksiyonlar
 │   │   └── tests/            # xUnit testler
 │   └── ai/                   # Python FastAPI AI servisi
 │       ├── services/         # Forecast, Anomaly, Narrative
 │       ├── metrics.py        # Prometheus metrikleri
 │       └── tests/            # pytest testler
-├── docker/                   # Monitoring & infra konfigurasyon
+├── docker/                   # Monitoring & infra konfigürasyon
 │   ├── nginx/                # Reverse proxy (rate limiting, security headers)
-│   ├── prometheus/           # Metrik toplama + alert kurallari
+│   ├── prometheus/           # Metrik toplama + alert kuralları
 │   ├── grafana/              # Dashboard'lar + datasource provisioning
 │   ├── loki/                 # Log aggregation
 │   └── promtail/             # Container log shipper
-├── .github/workflows/        # CI/CD pipeline'lari
-├── docker-compose.yml        # Development ortami
-└── docker-compose.prod.yml   # Production ortami (tum servisler)
+├── .github/workflows/        # CI/CD pipeline'ları
+├── docker-compose.yml        # Development ortamı
+└── docker-compose.prod.yml   # Production ortamı (tüm servisler)
 ```
 
-## Hizli Baslangic
+## Hızlı Başlangıç
 
 ### Gereksinimler
 
@@ -77,24 +77,24 @@ ecosfer-skdm-v2/
 git clone https://github.com/ecosfer/skdm-v2.git
 cd ecosfer-skdm-v2
 
-# 2. Frontend bagimliliklari
+# 2. Frontend bağımlılıkları
 cd frontend
 npm install
-cp .env.example .env.local   # DB, auth ayarlarini duzenle
+cp .env.example .env.local   # DB, auth ayarlarını düzenle
 
 # 3. Prisma kurulumu
 npx prisma generate
 npx prisma db push
-npx tsx prisma/seed.ts        # Seed data (ulkeler, CN kodlari, roller)
+npx tsx prisma/seed.ts        # Seed data (ülkeler, CN kodları, roller)
 
-# 4. Frontend baslatma
+# 4. Frontend başlatma
 npm run dev                   # http://localhost:3000
 
-# 5. .NET servisi (ayri terminal)
+# 5. .NET servisi (ayrı terminal)
 cd ../services/dotnet
 dotnet run                    # http://localhost:5100
 
-# 6. Python AI servisi (ayri terminal)
+# 6. Python AI servisi (ayrı terminal)
 cd ../services/ai
 pip install -r requirements.txt
 uvicorn main:app --reload     # http://localhost:8000
@@ -103,11 +103,11 @@ uvicorn main:app --reload     # http://localhost:8000
 ### Docker ile Tam Kurulum
 
 ```bash
-# Production ortami
-cp .env.example .env          # Sifreleri duzenle
+# Production ortamı
+cp .env.example .env          # Şifreleri düzenle
 docker compose -f docker-compose.prod.yml up -d
 
-# Erisim noktalari:
+# Erişim noktaları:
 # - Frontend:    http://localhost
 # - Grafana:     http://localhost/grafana/  (admin/ecosfer_grafana_2026)
 # - Prometheus:  http://localhost:9090
@@ -125,30 +125,30 @@ cd services/dotnet && dotnet test
 # Python (pytest + 91 test)
 cd services/ai && pytest
 
-# Tumu
+# Tümü
 npm run test:all
 ```
 
-## Dokumantasyon
+## Dokümantasyon
 
-| Dokuman | Aciklama |
+| Doküman | Açıklama |
 |---------|----------|
-| [API.md](./docs/API.md) | Tum REST API endpoint'leri |
+| [API.md](./docs/API.md) | Tüm REST API endpoint'leri |
 | [DEPLOYMENT.md](./docs/DEPLOYMENT.md) | Production deployment rehberi |
-| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Sistem mimarisi ve tasarim kararlari |
-| [USER_GUIDE.md](./docs/USER_GUIDE.md) | Kullanici kilavuzu (TR) |
-| [CHANGELOG.md](./CHANGELOG.md) | Surum gecmisi |
+| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | Sistem mimarisi ve tasarım kararları |
+| [USER_GUIDE.md](./docs/USER_GUIDE.md) | Kullanıcı kılavuzu (TR) |
+| [CHANGELOG.md](./CHANGELOG.md) | Sürüm geçmişi |
 
 ## Roller ve Yetkiler
 
-| Rol | Aciklama |
+| Rol | Açıklama |
 |-----|----------|
-| SUPER_ADMIN | Tam erisim, tenant yonetimi |
-| COMPANY_ADMIN | Sirket yonetimi, kullanici atama |
-| OPERATOR | Tesis verileri, emisyon girisi |
-| CBAM_DECLARANT | Beyanname olusturma/gonderme |
-| VERIFIER | Dogrulama islemleri |
-| SUPPLIER | Tedarikci portali (sinirli erisim) |
+| SUPER_ADMIN | Tam erişim, tenant yönetimi |
+| COMPANY_ADMIN | Şirket yönetimi, kullanıcı atama |
+| OPERATOR | Tesis verileri, emisyon girişi |
+| CBAM_DECLARANT | Beyanname oluşturma/gönderme |
+| VERIFIER | Doğrulama işlemleri |
+| SUPPLIER | Tedarikçi portalı (sınırlı erişim) |
 
 ## Lisans
 

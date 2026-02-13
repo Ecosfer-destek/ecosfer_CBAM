@@ -1,447 +1,447 @@
-# Ecosfer SKDM v2.0 - Kullanici Kilavuzu
+# Ecosfer SKDM v2.0 - Kullanıcı Kılavuzu
 
-## Icindekiler
+## İçindekiler
 
-1. [Giris](#1-giris)
-2. [Sisteme Giris ve Kullanici Yonetimi](#2-sisteme-giris-ve-kullanici-yonetimi)
+1. [Giriş](#1-giris)
+2. [Sisteme Giriş ve Kullanıcı Yönetimi](#2-sisteme-giris-ve-kullanici-yonetimi)
 3. [Dashboard (Ana Panel)](#3-dashboard-ana-panel)
-4. [Sirket Yonetimi](#4-sirket-yonetimi)
-5. [Tesis Yonetimi](#5-tesis-yonetimi)
+4. [Şirket Yönetimi](#4-sirket-yonetimi)
+5. [Tesis Yönetimi](#5-tesis-yonetimi)
 6. [Tesis Verileri (Installation Data)](#6-tesis-verileri)
-7. [Excel Veri Aktarimi](#7-excel-veri-aktarimi)
-8. [Emisyon Yonetimi](#8-emisyon-yonetimi)
-9. [Denge Tablolari](#9-denge-tablolari)
-10. [CBAM Beyanname Yonetimi](#10-cbam-beyanname-yonetimi)
-11. [Beyanname Sihirbazi](#11-beyanname-sihirbazi)
-12. [Sertifika Yonetimi](#12-sertifika-yonetimi)
-13. [Izleme Plani ve Yetkilendirme](#13-izleme-plani-ve-yetkilendirme)
-14. [Tedarikci Yonetimi](#14-tedarikci-yonetimi)
-15. [Tedarikci Portali](#15-tedarikci-portali)
+7. [Excel Veri Aktarımı](#7-excel-veri-aktarimi)
+8. [Emisyon Yönetimi](#8-emisyon-yonetimi)
+9. [Denge Tabloları](#9-denge-tablolari)
+10. [CBAM Beyanname Yönetimi](#10-cbam-beyanname-yonetimi)
+11. [Beyanname Sihirbazı](#11-beyanname-sihirbazi)
+12. [Sertifika Yönetimi](#12-sertifika-yonetimi)
+13. [İzleme Planı ve Yetkilendirme](#13-izleme-plani-ve-yetkilendirme)
+14. [Tedarikçi Yönetimi](#14-tedarikci-yonetimi)
+15. [Tedarikçi Portalı](#15-tedarikci-portali)
 16. [AI Analiz Paneli](#16-ai-analiz-paneli)
 17. [Raporlama](#17-raporlama)
 18. [Ayarlar](#18-ayarlar)
-19. [Dil Degistirme](#19-dil-degistirme)
+19. [Dil Değiştirme](#19-dil-degistirme)
 
 ---
 
-## 1. Giris
+## 1. Giriş
 
-Ecosfer SKDM (Surdurulebilirlik ve Karbon Veri Yonetimi) platformu, AB CBAM (Sinirda Karbon Duzenleme Mekanizmasi) regulasyonuna uyum icin gelistirilmis kapsamli bir veri yonetim sistemidir.
+Ecosfer SKDM (Sürdürülebilirlik ve Karbon Veri Yönetimi) platformu, AB CBAM (Sınırda Karbon Düzenleme Mekanizması) regülasyonuna uyum için geliştirilmiş kapsamlı bir veri yönetim sistemidir.
 
-### Platform Ozellikleri
-- Tesis ve emisyon veri yonetimi
-- Excel uzerinden toplu veri aktarimi (CBAM sablonu)
-- CBAM beyanname olusturma ve XML export
+### Platform Özellikleri
+- Tesis ve emisyon veri yönetimi
+- Excel üzerinden toplu veri aktarımı (CBAM şablonu)
+- CBAM beyanname oluşturma ve XML export
 - PDF raporlama (TR/EN/DE)
-- Tedarikci anket yonetimi ve portali
+- Tedarikçi anket yönetimi ve portalı
 - AI destekli emisyon tahmini ve anomali tespiti
-- Cok kiracili (multi-tenant) mimari
-- Rol tabanli erisim kontrolu
+- Çok kiracılı (multi-tenant) mimari
+- Rol tabanlı erişim kontrolü
 
-### Desteklenen Tarayicilar
+### Desteklenen Tarayıcılar
 - Chrome 90+, Firefox 90+, Edge 90+, Safari 15+
 
 ---
 
-## 2. Sisteme Giris ve Kullanici Yonetimi
+## 2. Sisteme Giriş ve Kullanıcı Yönetimi
 
-### Giris Yapma
-1. Tarayicida `https://cbam.ecosfer.com` adresine gidin
-2. E-posta ve sifrenizi girin
-3. **Giris Yap** butonuna tiklayin
+### Giriş Yapma
+1. Tarayıcıda `https://cbam.ecosfer.com` adresine gidin
+2. E-posta ve şifrenizi girin
+3. **Giriş Yap** butonuna tıklayın
 
-### Sifre Gereksinimleri
+### Şifre Gereksinimleri
 - En az 8 karakter
-- En az 1 buyuk harf
+- En az 1 büyük harf
 - En az 1 rakam
 
-### Kullanici Rolleri
+### Kullanıcı Rolleri
 
 | Rol | Yetkiler |
 |-----|----------|
-| Super Admin | Tum sistem yonetimi, tenant olusturma, kullanici yonetimi |
-| Sirket Admin | Sirket ayarlari, kullanici atama, tum veri erisimi |
-| Operator | Tesis verileri, emisyon girisi, Excel aktarimi |
-| CBAM Beyannameci | Beyanname olusturma, XML/PDF uretimi |
-| Dogrulayici | Beyanname dogrulama islemleri |
-| Tedarikci | Sadece tedarikci portali erisimi |
+| Super Admin | Tüm sistem yönetimi, tenant oluşturma, kullanıcı yönetimi |
+| Şirket Admin | Şirket ayarları, kullanıcı atama, tüm veri erişimi |
+| Operatör | Tesis verileri, emisyon girişi, Excel aktarımı |
+| CBAM Beyannameci | Beyanname oluşturma, XML/PDF üretimi |
+| Doğrulayıcı | Beyanname doğrulama işlemleri |
+| Tedarikçi | Sadece tedarikçi portalı erişimi |
 
-### Kullanici Olusturma (Super Admin / Sirket Admin)
-1. Sol menude **Ayarlar > Guvenlik** sayfasina gidin
-2. **Yeni Kullanici** butonuna tiklayin
-3. Ad, soyad, e-posta, sifre ve rol bilgilerini girin
-4. **Olustur** butonuna tiklayin
+### Kullanıcı Oluşturma (Super Admin / Şirket Admin)
+1. Sol menüde **Ayarlar > Güvenlik** sayfasına gidin
+2. **Yeni Kullanıcı** butonuna tıklayın
+3. Ad, soyad, e-posta, şifre ve rol bilgilerini girin
+4. **Oluştur** butonuna tıklayın
 
 ---
 
 ## 3. Dashboard (Ana Panel)
 
-Sisteme giris yaptiginizda ana panel goruntulenir. Panelde:
+Sisteme giriş yaptığınızda ana panel görüntülenir. Panelde:
 
-- **Ozet Kartlar**: Toplam tesis sayisi, aktif beyanname, tedarikci sayisi, emisyon ozeti
-- **Son Aktiviteler**: Son yapilan islemler listesi
-- **Hizli Erisim**: Sik kullanilan sayfalara kisayollar
+- **Özet Kartlar**: Toplam tesis sayısı, aktif beyanname, tedarikçi sayısı, emisyon özeti
+- **Son Aktiviteler**: Son yapılan işlemler listesi
+- **Hızlı Erişim**: Sık kullanılan sayfalara kısayollar
 
 ---
 
-## 4. Sirket Yonetimi
+## 4. Şirket Yönetimi
 
-### Sirket Listesi
-Sol menude **Sirketler** sayfasina gidin. Tum kayitli sirketler listelenir.
+### Şirket Listesi
+Sol menüde **Şirketler** sayfasına gidin. Tüm kayıtlı şirketler listelenir.
 
-### Yeni Sirket Olusturma
-1. **Yeni Sirket** butonuna tiklayin
+### Yeni Şirket Oluşturma
+1. **Yeni Şirket** butonuna tıklayın
 2. Zorunlu alanlar:
-   - Sirket adi
-   - Ulke
-   - Sehir
-3. Opsiyonel: Vergi no, adres, iletisim bilgileri
-4. **Kaydet** butonuna tiklayin
+   - Şirket adı
+   - Ülke
+   - Şehir
+3. Opsiyonel: Vergi no, adres, iletişim bilgileri
+4. **Kaydet** butonuna tıklayın
 
-### Sirket Duzenleme
-1. Listede ilgili sirketin satirina tiklayin
-2. Detay sayfasinda **Duzenle** butonuna tiklayin
-3. Degisiklikleri yapin ve **Kaydet**
+### Şirket Düzenleme
+1. Listede ilgili şirketin satırına tıklayın
+2. Detay sayfasında **Düzenle** butonuna tıklayın
+3. Değişiklikleri yapın ve **Kaydet**
 
 ---
 
-## 5. Tesis Yonetimi
+## 5. Tesis Yönetimi
 
 ### Tesis Listesi
-Sol menude **Tesisler** sayfasina gidin.
+Sol menüde **Tesisler** sayfasına gidin.
 
-### Yeni Tesis Olusturma
-1. **Yeni Tesis** butonuna tiklayin
+### Yeni Tesis Oluşturma
+1. **Yeni Tesis** butonuna tıklayın
 2. Zorunlu alanlar:
-   - Tesis adi
-   - Bagli sirket (dropdown)
-   - Ulke
-   - Sehir
-3. Opsiyonel: Adres, koordinat, uretim kapasitesi
+   - Tesis adı
+   - Bağlı şirket (dropdown)
+   - Ülke
+   - Şehir
+3. Opsiyonel: Adres, koordinat, üretim kapasitesi
 4. **Kaydet**
 
-### Tesis Detaylari
-Tesis satirina tikladiginizda detay sayfasi acilir. Buradan:
-- Tesise ait **Installation Data** kayitlari goruntulenir
-- Yeni donem verisi eklenebilir
+### Tesis Detayları
+Tesis satırına tıkladığınızda detay sayfası açılır. Buradan:
+- Tesise ait **Installation Data** kayıtları görüntülenir
+- Yeni dönem verisi eklenebilir
 
 ---
 
 ## 6. Tesis Verileri
 
-Tesis verileri (InstallationData) CBAM raporlamasi icin temel veri birimidir. Her kayit belirli bir doneme ait tesis verilerini icerir.
+Tesis verileri (InstallationData) CBAM raporlaması için temel veri birimidir. Her kayıt belirli bir döneme ait tesis verilerini içerir.
 
 ### 5 Sekmeli Form
-Tesis verisi detay sayfasinda 5 sekme bulunur:
+Tesis verisi detay sayfasında 5 sekme bulunur:
 
-1. **Genel Bilgiler**: Donem, tesis bilgileri, uretim aktiviteleri
-2. **Mallar ve Rotalar**: Ithal edilen mallar, CN kodlari, uretim rotalari
-3. **Emisyonlar**: Dogrudan ve dolayli emisyon kayitlari
-4. **Enerji Dengeleri**: Yakit ve GHG denge tablolari
+1. **Genel Bilgiler**: Dönem, tesis bilgileri, üretim aktiviteleri
+2. **Mallar ve Rotalar**: İthal edilen mallar, CN kodları, üretim rotaları
+3. **Emisyonlar**: Doğrudan ve dolaylı emisyon kayıtları
+4. **Enerji Dengeleri**: Yakıt ve GHG denge tabloları
 5. **Belgeler**: Excel import, XML export, PDF raporlar
 
 ### Yeni Tesis Verisi Ekleme
-1. Tesis detay sayfasindan **Yeni Donem Verisi** butonuna tiklayin
-2. Donem yilini secin
+1. Tesis detay sayfasından **Yeni Dönem Verisi** butonuna tıklayın
+2. Dönem yılını seçin
 3. Form sekmelerini doldurun
 4. **Kaydet**
 
 ---
 
-## 7. Excel Veri Aktarimi
+## 7. Excel Veri Aktarımı
 
-CBAM Excel sablonu uzerinden toplu veri aktarimi yapabilirsiniz. Excel dosyasi 5 sheet icerir:
+CBAM Excel şablonu üzerinden toplu veri aktarımı yapabilirsiniz. Excel dosyası 5 sheet içerir:
 
-| Sheet | Icerik |
+| Sheet | İçerik |
 |-------|--------|
 | A_InstData | Tesis genel verileri |
 | B_EmInst | Emisyon tesis verileri |
 | C_Emissions&Energy | Emisyon ve enerji verileri |
 | D_Processes | Proses verileri |
-| E_PurchPrec | Satin alma verileri |
+| E_PurchPrec | Satın alma verileri |
 
-### Import Adimlari
-1. Tesis verisi detay sayfasina gidin
-2. **Belgeler** sekmesine gecin
-3. **Excel Import** butonuna tiklayin
-4. CBAM sablonundaki Excel dosyasini secin
-5. Yukleme otomatik baslar ve ilerleme cubugu gorunur
-6. Tamamlandiginda her sheet icin sonuc gosterilir:
-   - Basarili satirlar (yesil)
-   - Hatali satirlar (kirmizi) - hata mesajlari ile birlikte
+### Import Adımları
+1. Tesis verisi detay sayfasına gidin
+2. **Belgeler** sekmesine geçin
+3. **Excel Import** butonuna tıklayın
+4. CBAM şablonundaki Excel dosyasını seçin
+5. Yükleme otomatik başlar ve ilerleme çubuğu görünür
+6. Tamamlandığında her sheet için sonuç gösterilir:
+   - Başarılı satırlar (yeşil)
+   - Hatalı satırlar (kırmızı) - hata mesajları ile birlikte
 
-### Onemli Notlar
-- Excel dosyasi CBAM resmi sablonuna uygun olmalidir
+### Önemli Notlar
+- Excel dosyası CBAM resmi şablonuna uygun olmalıdır
 - Maksimum dosya boyutu: 50MB
 - Desteklenen format: .xlsx
-- Import islemi mevcut verilerin uzerine yazar
+- Import işlemi mevcut verilerin üzerine yazar
 
 ---
 
-## 8. Emisyon Yonetimi
+## 8. Emisyon Yönetimi
 
 ### Emisyon Listesi
-Sol menude **Emisyonlar** sayfasina gidin. Tum emisyon kayitlari filtrelenebilir tablo halinde listelenir.
+Sol menüde **Emisyonlar** sayfasına gidin. Tüm emisyon kayıtları filtrelenebilir tablo halinde listelenir.
 
 ### Yeni Emisyon Ekleme
-1. **Yeni Emisyon** butonuna tiklayin
-2. Emisyon turune gore kosullu form gorunur:
-   - **SS (Spesifik Sera Gazi)**: CO2, N2O, PFC degerleri
+1. **Yeni Emisyon** butonuna tıklayın
+2. Emisyon türüne göre koşullu form görünür:
+   - **SS (Spesifik Sera Gazı)**: CO2, N2O, PFC değerleri
    - **PFC (Perfluorokarbon)**: PFC spesifik alanlar
-   - **ES (Enerji Kaynaklari)**: Yakit bazli emisyon verileri
-3. Tesis verisi ile iliskilendirin
+   - **ES (Enerji Kaynakları)**: Yakıt bazlı emisyon verileri
+3. Tesis verisi ile ilişkilendirin
 4. **Kaydet**
 
-### Emisyon Duzenleme
-1. Listede emisyon satirina tiklayin
-2. Degerleri guncelleyin
+### Emisyon Düzenleme
+1. Listede emisyon satırına tıklayın
+2. Değerleri güncelleyin
 3. **Kaydet**
 
 ---
 
-## 9. Denge Tablolari
+## 9. Denge Tabloları
 
-### Yakit Dengesi (Fuel Balance)
-- Tesis bazinda yakit tuketimi ve emisyon kayitlari
-- Yakit tipi, miktar, birim, emisyon faktoru
+### Yakıt Dengesi (Fuel Balance)
+- Tesis bazında yakıt tüketimi ve emisyon kayıtları
+- Yakıt tipi, miktar, birim, emisyon faktörü
 
 ### GHG Dengesi (GHG Balance)
-Iki tip GHG dengesi vardir:
-1. **Ture Gore** (GhgBalanceByType): Emisyon turune gore toplam degerler
-2. **Izleme Metodolojisine Gore** (GhgBalanceByMonitoringMethodologyType): Izleme yontemine gore dagilim
+İki tip GHG dengesi vardır:
+1. **Türe Göre** (GhgBalanceByType): Emisyon türüne göre toplam değerler
+2. **İzleme Metodolojisine Göre** (GhgBalanceByMonitoringMethodologyType): İzleme yöntemine göre dağılım
 
 ---
 
-## 10. CBAM Beyanname Yonetimi
+## 10. CBAM Beyanname Yönetimi
 
 ### Beyanname Listesi
-Sol menude **Beyannameler** sayfasina gidin.
+Sol menüde **Beyannameler** sayfasına gidin.
 
-### Yeni Beyanname Olusturma
-1. **Yeni Beyanname** butonuna tiklayin
+### Yeni Beyanname Oluşturma
+1. **Yeni Beyanname** butonuna tıklayın
 2. Zorunlu alanlar:
-   - Beyanname yili (2023-2030)
-   - Donem (ceyrek/yillik)
-   - Bagli tesis
+   - Beyanname yılı (2023-2030)
+   - Dönem (çeyrek/yıllık)
+   - Bağlı tesis
 3. **Kaydet**
 
-### Beyanname Detaylari
-Beyanname detay sayfasinda:
+### Beyanname Detayları
+Beyanname detay sayfasında:
 - Beyanname bilgileri ve durum
-- Iliskili mallar ve emisyonlar
-- **XML Olustur** butonu ile CBAM XML dosyasi uretimi
-- **XML Indir** butonu ile XML dosya indirme
-- XSD dogrulama sonuclari
+- İlişkili mallar ve emisyonlar
+- **XML Oluştur** butonu ile CBAM XML dosyası üretimi
+- **XML İndir** butonu ile XML dosya indirme
+- XSD doğrulama sonuçları
 
 ---
 
-## 11. Beyanname Sihirbazi
+## 11. Beyanname Sihirbazı
 
-7 adimli interaktif sihirbaz ile yeni beyanname olusturabilirsiniz:
+7 adımlı interaktif sihirbaz ile yeni beyanname oluşturabilirsiniz:
 
-### Adim 1: Tesis ve Yil Secimi
-- Listeden tesis secin
-- Beyanname yilini secin
+### Adım 1: Tesis ve Yıl Seçimi
+- Listeden tesis seçin
+- Beyanname yılını seçin
 
-### Adim 2: Ithal Mallar
-- Tesis verisine bagli mallari goruntuleyin
-- Beyanname kapsamina dahil edilecek mallari secin
+### Adım 2: İthal Mallar
+- Tesis verisine bağlı malları görüntüleyin
+- Beyanname kapsamına dahil edilecek malları seçin
 
-### Adim 3: Emisyonlar
-- Secilen mallara ait emisyon verilerini goruntuleyin
-- Emisyon degerlerini dogrulayin
+### Adım 3: Emisyonlar
+- Seçilen mallara ait emisyon verilerini görüntüleyin
+- Emisyon değerlerini doğrulayın
 
-### Adim 4: Sertifika Teslimi
+### Adım 4: Sertifika Teslimi
 - CBAM sertifika teslim bilgilerini girin
-- Teslim edilen sertifika miktari
+- Teslim edilen sertifika miktarı
 
-### Adim 5: Ucretsiz Tahsis
-- Ucretsiz tahsis duzeltmelerini girin
-- Mensei ulke bazinda ucretsiz tahsis
+### Adım 5: Ücretsiz Tahsis
+- Ücretsiz tahsis düzeltmelerini girin
+- Menşei ülke bazında ücretsiz tahsis
 
-### Adim 6: Dogrulama
-- Dogrulayici bilgilerini girin
-- Dogrulama durumu
+### Adım 6: Doğrulama
+- Doğrulayıcı bilgilerini girin
+- Doğrulama durumu
 
-### Adim 7: Inceleme ve Gonderme
-- Tum verileri inceleyin
-- **Beyanname Olustur** butonuna tiklayin
-- Sistem otomatik olarak XML ve PDF olusturur
+### Adım 7: İnceleme ve Gönderme
+- Tüm verileri inceleyin
+- **Beyanname Oluştur** butonuna tıklayın
+- Sistem otomatik olarak XML ve PDF oluşturur
 
 ---
 
-## 12. Sertifika Yonetimi
+## 12. Sertifika Yönetimi
 
-### CBAM Sertifikalari
-- Sol menude **Sertifikalar** sayfasina gidin
-- Sertifika olusturma, goruntuleme, duzenleme
+### CBAM Sertifikaları
+- Sol menüde **Sertifikalar** sayfasına gidin
+- Sertifika oluşturma, görüntüleme, düzenleme
 
 ### Sertifika Teslimi
-- Beyanname ile iliskili sertifika teslim kayitlari
-- Satir ici (inline) duzenleme
+- Beyanname ile ilişkili sertifika teslim kayıtları
+- Satır içi (inline) düzenleme
 
-### Ucretsiz Tahsis Duzeltmesi
-- Mensei ulke bazinda ucretsiz tahsis kayitlari
-- Satir ici (inline) duzenleme
+### Ücretsiz Tahsis Düzeltmesi
+- Menşei ülke bazında ücretsiz tahsis kayıtları
+- Satır içi (inline) düzenleme
 
 ---
 
-## 13. Izleme Plani ve Yetkilendirme
+## 13. İzleme Planı ve Yetkilendirme
 
-### Izleme Plani (Monitoring Plan)
-- Sol menude **Izleme Planlari** sayfasina gidin
-- Tesis bazinda izleme metodolojisi tanimlama
+### İzleme Planı (Monitoring Plan)
+- Sol menüde **İzleme Planları** sayfasına gidin
+- Tesis bazında izleme metodolojisi tanımlama
 - Plan durumu takibi
 
-### Yetkilendirme Basvurusu (Authorisation Application)
-- Sol menude **Yetkilendirme** sayfasina gidin
-- CBAM yetkili beyannameci basvurusu
-- Dogrulama durumu sayfasi
+### Yetkilendirme Başvurusu (Authorisation Application)
+- Sol menüde **Yetkilendirme** sayfasına gidin
+- CBAM yetkili beyannameci başvurusu
+- Doğrulama durumu sayfası
 
 ---
 
-## 14. Tedarikci Yonetimi
+## 14. Tedarikçi Yönetimi
 
-### Tedarikci Listesi
-Sol menude **Tedarikciler** sayfasina gidin.
+### Tedarikçi Listesi
+Sol menüde **Tedarikçiler** sayfasına gidin.
 
-### Yeni Tedarikci Ekleme
-1. **Yeni Tedarikci** butonuna tiklayin
+### Yeni Tedarikçi Ekleme
+1. **Yeni Tedarikçi** butonuna tıklayın
 2. Bilgileri girin:
-   - Sirket adi
+   - Şirket adı
    - E-posta
    - Telefon
-   - Ulke
-3. **Olustur**
+   - Ülke
+3. **Oluştur**
 
-### Davet Gonderme
-1. Tedarikci listesinde ilgili satirdaki **Davet Gonder** butonuna tiklayin
-2. Sistem otomatik davet e-postasi gonderir
-3. Tedarikci, davet linkindeki benzersiz token ile portala erisir
+### Davet Gönderme
+1. Tedarikçi listesinde ilgili satırdaki **Davet Gönder** butonuna tıklayın
+2. Sistem otomatik davet e-postası gönderir
+3. Tedarikçi, davet linkindeki benzersiz token ile portala erişir
 
-### Tedarikci Detaylari
-- Tedarikci bilgileri
-- Anket durumu (beklemede/gonderildi/tamamlandi)
-- Tanimlanan mallar ve CN kodlari
+### Tedarikçi Detayları
+- Tedarikçi bilgileri
+- Anket durumu (beklemede/gönderildi/tamamlandı)
+- Tanımlanan mallar ve CN kodları
 
 ---
 
-## 15. Tedarikci Portali
+## 15. Tedarikçi Portalı
 
-Tedarikciler icin ayri bir portal sunulur. Tedarikci davet linkine tikladiginda:
+Tedarikçiler için ayrı bir portal sunulur. Tedarikçi davet linkine tıkladığında:
 
 ### Dashboard
-- Toplam anket, bekleyen anket, tanimlanan mal sayisi
+- Toplam anket, bekleyen anket, tanımlanan mal sayısı
 - Son anketler listesi
 
 ### Anketler
-1. **Yeni Anket** ile bos anket olusturun
+1. **Yeni Anket** ile boş anket oluşturun
 2. Emisyon verilerini girin
-3. **Gonder** ile anketi tamamlayin
+3. **Gönder** ile anketi tamamlayın
 
 ### Mallar
-- Tedarik edilen mallari tanimlayin
-- CN kodu ve aciklama girin
+- Tedarik edilen malları tanımlayın
+- CN kodu ve açıklama girin
 
 ### Profil
-- Sirket bilgilerini guncelleyin
+- Şirket bilgilerini güncelleyin
 
 ---
 
 ## 16. AI Analiz Paneli
 
-Sol menude **AI Analiz** sayfasina gidin. Uc sekme mevcuttur:
+Sol menüde **AI Analiz** sayfasına gidin. Üç sekme mevcuttur:
 
 ### Emisyon Tahmini
-1. Analiz edilecek tesisi secin
-2. Tahmin donemi sayisini belirleyin (1-24)
-3. **Tahmin Olustur** butonuna tiklayin
-4. Sonuclar:
-   - Gecmis emisyon verileri (grafik)
-   - Gelecek tahminleri (guven araliklari ile)
-   - Trend bilgisi (yukselis/dusus yuzde)
-   - Kullanilan model (XGBoost/LinearRegression)
-   - R2 skoru (model dogrulugu)
+1. Analiz edilecek tesisi seçin
+2. Tahmin dönemi sayısını belirleyin (1-24)
+3. **Tahmin Oluştur** butonuna tıklayın
+4. Sonuçlar:
+   - Geçmiş emisyon verileri (grafik)
+   - Gelecek tahminleri (güven aralıkları ile)
+   - Trend bilgisi (yükseliş/düşüş yüzde)
+   - Kullanılan model (XGBoost/LinearRegression)
+   - R2 skoru (model doğruluğu)
 
 ### Anomali Tespiti
-1. Tesisi secin
-2. Hassasiyet esigini ayarlayin (0.01-0.5)
-3. **Analiz Et** butonuna tiklayin
-4. Sonuclar:
-   - Tespit edilen anomaliler listesi (kritik/uyari/bilgi)
-   - Her anomali icin aciklama ve etkilenen degerler
+1. Tesisi seçin
+2. Hassasiyet eşiğini ayarlayın (0.01-0.5)
+3. **Analiz Et** butonuna tıklayın
+4. Sonuçlar:
+   - Tespit edilen anomaliler listesi (kritik/uyarı/bilgi)
+   - Her anomali için açıklama ve etkilenen değerler
    - Veri kalite skoru (0-1)
-   - Anomali turleri: denge uyumsuzlugu, ani degisim, negatif deger
+   - Anomali türleri: denge uyumsuzluğu, ani değişim, negatif değer
 
-### Akilli Raporlama
-1. Tesisi secin
-2. Rapor tipi: Ozet / Detayli / Yonetici
-3. Dil: Turkce / Ingilizce / Almanca
-4. **Rapor Olustur** butonuna tiklayin
-5. AI tarafindan olusturulan metin raporu goruntulenir
-6. Claude veya GPT-4 kullanilir (API key yoksa sablon tabanli fallback)
+### Akıllı Raporlama
+1. Tesisi seçin
+2. Rapor tipi: Özet / Detaylı / Yönetici
+3. Dil: Türkçe / İngilizce / Almanca
+4. **Rapor Oluştur** butonuna tıklayın
+5. AI tarafından oluşturulan metin raporu görüntülenir
+6. Claude veya GPT-4 kullanılır (API key yoksa şablon tabanlı fallback)
 
 ---
 
 ## 17. Raporlama
 
-### PDF Rapor Uretimi
-Tesis verisi detay sayfasindan PDF rapor olusturabilirsiniz:
+### PDF Rapor Üretimi
+Tesis verisi detay sayfasından PDF rapor oluşturabilirsiniz:
 
-1. **Belgeler** sekmesine gecin
-2. **PDF Rapor Olustur** butonuna tiklayin
-3. Rapor tipini secin:
-   - **Tesis Ozet Raporu**: Tesis genel bilgileri ve emisyon ozeti
-   - **Beyanname Raporu**: CBAM beyanname detaylari
-   - **Emisyon Detay Raporu**: Detayli emisyon verileri
-   - **Tedarikci Anket Raporu**: Tedarikci anket sonuclari
-   - **Ozel Rapor**: Kullanici tanimli rapor
-4. Dil secin (TR/EN/DE)
-5. **Olustur** butonuna tiklayin
+1. **Belgeler** sekmesine geçin
+2. **PDF Rapor Oluştur** butonuna tıklayın
+3. Rapor tipini seçin:
+   - **Tesis Özet Raporu**: Tesis genel bilgileri ve emisyon özeti
+   - **Beyanname Raporu**: CBAM beyanname detayları
+   - **Emisyon Detay Raporu**: Detaylı emisyon verileri
+   - **Tedarikçi Anket Raporu**: Tedarikçi anket sonuçları
+   - **Özel Rapor**: Kullanıcı tanımlı rapor
+4. Dil seçin (TR/EN/DE)
+5. **Oluştur** butonuna tıklayın
 6. PDF otomatik indirilir
 
 ### XML Export
-Beyanname detay sayfasindan:
-1. **XML Olustur** butonuna tiklayin
-2. Sistem CBAM XSD semasina gore XML uretir
-3. XSD dogrulama sonuclari gosterilir
-4. **XML Indir** ile dosyayi indirin
-5. SHA-256 butunluk hash'i eklenir
+Beyanname detay sayfasından:
+1. **XML Oluştur** butonuna tıklayın
+2. Sistem CBAM XSD şemasına göre XML üretir
+3. XSD doğrulama sonuçları gösterilir
+4. **XML İndir** ile dosyayı indirin
+5. SHA-256 bütünlük hash'i eklenir
 
 ---
 
 ## 18. Ayarlar
 
-### Tenant Ayarlari
-- Sirket genel bilgileri
-- Varsayilan dil ve para birimi
-- CBAM beyanname varsayilanlari
+### Tenant Ayarları
+- Şirket genel bilgileri
+- Varsayılan dil ve para birimi
+- CBAM beyanname varsayılanları
 
-### Guvenlik
-- Kullanici listesi ve yonetimi
-- Sifre degistirme
+### Güvenlik
+- Kullanıcı listesi ve yönetimi
+- Şifre değiştirme
 - Rol atama
 
 ---
 
-## 19. Dil Degistirme
+## 19. Dil Değiştirme
 
-Platform 3 dilde kullanilabilir:
-- **Turkce** (varsayilan)
+Platform 3 dilde kullanılabilir:
+- **Türkçe** (varsayılan)
 - **English**
 - **Deutsch**
 
-Dil degistirmek icin:
-1. Sag ust kosedeki dil seciciye tiklayin
-2. Istediginiz dili secin
+Dil değiştirmek için:
+1. Sağ üst köşedeki dil seçiciye tıklayın
+2. İstediğiniz dili seçin
 3. Sayfa otomatik yenilenir
 
-Not: Dil tercihi cerez (cookie) ile saklanir ve sonraki oturumlarda hatirlanir.
+Not: Dil tercihi çerez (cookie) ile saklanır ve sonraki oturumlarda hatırlanır.
 
 ---
 
 ## Destek
 
-Teknik destek icin: destek@ecosfer.com
+Teknik destek için: destek@ecosfer.com
 
 Sistem durumu: `https://cbam.ecosfer.com/api/health`

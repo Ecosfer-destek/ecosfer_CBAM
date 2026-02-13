@@ -12,7 +12,7 @@ export default function NewInstallationPage() {
       <div>
         <h1 className="text-3xl font-bold">Yeni Tesis</h1>
         <p className="text-muted-foreground">
-          Yeni bir tesis kaydi olusturun
+          Yeni bir tesis kaydı oluşturun
         </p>
       </div>
       <InstallationForm defaultCompanyId={companyId} />

@@ -94,7 +94,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success(isEditing ? "Sirket guncellendi" : "Sirket olusturuldu");
+      toast.success(isEditing ? "Şirket güncellendi" : "Şirket oluşturuldu");
       router.push("/dashboard/companies");
       router.refresh();
     }
@@ -106,12 +106,12 @@ export function CompanyForm({ company }: CompanyFormProps) {
       <Card>
         <CardHeader>
           <CardTitle>Temel Bilgiler</CardTitle>
-          <CardDescription>Sirket bilgilerini girin</CardDescription>
+          <CardDescription>Şirket bilgilerini girin</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Sirket Adi *</Label>
+              <Label htmlFor="name">Şirket Adı *</Label>
               <Input id="name" {...register("name")} />
               {errors.name && (
                 <p className="text-sm text-destructive">{errors.name.message}</p>
@@ -122,7 +122,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
               <Input id="officialName" {...register("officialName")} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="taxNumber">Vergi Numarasi</Label>
+              <Label htmlFor="taxNumber">Vergi Numarası</Label>
               <Input id="taxNumber" {...register("taxNumber")} maxLength={11} />
               {errors.taxNumber && (
                 <p className="text-sm text-destructive">
@@ -148,13 +148,13 @@ export function CompanyForm({ company }: CompanyFormProps) {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label>Ulke</Label>
+              <Label>Ülke</Label>
               <Select
                 value={countryId || ""}
                 onValueChange={(v) => setValue("countryId", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Ulke secin" />
+                  <SelectValue placeholder="Ülke seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {countries.map((c) => (
@@ -166,14 +166,14 @@ export function CompanyForm({ company }: CompanyFormProps) {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Sehir</Label>
+              <Label>Şehir</Label>
               <Select
                 value={cityId || ""}
                 onValueChange={(v) => setValue("cityId", v || null)}
                 disabled={!countryId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Sehir secin" />
+                  <SelectValue placeholder="Şehir seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {cities.map((c) => (
@@ -185,14 +185,14 @@ export function CompanyForm({ company }: CompanyFormProps) {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Ilce</Label>
+              <Label>İlçe</Label>
               <Select
                 value={watch("districtId") || ""}
                 onValueChange={(v) => setValue("districtId", v || null)}
                 disabled={!cityId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Ilce secin" />
+                  <SelectValue placeholder="İlçe seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {districts.map((d) => (
@@ -226,7 +226,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
                 onValueChange={(v) => setValue("taxOfficeId", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Vergi dairesi secin" />
+                  <SelectValue placeholder="Vergi dairesi seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {taxOffices.map((t) => (
@@ -258,7 +258,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Iletisim Bilgileri</CardTitle>
+          <CardTitle>İletişim Bilgileri</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -280,14 +280,14 @@ export function CompanyForm({ company }: CompanyFormProps) {
       <div className="flex gap-4">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isEditing ? "Guncelle" : "Olustur"}
+          {isEditing ? "Güncelle" : "Oluştur"}
         </Button>
         <Button
           type="button"
           variant="outline"
           onClick={() => router.push("/dashboard/companies")}
         >
-          Iptal
+          İptal
         </Button>
       </div>
     </form>

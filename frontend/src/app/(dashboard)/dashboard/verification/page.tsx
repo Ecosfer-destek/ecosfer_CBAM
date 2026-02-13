@@ -67,7 +67,7 @@ export default function VerificationPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Izleme plani olusturuldu");
+      toast.success("İzleme planı oluşturuldu");
       setShowPlanDialog(false);
       setPlanName("");
       setPlanVersion("");
@@ -77,11 +77,11 @@ export default function VerificationPage() {
   }
 
   async function handleDeletePlan(id: string) {
-    if (!confirm("Bu izleme planini silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu izleme planını silmek istediğinizden emin misiniz?")) return;
     const result = await deleteMonitoringPlan(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Izleme plani silindi");
+      toast.success("İzleme planı silindi");
       getMonitoringPlans().then(setPlans);
     }
   }
@@ -95,7 +95,7 @@ export default function VerificationPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Yetkilendirme basvurusu olusturuldu");
+      toast.success("Yetkilendirme başvurusu oluşturuldu");
       setShowAuthDialog(false);
       setAuthName("");
       setAuthType("");
@@ -105,11 +105,11 @@ export default function VerificationPage() {
   }
 
   async function handleDeleteAuth(id: string) {
-    if (!confirm("Bu basvuruyu silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu başvuruyu silmek istediğinizden emin misiniz?")) return;
     const result = await deleteAuthorisation(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Basvuru silindi");
+      toast.success("Başvuru silindi");
       getAuthorisations().then(setAuths);
     }
   }
@@ -117,15 +117,15 @@ export default function VerificationPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Dogrulama</h1>
+        <h1 className="text-3xl font-bold">Doğrulama</h1>
         <p className="text-muted-foreground">
-          Izleme planlari ve yetkilendirme basvurulari
+          İzleme planları ve yetkilendirme başvuruları
         </p>
       </div>
 
       <Tabs defaultValue="plans" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="plans">Izleme Planlari</TabsTrigger>
+          <TabsTrigger value="plans">İzleme Planları</TabsTrigger>
           <TabsTrigger value="authorisations">Yetkilendirme</TabsTrigger>
         </TabsList>
 
@@ -135,7 +135,7 @@ export default function VerificationPage() {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5" />
-                  Izleme Planlari
+                  İzleme Planları
                 </CardTitle>
                 <CardDescription>{plans.length} plan</CardDescription>
               </div>
@@ -148,11 +148,11 @@ export default function VerificationPage() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Yeni Izleme Plani</DialogTitle>
+                    <DialogTitle>Yeni İzleme Planı</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
-                      <Label>Plan Adi *</Label>
+                      <Label>Plan Adı *</Label>
                       <Input value={planName} onChange={(e) => setPlanName(e.target.value)} />
                     </div>
                     <div className="space-y-2">
@@ -161,9 +161,9 @@ export default function VerificationPage() {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setShowPlanDialog(false)}>Iptal</Button>
+                    <Button variant="outline" onClick={() => setShowPlanDialog(false)}>İptal</Button>
                     <Button onClick={handleCreatePlan} disabled={isCreating || !planName}>
-                      {isCreating ? "Olusturuluyor..." : "Olustur"}
+                      {isCreating ? "Oluşturuluyor..." : "Oluştur"}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -176,15 +176,15 @@ export default function VerificationPage() {
                     <TableHead>Ad</TableHead>
                     <TableHead>Versiyon</TableHead>
                     <TableHead>Durum</TableHead>
-                    <TableHead>Olusturma</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead>Oluşturma</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {plans.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                        Henuz izleme plani yok
+                        Henüz izleme planı yok
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -214,23 +214,23 @@ export default function VerificationPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Yetkilendirme Basvurulari</CardTitle>
-                <CardDescription>{auths.length} basvuru</CardDescription>
+                <CardTitle>Yetkilendirme Başvuruları</CardTitle>
+                <CardDescription>{auths.length} başvuru</CardDescription>
               </div>
               <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
                 <DialogTrigger asChild>
                   <Button size="sm">
                     <Plus className="mr-2 h-4 w-4" />
-                    Yeni Basvuru
+                    Yeni Başvuru
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Yeni Yetkilendirme Basvurusu</DialogTitle>
+                    <DialogTitle>Yeni Yetkilendirme Başvurusu</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
-                      <Label>Basvuran Adi *</Label>
+                      <Label>Başvuran Adı *</Label>
                       <Input value={authName} onChange={(e) => setAuthName(e.target.value)} />
                     </div>
                     <div className="space-y-2">
@@ -239,9 +239,9 @@ export default function VerificationPage() {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setShowAuthDialog(false)}>Iptal</Button>
+                    <Button variant="outline" onClick={() => setShowAuthDialog(false)}>İptal</Button>
                     <Button onClick={handleCreateAuth} disabled={isCreating || !authName}>
-                      {isCreating ? "Olusturuluyor..." : "Olustur"}
+                      {isCreating ? "Oluşturuluyor..." : "Oluştur"}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -251,19 +251,19 @@ export default function VerificationPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Basvuran</TableHead>
+                    <TableHead>Başvuran</TableHead>
                     <TableHead>Tip</TableHead>
                     <TableHead>Durum</TableHead>
-                    <TableHead>Basvuru No</TableHead>
+                    <TableHead>Başvuru No</TableHead>
                     <TableHead>Tarih</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {auths.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                        Henuz basvuru yok
+                        Henüz başvuru yok
                       </TableCell>
                     </TableRow>
                   ) : (

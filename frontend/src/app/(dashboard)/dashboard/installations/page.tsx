@@ -9,7 +9,7 @@ export default async function InstallationsPage() {
       <div>
         <h1 className="text-3xl font-bold">Tesisler</h1>
         <p className="text-muted-foreground">
-          CBAM kapsamindaki tesisleri yonetin
+          CBAM kapsamındaki tesisleri yönetin
         </p>
       </div>
       <InstallationListClient installations={installations} />

@@ -52,11 +52,11 @@ import { toast } from "sonner";
 
 const STATUS_OPTIONS = [
   { value: "DRAFT", label: "Taslak" },
-  { value: "SUBMITTED", label: "Gonderildi" },
-  { value: "UNDER_REVIEW", label: "Incelemede" },
-  { value: "APPROVED", label: "Onaylandi" },
+  { value: "SUBMITTED", label: "Gönderildi" },
+  { value: "UNDER_REVIEW", label: "İncelemede" },
+  { value: "APPROVED", label: "Onaylandı" },
   { value: "REJECTED", label: "Reddedildi" },
-  { value: "AMENDED", label: "Duzeltildi" },
+  { value: "AMENDED", label: "Düzeltildi" },
 ];
 
 export default function DeclarationDetailPage() {
@@ -100,7 +100,7 @@ export default function DeclarationDetailPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Durum guncellendi");
+      toast.success("Durum güncellendi");
       reload();
     }
   }
@@ -127,7 +127,7 @@ export default function DeclarationDetailPage() {
   }
 
   async function handleDeleteSurrender(id: string) {
-    if (!confirm("Bu sertifika teslimini silmek istediginizden emin misiniz?"))
+    if (!confirm("Bu sertifika teslimini silmek istediğinizden emin misiniz?"))
       return;
     const result = await deleteCertificateSurrender(id);
     if (result.error) toast.error(result.error);
@@ -149,7 +149,7 @@ export default function DeclarationDetailPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Ucretsiz tahsis duzeltmesi eklendi");
+      toast.success("Ücretsiz tahsis düzeltmesi eklendi");
       setShowAdjDialog(false);
       setAdjType("");
       setAdjAmount(0);
@@ -160,11 +160,11 @@ export default function DeclarationDetailPage() {
   }
 
   async function handleDeleteAdj(id: string) {
-    if (!confirm("Bu duzeltmeyi silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu düzeltmeyi silmek istediğinizden emin misiniz?")) return;
     const result = await deleteFreeAllocationAdjustment(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Duzeltme silindi");
+      toast.success("Düzeltme silindi");
       reload();
     }
   }
@@ -182,7 +182,7 @@ export default function DeclarationDetailPage() {
           </Button>
           <div>
             <h1 className="text-3xl font-bold">Beyanname {decl.year}</h1>
-            <p className="text-muted-foreground">Yillik CBAM Beyannamesi</p>
+            <p className="text-muted-foreground">Yıllık CBAM Beyannamesi</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -208,11 +208,11 @@ export default function DeclarationDetailPage() {
       <div className="grid gap-6 md:grid-cols-3">
         <Card>
           <CardHeader>
-            <CardTitle>Ozet</CardTitle>
+            <CardTitle>Özet</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
-              <p className="text-sm text-muted-foreground">Yil</p>
+              <p className="text-sm text-muted-foreground">Yıl</p>
               <p className="text-2xl font-bold">{decl.year}</p>
             </div>
             <div>
@@ -272,7 +272,7 @@ export default function DeclarationDetailPage() {
                       onValueChange={setSurrenderCertId}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Sertifika secin" />
+                        <SelectValue placeholder="Sertifika seçin" />
                       </SelectTrigger>
                       <SelectContent>
                         {certificates.map(
@@ -308,7 +308,7 @@ export default function DeclarationDetailPage() {
                     variant="outline"
                     onClick={() => setShowSurrenderDialog(false)}
                   >
-                    Iptal
+                    İptal
                   </Button>
                   <Button
                     onClick={handleCreateSurrender}
@@ -330,7 +330,7 @@ export default function DeclarationDetailPage() {
                     <TableHead>Sertifika</TableHead>
                     <TableHead>Adet</TableHead>
                     <TableHead>Tarih</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -375,10 +375,10 @@ export default function DeclarationDetailPage() {
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Scale className="h-5 w-5" />
-                Tahsis Duzeltmeleri
+                Tahsis Düzeltmeleri
               </CardTitle>
               <CardDescription>
-                {decl.freeAllocationAdjustments?.length || 0} duzeltme
+                {decl.freeAllocationAdjustments?.length || 0} düzeltme
               </CardDescription>
             </div>
             <Dialog open={showAdjDialog} onOpenChange={setShowAdjDialog}>
@@ -389,24 +389,24 @@ export default function DeclarationDetailPage() {
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Ucretsiz Tahsis Duzeltmesi Ekle</DialogTitle>
+                  <DialogTitle>Ücretsiz Tahsis Düzeltmesi Ekle</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                   <div className="space-y-2">
-                    <Label>Duzeltme Tipi *</Label>
+                    <Label>Düzeltme Tipi *</Label>
                     <Select value={adjType} onValueChange={setAdjType}>
                       <SelectTrigger>
-                        <SelectValue placeholder="Tip secin" />
+                        <SelectValue placeholder="Tip seçin" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="DEDUCTION">
-                          Dusurme (Deduction)
+                          Düşürme (Deduction)
                         </SelectItem>
                         <SelectItem value="CREDIT">
                           Kredi (Credit)
                         </SelectItem>
                         <SelectItem value="ADJUSTMENT">
-                          Duzeltme (Adjustment)
+                          Düzeltme (Adjustment)
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -421,7 +421,7 @@ export default function DeclarationDetailPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Aciklama</Label>
+                    <Label>Açıklama</Label>
                     <Input
                       value={adjDesc}
                       onChange={(e) => setAdjDesc(e.target.value)}
@@ -433,7 +433,7 @@ export default function DeclarationDetailPage() {
                     variant="outline"
                     onClick={() => setShowAdjDialog(false)}
                   >
-                    Iptal
+                    İptal
                   </Button>
                   <Button
                     onClick={handleCreateAdj}
@@ -447,15 +447,15 @@ export default function DeclarationDetailPage() {
           </CardHeader>
           <CardContent>
             {decl.freeAllocationAdjustments?.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Duzeltme yok</p>
+              <p className="text-sm text-muted-foreground">Düzeltme yok</p>
             ) : (
               <Table>
                 <TableHeader>
                   <TableRow>
                     <TableHead>Tip</TableHead>
                     <TableHead>Tutar</TableHead>
-                    <TableHead>Aciklama</TableHead>
-                    <TableHead className="text-right">Islem</TableHead>
+                    <TableHead>Açıklama</TableHead>
+                    <TableHead className="text-right">İşlem</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

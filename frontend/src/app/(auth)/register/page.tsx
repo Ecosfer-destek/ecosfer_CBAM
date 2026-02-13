@@ -52,7 +52,7 @@ export default function RegisterPage() {
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Sifreler eslesmiyor");
+      setError("Şifreler eşleşmiyor");
       setIsLoading(false);
       return;
     }
@@ -65,7 +65,7 @@ export default function RegisterPage() {
         setSuccess(true);
       }
     } catch {
-      setError("Bir hata olustu. Lutfen tekrar deneyin.");
+      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setIsLoading(false);
     }
@@ -76,14 +76,14 @@ export default function RegisterPage() {
       <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Kayit Basarili</CardTitle>
+            <CardTitle className="text-2xl font-bold">Kayıt Başarılı</CardTitle>
             <CardDescription>
-              Hesabiniz olusturuldu. Giris yapabilirsiniz.
+              Hesabınız oluşturuldu. Giriş yapabilirsiniz.
             </CardDescription>
           </CardHeader>
           <CardFooter className="justify-center">
             <Button asChild>
-              <Link href="/login">Giris Yap</Link>
+              <Link href="/login">Giriş Yap</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -95,9 +95,9 @@ export default function RegisterPage() {
     <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Kayit Ol</CardTitle>
+          <CardTitle className="text-2xl font-bold">Kayıt Ol</CardTitle>
           <CardDescription>
-            Ecosfer SKDM Platformu&apos;na kayit olun
+            Ecosfer SKDM Platformu&apos;na kayıt olun
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -122,7 +122,7 @@ export default function RegisterPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="ornek@ecosfer.com"
+                placeholder="örnek@ecosfer.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -130,10 +130,10 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="tenant">Sirket</Label>
+              <Label htmlFor="tenant">Şirket</Label>
               <Select value={tenantId} onValueChange={setTenantId}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Sirket seciniz" />
+                  <SelectValue placeholder="Şirket seçiniz" />
                 </SelectTrigger>
                 <SelectContent>
                   {tenants.map((t) => (
@@ -145,7 +145,7 @@ export default function RegisterPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Sifre</Label>
+              <Label htmlFor="password">Şifre</Label>
               <Input
                 id="password"
                 type="password"
@@ -155,11 +155,11 @@ export default function RegisterPage() {
                 disabled={isLoading}
               />
               <p className="text-xs text-muted-foreground">
-                En az 8 karakter, bir buyuk harf ve bir rakam icermelidir
+                En az 8 karakter, bir büyük harf ve bir rakam içermelidir
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Sifre Tekrar</Label>
+              <Label htmlFor="confirmPassword">Şifre Tekrar</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -170,15 +170,15 @@ export default function RegisterPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Kaydediliyor..." : "Kayit Ol"}
+              {isLoading ? "Kaydediliyor..." : "Kayıt Ol"}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Zaten hesabiniz var mi?{" "}
+            Zaten hesabınız var mı?{" "}
             <Link href="/login" className="text-primary hover:underline">
-              Giris Yap
+              Giriş Yap
             </Link>
           </p>
         </CardFooter>

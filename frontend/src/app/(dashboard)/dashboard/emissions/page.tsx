@@ -9,7 +9,7 @@ export default async function EmissionsPage() {
       <div>
         <h1 className="text-3xl font-bold">Emisyonlar</h1>
         <p className="text-muted-foreground">
-          Tesis emisyon verilerini yonetin
+          Tesis emisyon verilerini yönetin
         </p>
       </div>
       <EmissionListClient emissions={emissions} />

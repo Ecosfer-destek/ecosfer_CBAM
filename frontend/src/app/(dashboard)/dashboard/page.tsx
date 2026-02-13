@@ -17,9 +17,9 @@ export default async function DashboardPage() {
 
   const statCards = [
     {
-      title: "Sirketler",
+      title: "Şirketler",
       value: stats.companies,
-      description: "Toplam sirket",
+      description: "Toplam şirket",
       icon: Building2,
     },
     {
@@ -31,7 +31,7 @@ export default async function DashboardPage() {
     {
       title: "Emisyonlar",
       value: stats.emissions,
-      description: "Toplam emisyon kaydi",
+      description: "Toplam emisyon kaydı",
       icon: Flame,
     },
     {
@@ -53,7 +53,7 @@ export default async function DashboardPage() {
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <p className="text-muted-foreground">
-          Ecosfer SKDM Platform - Surdurulebilirlik Veri Yonetimi
+          Ecosfer SKDM Platform - Sürdürülebilirlik Veri Yönetimi
         </p>
       </div>
 
@@ -78,11 +78,11 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>Son Beyannameler</CardTitle>
-            <CardDescription>En son olusturulan beyannameler</CardDescription>
+            <CardDescription>En son oluşturulan beyannameler</CardDescription>
           </CardHeader>
           <CardContent>
             {activity.recentDeclarations.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Henuz beyanname yok</p>
+              <p className="text-sm text-muted-foreground">Henüz beyanname yok</p>
             ) : (
               <div className="space-y-3">
                 {activity.recentDeclarations.map((d) => (
@@ -109,11 +109,11 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <CardTitle>Son Raporlar</CardTitle>
-            <CardDescription>En son olusturulan raporlar</CardDescription>
+            <CardDescription>En son oluşturulan raporlar</CardDescription>
           </CardHeader>
           <CardContent>
             {activity.recentReports.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Henuz rapor yok</p>
+              <p className="text-sm text-muted-foreground">Henüz rapor yok</p>
             ) : (
               <div className="space-y-3">
                 {activity.recentReports.map((r) => (
@@ -123,7 +123,7 @@ export default async function DashboardPage() {
                   >
                     <div>
                       <p className="text-sm font-medium">
-                        {r.coverTitle || "Isimsiz Rapor"}
+                        {r.coverTitle || "İsimsiz Rapor"}
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {new Date(r.createdAt).toLocaleDateString("tr-TR")}
@@ -139,9 +139,9 @@ export default async function DashboardPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Hizli Erisim</CardTitle>
+          <CardTitle>Hızlı Erişim</CardTitle>
           <CardDescription>
-            CBAM Surdurulebilirlik Veri Yonetim Platformu
+            CBAM Sürdürülebilirlik Veri Yönetim Platformu
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -149,19 +149,19 @@ export default async function DashboardPage() {
             <div className="rounded-lg border p-4">
               <h3 className="font-semibold mb-1">Tesis Verileri</h3>
               <p className="text-sm text-muted-foreground">
-                Excel dosyalarinizi yukleyin veya tesis verilerini giris yapin.
+                Excel dosyalarınızı yükleyin veya tesis verilerini giriş yapın.
               </p>
             </div>
             <div className="rounded-lg border p-4">
-              <h3 className="font-semibold mb-1">Rapor Olustur</h3>
+              <h3 className="font-semibold mb-1">Rapor Oluştur</h3>
               <p className="text-sm text-muted-foreground">
-                CBAM beyannameleri ve PDF raporlari olusturun.
+                CBAM beyannameleri ve PDF raporları oluşturun.
               </p>
             </div>
             <div className="rounded-lg border p-4">
               <h3 className="font-semibold mb-1">AI Analiz</h3>
               <p className="text-sm text-muted-foreground">
-                Yapay zeka destekli emisyon analizi ve tahminleri gorun.
+                Yapay zeka destekli emisyon analizi ve tahminleri görün.
               </p>
             </div>
           </div>

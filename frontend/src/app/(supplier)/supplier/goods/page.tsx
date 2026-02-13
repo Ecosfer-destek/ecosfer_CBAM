@@ -57,7 +57,7 @@ export default function SupplierGoodsPage() {
 
   async function handleCreate() {
     if (!name.trim()) {
-      toast.error("Mal adi zorunludur");
+      toast.error("Mal adı zorunludur");
       return;
     }
     setIsCreating(true);
@@ -70,7 +70,7 @@ export default function SupplierGoodsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Mal olusturuldu");
+      toast.success("Mal oluşturuldu");
       setShowCreate(false);
       setName("");
       setCode("");
@@ -82,7 +82,7 @@ export default function SupplierGoodsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu mali silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu malı silmek istediğinizden emin misiniz?")) return;
     const result = await deleteSupplierGood(id);
     if (result.error) toast.error(result.error);
     else {
@@ -95,9 +95,9 @@ export default function SupplierGoodsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Mallarim</h1>
+          <h1 className="text-3xl font-bold">Mallarım</h1>
           <p className="text-muted-foreground">
-            CBAM kapsamindaki mallarinizi yonetin
+            CBAM kapsamındaki mallarınızı yönetin
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
@@ -113,11 +113,11 @@ export default function SupplierGoodsPage() {
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Mal Adi *</Label>
+                <Label>Mal Adı *</Label>
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="ornegin: Celik Levha"
+                  placeholder="örneğin: Çelik Levha"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -126,7 +126,7 @@ export default function SupplierGoodsPage() {
                   <Input
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    placeholder="ornegin: STL-001"
+                    placeholder="örneğin: STL-001"
                   />
                 </div>
                 <div className="space-y-2">
@@ -134,26 +134,26 @@ export default function SupplierGoodsPage() {
                   <Input
                     value={cnCode}
                     onChange={(e) => setCnCode(e.target.value)}
-                    placeholder="ornegin: 7208 10 00"
+                    placeholder="örneğin: 7208 10 00"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Aciklama</Label>
+                <Label>Açıklama</Label>
                 <Textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={2}
-                  placeholder="Mal hakkinda aciklama"
+                  placeholder="Mal hakkında açıklama"
                 />
               </div>
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                Iptal
+                İptal
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Olusturuluyor..." : "Olustur"}
+                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -172,11 +172,11 @@ export default function SupplierGoodsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mal Adi</TableHead>
+                <TableHead>Mal Adı</TableHead>
                 <TableHead>Kod</TableHead>
                 <TableHead>CN Kodu</TableHead>
                 <TableHead>Kategori</TableHead>
-                <TableHead className="text-right">Islemler</TableHead>
+                <TableHead className="text-right">İşlemler</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -186,7 +186,7 @@ export default function SupplierGoodsPage() {
                     colSpan={5}
                     className="text-center text-muted-foreground py-8"
                   >
-                    Henuz maliniz bulunmuyor
+                    Henüz malınız bulunmuyor
                   </TableCell>
                 </TableRow>
               ) : (

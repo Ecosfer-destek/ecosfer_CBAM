@@ -1,114 +1,114 @@
 # Changelog
 
-Ecosfer SKDM v2.0 surum gecmisi.
+Ecosfer SKDM v2.0 sürüm geçmişi.
 
 ## [2.0.0-rc1] - 2026-02-11
 
 ### Faz 4: UAT, Bug Fix & Production Deploy (Hafta 13-15)
 
-#### Hafta 13: Kritik Fix + UAT Test Senaryolari
-- **Guvenlik**: Token log temizligi (plaintext token loglama kaldirildi)
+#### Hafta 13: Kritik Fix + UAT Test Senaryoları
+- **Güvenlik**: Token log temizliği (plaintext token loglama kaldırıldı)
 - **CORS**: .NET ve Python servislerinde hardcoded origin -> env var
-- **Dashboard**: Gercek verilerle stat kartlari (async Server Component)
-- **Email**: Resend SDK ile tedarikci davet e-postalari (TR/EN/DE)
-- **E2E Testler**: 8 yeni test dosyasi, ~79 test senaryosu
+- **Dashboard**: Gerçek verilerle stat kartları (async Server Component)
+- **Email**: Resend SDK ile tedarikçi davet e-postaları (TR/EN/DE)
+- **E2E Testler**: 8 yeni test dosyası, ~79 test senaryosu
   - Auth setup (storageState), Company/Installation/Emission CRUD
   - Declaration wizard, Supplier portal, Reports, AI analysis
-- Playwright config guncelleme (setup project + dependencies)
+- Playwright config güncelleme (setup project + dependencies)
 
-#### Hafta 14: Bug Fix & Iyilestirme
-- **Supplier Survey**: Placeholder -> fonksiyonel admin sayfasi
+#### Hafta 14: Bug Fix & İyileştirme
+- **Supplier Survey**: Placeholder -> fonksiyonel admin sayfası
   - DataTable, durum filtreleme, detay dialog, onayla aksiyonu
-- **Reports**: Rapor detay gorunumu, PDF olustur butonu, tip secici
+- **Reports**: Rapor detay görünümü, PDF oluştur butonu, tip seçici
 - **Excel Export**: EPPlus ile 5-sheet export (A-E), .NET endpoint, proxy
 - **Logger**: Production structured JSON logging (Loki uyumlu)
-  - console.error -> logError donusumu (tum server actions & API routes)
-- **Python**: print -> structlog donusumu (narrative_service.py)
+  - console.error -> logError dönüşümü (tüm server actions & API routes)
+- **Python**: print -> structlog dönüşümü (narrative_service.py)
 - **Unit testler**: logger, email, dashboard actions testleri
 
 #### Hafta 15: Production Deploy
 - **SSL/TLS**: nginx.prod.conf (TLS 1.2/1.3, HSTS, CSP, OCSP stapling)
 - **SSL Setup**: Let's Encrypt certbot script
-- **DB Backup**: Gunluk/haftalik/manuel yedekleme (7+4 retention)
-- **DB Restore**: Yedekten geri yukleme scripti
+- **DB Backup**: Günlük/haftalık/manuel yedekleme (7+4 retention)
+- **DB Restore**: Yedekten geri yükleme scripti
 - **DB Migrate**: Production Prisma migrate deploy
-- **Env Validation**: Zorunlu var, varsayilan sifre, baglanti, SSL, disk kontrolu
-- **Health Check**: Post-deploy servis dogrulama (tum endpoint'ler + Docker)
+- **Env Validation**: Zorunlu var, varsayılan şifre, bağlantı, SSL, disk kontrolü
+- **Health Check**: Post-deploy servis doğrulama (tüm endpoint'ler + Docker)
 - **CI Pipeline**: E2E job eklendi (PostgreSQL service, Playwright, auth)
 - **DEPLOYMENT.md**: Production checklist (pre/deploy/post/rollback)
-- **Guvenlik auditi**: Secret tarama, tenant izolasyon, middleware dogrulama
+- **Güvenlik auditi**: Secret tarama, tenant izolasyon, middleware doğrulama
 
 ---
 
 ## [2.0.0-mvp] - 2026-02-11
 
-### Faz 1: Temel Altyapi ve CRUD (Hafta 1-4)
+### Faz 1: Temel Altyapı ve CRUD (Hafta 1-4)
 
 #### Hafta 1-2: Monorepo ve Auth
 - Next.js 16.1.6 + React 19 + TypeScript monorepo kurulumu
 - Prisma 7.3.0 ile 82 model PostgreSQL schema
 - shadcn/ui + Radix UI + Tailwind CSS 4 UI kit
-- Docker Compose development ortami (PostgreSQL 16 + Redis 7)
+- Docker Compose development ortamı (PostgreSQL 16 + Redis 7)
 - NextAuth.js v5 credentials authentication
-- 6 rol ile rol tabanli erisim kontrolu (RBAC)
+- 6 rol ile rol tabanlı erişim kontrolü (RBAC)
 - Multi-tenant izolasyon (27 tenant-scoped model)
-- Kullanici yonetimi (CRUD + sifre degistirme)
-- Zod v4 validasyon semalari (auth, company, emission, supplier, declaration)
+- Kullanıcı yönetimi (CRUD + şifre değiştirme)
+- Zod v4 validasyon şemaları (auth, company, emission, supplier, declaration)
 
-#### Hafta 3: Veri Yonetimi UI
-- TanStack Table v8 DataTable (siralama, filtreleme, sayfalama)
-- Company CRUD (sirket yonetimi)
-- Installation CRUD (tesis yonetimi)
+#### Hafta 3: Veri Yönetimi UI
+- TanStack Table v8 DataTable (sıralama, filtreleme, sayfalama)
+- Company CRUD (şirket yönetimi)
+- Installation CRUD (tesis yönetimi)
 - InstallationData 5-sekmeli form
-- Emission CRUD (SS/PFC/ES kosullu form)
-- Server Actions ile veri islemleri
+- Emission CRUD (SS/PFC/ES koşullu form)
+- Server Actions ile veri işlemleri
 
-#### Hafta 4: Ileri CRUD ve Seed Data
+#### Hafta 4: İleri CRUD ve Seed Data
 - Balance CRUD: FuelBalance, GhgBalance
 - Report CRUD
 - Declaration CRUD (CBAM beyannameleri)
-- CbamCertificate, CertificateSurrender (inline duzenleme)
-- FreeAllocationAdjustment (inline duzenleme)
-- MonitoringPlan, AuthorisationApplication (dogrulama sayfasi)
-- Kapsamli seed data: 39 ulke, 30 sehir, 26 ilce, 60+ CN kodu, birimler, roller
+- CbamCertificate, CertificateSurrender (inline düzenleme)
+- FreeAllocationAdjustment (inline düzenleme)
+- MonitoringPlan, AuthorisationApplication (doğrulama sayfası)
+- Kapsamlı seed data: 39 ülke, 30 şehir, 26 ilçe, 60+ CN kodu, birimler, roller
 
 ### Faz 2: Servisler ve Entegrasyon (Hafta 5-8)
 
 #### Hafta 5: Excel Import Servisi
 - .NET 9 Minimal API + EPPlus 7.5.2
-- 5-sheet CBAM sablon import (A_InstData, B_EmInst, C_Emissions&Energy, D_Processes, E_PurchPrec)
-- v1.0'dan 85+ hucre eslesmesi birebir migre edildi
-- L54/L65/L66 bug fix (3 ayri alan: direct/heat/waste)
-- SafeParseDecimal/ForceParseDecimal/SafeGetText helper'lari
-- Next.js API proxy + ExcelUpload UI bileseni
+- 5-sheet CBAM şablon import (A_InstData, B_EmInst, C_Emissions&Energy, D_Processes, E_PurchPrec)
+- v1.0'dan 85+ hücre eşleşmesi birebir migre edildi
+- L54/L65/L66 bug fix (3 ayrı alan: direct/heat/waste)
+- SafeParseDecimal/ForceParseDecimal/SafeGetText helper'ları
+- Next.js API proxy + ExcelUpload UI bileşeni
 
-#### Hafta 6: XML/PDF ve Beyanname Sihirbazi
-- XmlGeneratorService: CBAM Declaration XML (7 bolum)
-- XsdValidatorService: XSD dogrulama + is kurali kontrolu
-- SHA-256 butunluk hash
+#### Hafta 6: XML/PDF ve Beyanname Sihirbazı
+- XmlGeneratorService: CBAM Declaration XML (7 bölüm)
+- XsdValidatorService: XSD doğrulama + iş kuralı kontrolü
+- SHA-256 bütünlük hash
 - PdfReportService (QuestPDF): 5 rapor tipi (TR/EN/DE)
-- Beyanname Sihirbazi: 7 adimli wizard (Zustand)
+- Beyanname Sihirbazı: 7 adımlı wizard (Zustand)
 - Next.js API proxy'leri (xml/generate, xml/download, reports/pdf)
 
-#### Hafta 7: i18n ve Tedarikci Yonetimi
+#### Hafta 7: i18n ve Tedarikçi Yönetimi
 - next-intl v4.8.2: cookie-based locale (TR/EN/DE)
 - Supplier Prisma modelleri (email, phone, invitation token)
-- Tedarikci CRUD + davet sistemi (32-byte hex token)
-- Tedarikci Portali: dashboard, anketler, mallar, profil
-- Admin tedarikci yonetim sayfasi
+- Tedarikçi CRUD + davet sistemi (32-byte hex token)
+- Tedarikçi Portalı: dashboard, anketler, mallar, profil
+- Admin tedarikçi yönetim sayfası
 
 #### Hafta 8: AI/ML Servisi
 - Python FastAPI AI servisi (3 endpoint)
 - Emisyon Tahmini: XGBoost + LinearRegression fallback
-- Anomali Tespiti: IsolationForest + kural tabanli
-- Akilli Raporlama: LangChain + Claude/GPT-4 + sablon fallback
-- SQLAlchemy DB baglantisi
-- AI Dashboard (3 sekmeli): Recharts grafik, tesis secici
-- Tenant ayarlari sayfasi
+- Anomali Tespiti: IsolationForest + kural tabanlı
+- Akıllı Raporlama: LangChain + Claude/GPT-4 + şablon fallback
+- SQLAlchemy DB bağlantısı
+- AI Dashboard (3 sekmeli): Recharts grafik, tesis seçici
+- Tenant ayarları sayfası
 
 ### Faz 3: Kalite ve DevOps (Hafta 9-12)
 
-#### Hafta 9: Test Altyapisi
+#### Hafta 9: Test Altyapısı
 - Frontend: Vitest 4.0.18 + React Testing Library + Playwright + MSW (125 unit + 10 E2E test)
 - .NET: xUnit 2.9.3 + FluentAssertions 7.0 + Moq 4.20 (80 test)
 - Python: pytest 8.3.4 + pytest-asyncio + pytest-cov (91 test)
@@ -123,36 +123,36 @@ Ecosfer SKDM v2.0 surum gecmisi.
 - .dockerignore, .env.example
 
 #### Hafta 11: Monitoring ve Performance
-- Prometheus v3.2.1: 5 scrape job, 30 gun retention
+- Prometheus v3.2.1: 5 scrape job, 30 gün retention
 - Grafana v11.5.2: 3 auto-provisioned dashboard
-- Loki v3.4.2: log aggregation, 30 gun retention
+- Loki v3.4.2: log aggregation, 30 gün retention
 - Promtail v3.4.2: Docker container log shipper
 - Node Exporter v1.9.0: host metrikleri
-- 9 Prometheus alert kurali
+- 9 Prometheus alert kuralı
 - .NET: prometheus-net 8.2.1 + Serilog 9.0.0 (JSON structured logging)
 - Python: prometheus-client 0.22.0 + structlog 25.1.0
 - Next.js: security/cache headers, Web Vitals, /api/health, /api/metrics
 - Nginx: JSON log format, Grafana proxy
 
-#### Hafta 12: Dokumantasyon
-- README.md: Proje genel bakis, tech stack, hizli baslangic
-- API.md: Tum REST endpoint'leri (3 servis)
+#### Hafta 12: Dokümantasyon
+- README.md: Proje genel bakış, tech stack, hızlı başlangıç
+- API.md: Tüm REST endpoint'leri (3 servis)
 - DEPLOYMENT.md: Production deployment ve operasyon rehberi
-- ARCHITECTURE.md: Sistem mimarisi ve tasarim kararlari
-- USER_GUIDE.md: Kullanici kilavuzu (TR)
-- CHANGELOG.md: Surum gecmisi
+- ARCHITECTURE.md: Sistem mimarisi ve tasarım kararları
+- USER_GUIDE.md: Kullanıcı kılavuzu (TR)
+- CHANGELOG.md: Sürüm geçmişi
 
-### Teknik Istatistikler
+### Teknik İstatistikler
 
-| Metrik | Deger |
+| Metrik | Değer |
 |--------|-------|
 | Prisma Modeller | 82 |
 | Frontend Sayfalar | 25+ |
 | Server Actions | 40+ |
 | API Endpoint | 30+ |
-| Test Sayisi | 390+ |
+| Test Sayısı | 390+ |
 | TypeScript Hata | 0 |
-| Dil Destegi | TR/EN/DE |
+| Dil Desteği | TR/EN/DE |
 | Docker Servis | 11 |
 | Grafana Dashboard | 3 |
 | Prometheus Alert | 9 |

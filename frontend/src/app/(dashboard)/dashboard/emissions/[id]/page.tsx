@@ -19,7 +19,7 @@ export default async function EmissionDetailPage({
       <div>
         <h1 className="text-3xl font-bold">Emisyon Detay</h1>
         <p className="text-muted-foreground">
-          {emission.sourceStreamName || "Isimsiz"} -{" "}
+          {emission.sourceStreamName || "İsimsiz"} -{" "}
           {emission.emissionType?.code || ""}
         </p>
       </div>

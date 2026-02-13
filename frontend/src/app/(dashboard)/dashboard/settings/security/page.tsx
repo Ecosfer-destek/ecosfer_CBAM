@@ -32,11 +32,11 @@ export default function SecuritySettingsPage() {
   async function handleChangePassword(e: React.FormEvent) {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      toast.error("Yeni sifreler eslesmemektedir");
+      toast.error("Yeni şifreler eşleşmemektedir");
       return;
     }
     if (newPassword.length < 8) {
-      toast.error("Sifre en az 8 karakter olmalidir");
+      toast.error("Şifre en az 8 karakter olmalıdır");
       return;
     }
     setIsChanging(true);
@@ -48,7 +48,7 @@ export default function SecuritySettingsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Sifre basariyla degistirildi");
+      toast.success("Şifre başarıyla değiştirildi");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
@@ -59,9 +59,9 @@ export default function SecuritySettingsPage() {
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
-        <h1 className="text-3xl font-bold">Guvenlik</h1>
+        <h1 className="text-3xl font-bold">Güvenlik</h1>
         <p className="text-muted-foreground">
-          Guvenlik ayarlari ve erisim kontrolu
+          Güvenlik ayarları ve erişim kontrolü
         </p>
       </div>
 
@@ -70,14 +70,14 @@ export default function SecuritySettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Key className="h-5 w-5" />
-            Sifre Degistir
+            Şifre Değiştir
           </CardTitle>
-          <CardDescription>Hesap sifrenizi guncelleyin</CardDescription>
+          <CardDescription>Hesap şifrenizi güncelleyin</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleChangePassword} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="currentPassword">Mevcut Sifre</Label>
+              <Label htmlFor="currentPassword">Mevcut Şifre</Label>
               <Input
                 id="currentPassword"
                 type="password"
@@ -88,7 +88,7 @@ export default function SecuritySettingsPage() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="newPassword">Yeni Sifre</Label>
+                <Label htmlFor="newPassword">Yeni Şifre</Label>
                 <Input
                   id="newPassword"
                   type="password"
@@ -99,7 +99,7 @@ export default function SecuritySettingsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmNewPassword">Yeni Sifre Tekrar</Label>
+                <Label htmlFor="confirmNewPassword">Yeni Şifre Tekrar</Label>
                 <Input
                   id="confirmNewPassword"
                   type="password"
@@ -111,7 +111,7 @@ export default function SecuritySettingsPage() {
               </div>
             </div>
             <Button type="submit" disabled={isChanging}>
-              {isChanging ? "Degistiriliyor..." : "Sifre Degistir"}
+              {isChanging ? "Değiştiriliyor..." : "Şifre Değiştir"}
             </Button>
           </form>
         </CardContent>
@@ -131,7 +131,7 @@ export default function SecuritySettingsPage() {
             <div className="flex items-center justify-between border rounded-lg p-3">
               <div>
                 <p className="font-medium text-sm">
-                  {user?.name || "Kullanici"}
+                  {user?.name || "Kullanıcı"}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {user?.email}
@@ -153,20 +153,20 @@ export default function SecuritySettingsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5" />
-            Guvenlik Tercihleri
+            Güvenlik Tercihleri
           </CardTitle>
           <CardDescription>
-            Ek guvenlik yapilandirmalari
+            Ek güvenlik yapılandırmaları
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium">
-                Oturum Zaman Asimi
+                Oturum Zaman Aşımı
               </p>
               <p className="text-xs text-muted-foreground">
-                Belirli sure sonra otomatik cikis
+                Belirli süre sonra otomatik çıkış
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -177,24 +177,24 @@ export default function SecuritySettingsPage() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium">
-                Giris Bildirimleri
+                Giriş Bildirimleri
               </p>
               <p className="text-xs text-muted-foreground">
-                Yeni giris yapildiginda e-posta bildirim
+                Yeni giriş yapıldığında e-posta bildirim
               </p>
             </div>
-            <Badge variant="secondary">Kapali</Badge>
+            <Badge variant="secondary">Kapalı</Badge>
           </div>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium">
-                Iki Faktorlu Dogrulama (2FA)
+                İki Faktörlü Doğrulama (2FA)
               </p>
               <p className="text-xs text-muted-foreground">
-                Ek guvenlik katmani (yakin zamanda)
+                Ek güvenlik katmanı (yakın zamanda)
               </p>
             </div>
-            <Badge variant="secondary">Yakin Zamanda</Badge>
+            <Badge variant="secondary">Yakın Zamanda</Badge>
           </div>
         </CardContent>
       </Card>

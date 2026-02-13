@@ -11,31 +11,31 @@ import { User, Users, Building2, Shield, Globe } from "lucide-react";
 const settingsItems = [
   {
     title: "Profil",
-    description: "Hesap bilgilerinizi goruntuleyin ve sifrenizi degistirin",
+    description: "Hesap bilgilerinizi görüntüleyin ve şifrenizi değiştirin",
     href: "/dashboard/settings/profile",
     icon: User,
   },
   {
-    title: "Kullanici Yonetimi",
-    description: "Sirketinizdeki kullanicilari yonetin",
+    title: "Kullanıcı Yönetimi",
+    description: "Şirketinizdeki kullanıcıları yönetin",
     href: "/dashboard/settings/users",
     icon: Users,
   },
   {
-    title: "Tenant Ayarlari",
-    description: "Organizasyon bilgileri, dil ve bolgesel ayarlar",
+    title: "Tenant Ayarları",
+    description: "Organizasyon bilgileri, dil ve bölgesel ayarlar",
     href: "/dashboard/settings/tenant",
     icon: Globe,
   },
   {
-    title: "Sirket Ayarlari",
-    description: "Sirket bilgilerini guncelleyin",
+    title: "Şirket Ayarları",
+    description: "Şirket bilgilerini güncelleyin",
     href: "/dashboard/companies",
     icon: Building2,
   },
   {
-    title: "Guvenlik",
-    description: "Sifre degisikligi, oturum yonetimi ve erisim kontrolleri",
+    title: "Güvenlik",
+    description: "Şifre değişikliği, oturum yönetimi ve erişim kontrolleri",
     href: "/dashboard/settings/security",
     icon: Shield,
   },
@@ -47,7 +47,7 @@ export default function SettingsPage() {
       <div>
         <h1 className="text-3xl font-bold">Ayarlar</h1>
         <p className="text-muted-foreground">
-          Platform ayarlarini yonetin
+          Platform ayarlarını yönetin
         </p>
       </div>
 

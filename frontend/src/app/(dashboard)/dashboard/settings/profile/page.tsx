@@ -17,12 +17,12 @@ import { changePassword } from "@/actions/auth";
 import { toast } from "sonner";
 
 const ROLE_LABELS: Record<string, string> = {
-  SUPER_ADMIN: "Sistem Yoneticisi",
-  COMPANY_ADMIN: "Sirket Yoneticisi",
-  OPERATOR: "Operator",
-  SUPPLIER: "Tedarikci",
-  CBAM_DECLARANT: "CBAM Beyancisi",
-  VERIFIER: "Dogrulayici",
+  SUPER_ADMIN: "Sistem Yöneticisi",
+  COMPANY_ADMIN: "Şirket Yöneticisi",
+  OPERATOR: "Operatör",
+  SUPPLIER: "Tedarikçi",
+  CBAM_DECLARANT: "CBAM Beyancısı",
+  VERIFIER: "Doğrulayıcı",
 };
 
 export default function ProfilePage() {
@@ -48,7 +48,7 @@ export default function ProfilePage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Sifre basariyla degistirildi");
+      toast.success("Şifre başarıyla değiştirildi");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
@@ -63,13 +63,13 @@ export default function ProfilePage() {
     <div className="space-y-6 max-w-2xl">
       <div>
         <h1 className="text-3xl font-bold">Profil</h1>
-        <p className="text-muted-foreground">Hesap bilgilerinizi goruntuleyin</p>
+        <p className="text-muted-foreground">Hesap bilgilerinizi görüntüleyin</p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle>Hesap Bilgileri</CardTitle>
-          <CardDescription>Kisisel bilgileriniz</CardDescription>
+          <CardDescription>Kişisel bilgileriniz</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -88,7 +88,7 @@ export default function ProfilePage() {
               </p>
             </div>
             <div>
-              <Label className="text-muted-foreground">Sirket</Label>
+              <Label className="text-muted-foreground">Şirket</Label>
               <p className="font-medium">{user?.tenantName}</p>
             </div>
           </div>
@@ -99,15 +99,15 @@ export default function ProfilePage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Sifre Degistir</CardTitle>
+          <CardTitle>Şifre Değiştir</CardTitle>
           <CardDescription>
-            Hesap sifrenizi guncelleyin
+            Hesap şifrenizi güncelleyin
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleChangePassword} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="currentPassword">Mevcut Sifre</Label>
+              <Label htmlFor="currentPassword">Mevcut Şifre</Label>
               <Input
                 id="currentPassword"
                 type="password"
@@ -117,7 +117,7 @@ export default function ProfilePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="newPassword">Yeni Sifre</Label>
+              <Label htmlFor="newPassword">Yeni Şifre</Label>
               <Input
                 id="newPassword"
                 type="password"
@@ -127,7 +127,7 @@ export default function ProfilePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmNewPassword">Yeni Sifre Tekrar</Label>
+              <Label htmlFor="confirmNewPassword">Yeni Şifre Tekrar</Label>
               <Input
                 id="confirmNewPassword"
                 type="password"
@@ -137,7 +137,7 @@ export default function ProfilePage() {
               />
             </div>
             <Button type="submit" disabled={isChanging}>
-              {isChanging ? "Degistiriliyor..." : "Sifre Degistir"}
+              {isChanging ? "Değiştiriliyor..." : "Şifre Değiştir"}
             </Button>
           </form>
         </CardContent>

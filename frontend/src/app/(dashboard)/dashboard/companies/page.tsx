@@ -7,9 +7,9 @@ export default async function CompaniesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Sirketler</h1>
+        <h1 className="text-3xl font-bold">Şirketler</h1>
         <p className="text-muted-foreground">
-          CBAM kapsamindaki sirketleri yonetin
+          CBAM kapsamındaki şirketleri yönetin
         </p>
       </div>
       <CompanyListClient companies={companies} />

@@ -24,7 +24,7 @@ function ActionsCell({ installation }: { installation: Installation }) {
   const router = useRouter();
 
   async function handleDelete() {
-    if (!confirm(`"${installation.name}" tesisini silmek istediginizden emin misiniz?`))
+    if (!confirm(`"${installation.name}" tesisini silmek istediğinizden emin misiniz?`))
       return;
     const result = await deleteInstallation(installation.id);
     if (result.error) {
@@ -58,13 +58,13 @@ const columns: ColumnDef<Installation>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Tesis Adi" />
+      <DataTableColumnHeader column={column} title="Tesis Adı" />
     ),
   },
   {
     accessorKey: "company",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Sirket" />
+      <DataTableColumnHeader column={column} title="Şirket" />
     ),
     cell: ({ row }) => (
       <Link
@@ -77,19 +77,19 @@ const columns: ColumnDef<Installation>[] = [
   },
   {
     accessorKey: "country",
-    header: "Ulke",
+    header: "Ülke",
     cell: ({ row }) => (
       <Badge variant="outline">{row.original.country?.name || "-"}</Badge>
     ),
   },
   {
     accessorKey: "city",
-    header: "Sehir",
+    header: "Şehir",
     cell: ({ row }) => row.original.city?.name || "-",
   },
   {
     id: "actions",
-    header: () => <div className="text-right">Islemler</div>,
+    header: () => <div className="text-right">İşlemler</div>,
     cell: ({ row }) => <ActionsCell installation={row.original} />,
   },
 ];

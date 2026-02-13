@@ -48,8 +48,8 @@ import { toast } from "sonner";
 
 const STATUS_LABELS: Record<string, string> = {
   DRAFT: "Taslak",
-  SUBMITTED: "Gonderildi",
-  APPROVED: "Onaylandi",
+  SUBMITTED: "Gönderildi",
+  APPROVED: "Onaylandı",
   REJECTED: "Reddedildi",
 };
 
@@ -107,7 +107,7 @@ export default function SupplierSurveysPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Anket olusturuldu");
+      toast.success("Anket oluşturuldu");
       setShowCreate(false);
       resetForm();
       reload();
@@ -134,13 +134,13 @@ export default function SupplierSurveysPage() {
     const result = await submitSupplierSurvey(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Anket gonderildi");
+      toast.success("Anket gönderildi");
       reload();
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu anketi silmek istediginizden emin misiniz?")) return;
+    if (!confirm("Bu anketi silmek istediğinizden emin misiniz?")) return;
     const result = await deleteSupplierSurvey(id);
     if (result.error) toast.error(result.error);
     else {
@@ -155,7 +155,7 @@ export default function SupplierSurveysPage() {
         <div>
           <h1 className="text-3xl font-bold">Emisyon Anketleri</h1>
           <p className="text-muted-foreground">
-            CBAM emisyon verilerinizi gonderin
+            CBAM emisyon verilerinizi gönderin
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
@@ -174,7 +174,7 @@ export default function SupplierSurveysPage() {
                 <Label>Mal</Label>
                 <Select value={goodId} onValueChange={setGoodId}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Mal secin (opsiyonel)" />
+                    <SelectValue placeholder="Mal seçin (opsiyonel)" />
                   </SelectTrigger>
                   <SelectContent>
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -187,47 +187,47 @@ export default function SupplierSurveysPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Emisyon Faktoru Kaynagi</Label>
+                <Label>Emisyon Faktörü Kaynağı</Label>
                 <Input
                   value={emissionFactorSource}
                   onChange={(e) => setEmissionFactorSource(e.target.value)}
-                  placeholder="ornegin: Varsayilan deger, Olcum"
+                  placeholder="örneğin: Varsayılan değer, Ölçüm"
                 />
               </div>
               <div className="space-y-2">
-                <Label>Donem Baslangic</Label>
+                <Label>Dönem Başlangıç</Label>
                 <Input type="date" value={periodStart} onChange={(e) => setPeriodStart(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Donem Bitis</Label>
+                <Label>Dönem Bitiş</Label>
                 <Input type="date" value={periodEnd} onChange={(e) => setPeriodEnd(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Spesifik Gomulu Emisyon (tCO2e/t)</Label>
+                <Label>Spesifik Gömülü Emisyon (tCO2e/t)</Label>
                 <Input type="number" step="0.0001" value={specificEmissions} onChange={(e) => setSpecificEmissions(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Dogrudan Emisyon (tCO2e)</Label>
+                <Label>Doğrudan Emisyon (tCO2e)</Label>
                 <Input type="number" step="0.0001" value={directEmissions} onChange={(e) => setDirectEmissions(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Dolayli Emisyon (tCO2e)</Label>
+                <Label>Dolaylı Emisyon (tCO2e)</Label>
                 <Input type="number" step="0.0001" value={indirectEmissions} onChange={(e) => setIndirectEmissions(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Uretim Hacmi (ton)</Label>
+                <Label>Üretim Hacmi (ton)</Label>
                 <Input type="number" step="0.01" value={productionVolume} onChange={(e) => setProductionVolume(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Elektrik Tuketimi (MWh)</Label>
+                <Label>Elektrik Tüketimi (MWh)</Label>
                 <Input type="number" step="0.01" value={electricityConsumption} onChange={(e) => setElectricityConsumption(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Isi Tuketimi (TJ)</Label>
+                <Label>Isı Tüketimi (TJ)</Label>
                 <Input type="number" step="0.0001" value={heatConsumption} onChange={(e) => setHeatConsumption(e.target.value)} />
               </div>
               <div className="col-span-2 space-y-2">
-                <Label>Izleme Metodolojisi</Label>
+                <Label>İzleme Metodolojisi</Label>
                 <Input value={methodology} onChange={(e) => setMethodology(e.target.value)} />
               </div>
               <div className="col-span-2 space-y-2">
@@ -236,9 +236,9 @@ export default function SupplierSurveysPage() {
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowCreate(false)}>Iptal</Button>
+              <Button variant="outline" onClick={() => setShowCreate(false)}>İptal</Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Olusturuluyor..." : "Olustur"}
+                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -258,18 +258,18 @@ export default function SupplierSurveysPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Mal</TableHead>
-                <TableHead>Donem</TableHead>
+                <TableHead>Dönem</TableHead>
                 <TableHead>Spesifik Em.</TableHead>
-                <TableHead>Dogrudan Em.</TableHead>
+                <TableHead>Doğrudan Em.</TableHead>
                 <TableHead>Durum</TableHead>
-                <TableHead className="text-right">Islemler</TableHead>
+                <TableHead className="text-right">İşlemler</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {surveys.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                    Henuz anketiniz bulunmuyor
+                    Henüz anketiniz bulunmuyor
                   </TableCell>
                 </TableRow>
               ) : (
@@ -312,7 +312,7 @@ export default function SupplierSurveysPage() {
                             onClick={() => handleSubmit(s.id)}
                           >
                             <Send className="h-3 w-3 mr-1" />
-                            Gonder
+                            Gönder
                           </Button>
                         )}
                         <Button

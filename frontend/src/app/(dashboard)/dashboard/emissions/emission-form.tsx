@@ -108,7 +108,7 @@ export function EmissionForm({
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success(isEditing ? "Emisyon guncellendi" : "Emisyon olusturuldu");
+      toast.success(isEditing ? "Emisyon güncellendi" : "Emisyon oluşturuldu");
       if (defaultInstallationDataId) {
         router.push(
           `/dashboard/installation-data/${defaultInstallationDataId}`
@@ -128,13 +128,13 @@ export function EmissionForm({
         <CardHeader>
           <CardTitle>Genel Bilgiler</CardTitle>
           <CardDescription>
-            Emisyon kaynagi ve yontem bilgilerini girin
+            Emisyon kaynağı ve yöntem bilgilerini girin
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Kaynak Akisi Adi</Label>
+              <Label>Kaynak Akışı Adı</Label>
               <Input {...register("sourceStreamName")} />
             </div>
             <div className="space-y-2">
@@ -150,7 +150,7 @@ export function EmissionForm({
                 onValueChange={(v) => setValue("emissionTypeId", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Emisyon tipi secin" />
+                  <SelectValue placeholder="Emisyon tipi seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {emissionTypes.map((t) => (
@@ -163,13 +163,13 @@ export function EmissionForm({
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Emisyon Yontemi</Label>
+              <Label>Emisyon Yöntemi</Label>
               <Select
                 value={watch("emissionMethodId") || ""}
                 onValueChange={(v) => setValue("emissionMethodId", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Yontem secin" />
+                  <SelectValue placeholder="Yöntem seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {emissionMethods.map((m) => (
@@ -181,13 +181,13 @@ export function EmissionForm({
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Emisyon Yontemi 2</Label>
+              <Label>Emisyon Yöntemi 2</Label>
               <Select
                 value={watch("emissionMethod2Id") || ""}
                 onValueChange={(v) => setValue("emissionMethod2Id", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Yontem 2" />
+                  <SelectValue placeholder="Yöntem 2" />
                 </SelectTrigger>
                 <SelectContent>
                   {emissionMethods.map((m) => (
@@ -206,20 +206,20 @@ export function EmissionForm({
       {(isSS || !emissionTypeId) && (
         <Card>
           <CardHeader>
-            <CardTitle>SS - Aktivite Verisi ve Faktorler</CardTitle>
+            <CardTitle>SS - Aktivite Verisi ve Faktörler</CardTitle>
             <CardDescription>
-              Kaynak Akisi (PFC Haric): AD, NCV, EF, CC, OxF, ConvF, BioC
+              Kaynak Akışı (PFC Hariç): AD, NCV, EF, CC, OxF, ConvF, BioC
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <DecimalInput label="AD (Aktivite Verisi)" name="adActivityData" register={register} />
-              <DecimalInput label="NCV (Net Kalorifer Degeri)" name="ncvNetCalorificValue" register={register} />
-              <DecimalInput label="EF (Emisyon Faktoru)" name="efEmissionFactor" register={register} />
-              <DecimalInput label="CC (Karbon Icerigi)" name="ccCarbonContent" register={register} />
-              <DecimalInput label="OxF (Oksidasyon Faktoru)" name="oxfOxidationFactor" register={register} />
-              <DecimalInput label="ConvF (Donusum Faktoru)" name="convfConversionFactor" register={register} />
-              <DecimalInput label="BioC (Biyokutle Icerigi)" name="biocBiomassContent" register={register} />
+              <DecimalInput label="NCV (Net Kalorifer Değeri)" name="ncvNetCalorificValue" register={register} />
+              <DecimalInput label="EF (Emisyon Faktörü)" name="efEmissionFactor" register={register} />
+              <DecimalInput label="CC (Karbon İçeriği)" name="ccCarbonContent" register={register} />
+              <DecimalInput label="OxF (Oksidasyon Faktörü)" name="oxfOxidationFactor" register={register} />
+              <DecimalInput label="ConvF (Dönüşüm Faktörü)" name="convfConversionFactor" register={register} />
+              <DecimalInput label="BioC (Biyokütle İçeriği)" name="biocBiomassContent" register={register} />
             </div>
           </CardContent>
         </Card>
@@ -229,15 +229,15 @@ export function EmissionForm({
       {isPFC && (
         <Card>
           <CardHeader>
-            <CardTitle>PFC - Perfluorokarbon Emisyonlari</CardTitle>
+            <CardTitle>PFC - Perfluorokarbon Emisyonları</CardTitle>
             <CardDescription>
-              Frekans, Sure, SEF, AEO, CE, OVC, F_C2F6, GWP
+              Frekans, Süre, SEF, AEO, CE, OVC, F_C2F6, GWP
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <DecimalInput label="Frekans (a)" name="aFrequency" register={register} />
-              <DecimalInput label="Sure (a)" name="aDuration" register={register} />
+              <DecimalInput label="Süre (a)" name="aDuration" register={register} />
               <DecimalInput label="SEF CF4 (a)" name="aSefCf4" register={register} />
               <DecimalInput label="AEO (b)" name="bAeo" register={register} />
               <DecimalInput label="CE (b)" name="bCe" register={register} />
@@ -261,30 +261,30 @@ export function EmissionForm({
       {isES && (
         <Card>
           <CardHeader>
-            <CardTitle>ES (MBA) - Olcum Bazli Yaklasim</CardTitle>
+            <CardTitle>ES (MBA) - Ölçüm Bazlı Yaklaşım</CardTitle>
             <CardDescription>
-              GHG konsantrasyonu, calisma saatleri, baca gazi akisi
+              GHG konsantrasyonu, çalışma saatleri, baca gazı akışı
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <DecimalInput
-                label="GHG Konsantrasyon Ortalamasi"
+                label="GHG Konsantrasyon Ortalaması"
                 name="hourlyGhgConcAverage"
                 register={register}
               />
               <DecimalInput
-                label="Calisma Saatleri"
+                label="Çalışma Saatleri"
                 name="hoursOperating"
                 register={register}
               />
               <DecimalInput
-                label="Baca Gazi Akis Ortalamasi"
+                label="Baca Gazı Akış Ortalaması"
                 name="flueGasFlowAverage"
                 register={register}
               />
               <DecimalInput
-                label="Yillik GHG Miktari"
+                label="Yıllık GHG Miktarı"
                 name="annualAmountOfGhg"
                 register={register}
               />
@@ -300,11 +300,11 @@ export function EmissionForm({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <DecimalInput label="Toplama Verimliligi" name="collectionEfficiency" register={register} />
+            <DecimalInput label="Toplama Verimliliği" name="collectionEfficiency" register={register} />
             <DecimalInput label="CO2e Fosil" name="co2eFossil" register={register} />
             <DecimalInput label="CO2e Bio" name="co2eBio" register={register} />
-            <DecimalInput label="Enerji Icerik Bio (TJ)" name="energyContentBioTJ" register={register} />
-            <DecimalInput label="Enerji Icerik (TJ)" name="energyContentTJ" register={register} />
+            <DecimalInput label="Enerji İçerik Bio (TJ)" name="energyContentBioTJ" register={register} />
+            <DecimalInput label="Enerji İçerik (TJ)" name="energyContentTJ" register={register} />
             <DecimalInput label="GWP tCO2e" name="gwpTco2e" register={register} />
           </div>
         </CardContent>
@@ -315,14 +315,14 @@ export function EmissionForm({
           {isSubmitting && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}
-          {isEditing ? "Guncelle" : "Olustur"}
+          {isEditing ? "Güncelle" : "Oluştur"}
         </Button>
         <Button
           type="button"
           variant="outline"
           onClick={() => router.back()}
         >
-          Iptal
+          İptal
         </Button>
       </div>
     </form>
