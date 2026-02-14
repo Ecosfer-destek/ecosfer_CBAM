@@ -102,17 +102,17 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
     ghgTypes: ["CO2"],
     euRegulationRef: "EU 2023/1773 Annex III, Section 3",
     company: {
-      name: "Anatolya Cimento A.S.",
-      officialName: "Anatolya Cimento Sanayi ve Ticaret A.S.",
+      name: "Anatolya Çimento A.Ş.",
+      officialName: "Anatolya Çimento Sanayi ve Ticaret A.Ş.",
       countryCode: "TR",
-      address: "Organize Sanayi Bolgesi 1. Cadde No:15",
-      economicActivity: "Cimento uretimi (NACE 23.51)",
+      address: "Organize Sanayi Bölgesi 1. Cadde No:15",
+      economicActivity: "Çimento üretimi (NACE 23.51)",
       email: "info@anatolyacimento.com.tr",
       cityName: "Ankara",
     },
     installation: {
-      name: "Anatolya Cimento - Cankiri Fabrikasi",
-      address: "Cankiri Organize Sanayi Bolgesi",
+      name: "Anatolya Çimento - Çankırı Fabrikası",
+      address: "Çankırı Organize Sanayi Bölgesi",
       latitude: "40.6013",
       longitude: "33.6134",
       countryCode: "TR",
@@ -123,7 +123,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       productionRoutes: ["DRY"],
       emissions: [
         {
-          sourceStreamName: "Dogalgaz (Klinker Firini)",
+          sourceStreamName: "Doğalgaz (Klinker Fırını)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -161,7 +161,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: null,
         },
         {
-          sourceStreamName: "Petrol Koku (Alternatif Yakit)",
+          sourceStreamName: "Petrol Koku (Alternatif Yakıt)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -182,7 +182,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       fuelBalances: [
         {
-          name: "Dogalgaz",
+          name: "Doğalgaz",
           totalFuelInput: 2160,
           directFuelForCbamGoods: 1944,
           fuelForElectricity: 0,
@@ -214,7 +214,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       productionProcesses: [
         {
-          name: "Klinker Uretimi (Kuru Proses)",
+          name: "Klinker Üretimi (Kuru Proses)",
           goodsCategoryCode: "CEMENT",
           totalProduction: 800000,
           producedForMarket: 720000,
@@ -236,17 +236,17 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
     ghgTypes: ["CO2"],
     euRegulationRef: "EU 2023/1773 Annex III, Section 4",
     company: {
-      name: "Karadeniz Celik A.S.",
-      officialName: "Karadeniz Celik Sanayi ve Ticaret A.S.",
+      name: "Karadeniz Çelik A.Ş.",
+      officialName: "Karadeniz Çelik Sanayi ve Ticaret A.Ş.",
       countryCode: "TR",
-      address: "Kocaeli Sanayi Bolgesi B Blok No:42",
-      economicActivity: "Celik uretimi (NACE 24.10)",
+      address: "Kocaeli Sanayi Bölgesi B Blok No:42",
+      economicActivity: "Çelik üretimi (NACE 24.10)",
       email: "info@karadenizcelik.com.tr",
       cityName: "Kocaeli",
     },
     installation: {
-      name: "Karadeniz Celik - Gebze EAF Tesisi",
-      address: "Gebze Organize Sanayi Bolgesi",
+      name: "Karadeniz Çelik - Gebze EAF Tesisi",
+      address: "Gebze Organize Sanayi Bölgesi",
       latitude: "40.7988",
       longitude: "29.4314",
       countryCode: "TR",
@@ -257,7 +257,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       productionRoutes: ["EAF"],
       emissions: [
         {
-          sourceStreamName: "Elektrik Ark Firini - Elektrot",
+          sourceStreamName: "Elektrik Ark Fırını - Elektrot",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -276,7 +276,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: null,
         },
         {
-          sourceStreamName: "Dogalgaz (On Isitma)",
+          sourceStreamName: "Doğalgaz (Ön Isıtma)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -295,7 +295,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: 384,
         },
         {
-          sourceStreamName: "Kirechtasi (Fluks)",
+          sourceStreamName: "Kireçtaşı (Flaks)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -316,7 +316,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       fuelBalances: [
         {
-          name: "Dogalgaz",
+          name: "Doğalgaz",
           totalFuelInput: 384,
           directFuelForCbamGoods: 346,
           fuelForElectricity: 0,
@@ -339,7 +339,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       productionProcesses: [
         {
-          name: "EAF Celik Uretimi",
+          name: "EAF Çelik Üretimi",
           goodsCategoryCode: "IRON_STEEL",
           totalProduction: 250000,
           producedForMarket: 230000,
@@ -361,28 +361,28 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
     ghgTypes: ["CO2", "PFC"],
     euRegulationRef: "EU 2023/1773 Annex III, Section 5",
     company: {
-      name: "Ege Aluminyum A.S.",
-      officialName: "Ege Aluminyum Sanayi ve Ticaret A.S.",
+      name: "Ege Alüminyum A.Ş.",
+      officialName: "Ege Alüminyum Sanayi ve Ticaret A.Ş.",
       countryCode: "TR",
-      address: "Izmir Ataturk Organize Sanayi Bolgesi No:78",
-      economicActivity: "Aluminyum uretimi (NACE 24.42)",
+      address: "İzmir Atatürk Organize Sanayi Bölgesi No:78",
+      economicActivity: "Alüminyum üretimi (NACE 24.42)",
       email: "info@egealuminyum.com.tr",
-      cityName: "Izmir",
+      cityName: "İzmir",
     },
     installation: {
-      name: "Ege Aluminyum - Aliaga Elektroliz Tesisi",
-      address: "Aliaga Organize Sanayi Bolgesi",
+      name: "Ege Alüminyum - Aliağa Elektroliz Tesisi",
+      address: "Aliağa Organize Sanayi Bölgesi",
       latitude: "38.7955",
       longitude: "26.9761",
       countryCode: "TR",
-      cityName: "Izmir",
+      cityName: "İzmir",
       startDate: "2024-01-01",
       endDate: "2024-12-31",
       goodsCategoryCodes: ["ALUMINIUM"],
       productionRoutes: ["HALL-HEROULT"],
       emissions: [
         {
-          sourceStreamName: "Anot Tuketimi (Elektroliz)",
+          sourceStreamName: "Anot Tüketimi (Elektroliz)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -401,7 +401,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: null,
         },
         {
-          sourceStreamName: "Dogalgaz (Anot Pisirme)",
+          sourceStreamName: "Doğalgaz (Anot Pişirme)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -420,7 +420,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: 240,
         },
         {
-          sourceStreamName: "PFC Emisyonlari (Anot Etkisi)",
+          sourceStreamName: "PFC Emisyonları (Anot Etkisi)",
           emissionTypeCode: "PFC",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "PFC",
@@ -441,7 +441,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       fuelBalances: [
         {
-          name: "Dogalgaz",
+          name: "Doğalgaz",
           totalFuelInput: 240,
           directFuelForCbamGoods: 216,
           fuelForElectricity: 0,
@@ -486,17 +486,17 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
     ghgTypes: ["CO2", "N2O"],
     euRegulationRef: "EU 2023/1773 Annex III, Section 6",
     company: {
-      name: "Akdeniz Gubre San. A.S.",
-      officialName: "Akdeniz Gubre Sanayi ve Ticaret A.S.",
+      name: "Akdeniz Gübre San. A.Ş.",
+      officialName: "Akdeniz Gübre Sanayi ve Ticaret A.Ş.",
       countryCode: "TR",
-      address: "Mersin Serbest Bolge Yolu No:25",
-      economicActivity: "Gubre uretimi (NACE 20.15)",
+      address: "Mersin Serbest Bölge Yolu No:25",
+      economicActivity: "Gübre üretimi (NACE 20.15)",
       email: "info@akdenizgubre.com.tr",
       cityName: "Mersin",
     },
     installation: {
-      name: "Akdeniz Gubre - Mersin Amonyak Tesisi",
-      address: "Mersin Organize Sanayi Bolgesi",
+      name: "Akdeniz Gübre - Mersin Amonyak Tesisi",
+      address: "Mersin Organize Sanayi Bölgesi",
       latitude: "36.7990",
       longitude: "34.6322",
       countryCode: "TR",
@@ -507,7 +507,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       productionRoutes: ["HABER-BOSCH"],
       emissions: [
         {
-          sourceStreamName: "Dogalgaz (Hammadde + Yakit)",
+          sourceStreamName: "Doğalgaz (Hammadde + Yakıt)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -526,7 +526,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: 5760,
         },
         {
-          sourceStreamName: "N2O Emisyonlari (Nitrik Asit)",
+          sourceStreamName: "N2O Emisyonları (Nitrik Asit)",
           emissionTypeCode: "ES",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "N2O",
@@ -547,7 +547,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       fuelBalances: [
         {
-          name: "Dogalgaz",
+          name: "Doğalgaz",
           totalFuelInput: 5760,
           directFuelForCbamGoods: 5184,
           fuelForElectricity: 0,
@@ -592,17 +592,17 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
     ghgTypes: ["CO2"],
     euRegulationRef: "EU 2023/1773 Annex III, Section 7",
     company: {
-      name: "Marmara H2 Enerji A.S.",
-      officialName: "Marmara Hidrojen Enerji Sanayi A.S.",
+      name: "Marmara H2 Enerji A.Ş.",
+      officialName: "Marmara Hidrojen Enerji Sanayi A.Ş.",
       countryCode: "TR",
-      address: "Kocaeli Petrokimya Bolgesi No:9",
-      economicActivity: "Hidrojen uretimi (NACE 20.11)",
+      address: "Kocaeli Petrokimya Bölgesi No:9",
+      economicActivity: "Hidrojen üretimi (NACE 20.11)",
       email: "info@marmarah2.com.tr",
       cityName: "Kocaeli",
     },
     installation: {
-      name: "Marmara H2 - Dilovasi SMR Tesisi",
-      address: "Dilovasi Kimya Organize Sanayi Bolgesi",
+      name: "Marmara H2 - Dilovası SMR Tesisi",
+      address: "Dilovası Kimya Organize Sanayi Bölgesi",
       latitude: "40.7670",
       longitude: "29.5480",
       countryCode: "TR",
@@ -613,7 +613,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       productionRoutes: ["SMR"],
       emissions: [
         {
-          sourceStreamName: "Dogalgaz (SMR Hammadde)",
+          sourceStreamName: "Doğalgaz (SMR Hammadde)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -632,7 +632,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: 4320,
         },
         {
-          sourceStreamName: "Dogalgaz (Yakit - Reformer Isitma)",
+          sourceStreamName: "Doğalgaz (Yakıt - Reformer Isıtma)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -653,7 +653,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       fuelBalances: [
         {
-          name: "Dogalgaz (Toplam)",
+          name: "Doğalgaz (Toplam)",
           totalFuelInput: 5760,
           directFuelForCbamGoods: 5184,
           fuelForElectricity: 0,
@@ -698,28 +698,28 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
     ghgTypes: ["CO2", "N2O"],
     euRegulationRef: "EU 2023/1773 Annex III, Section 2",
     company: {
-      name: "Trakya Enerji Uretim A.S.",
-      officialName: "Trakya Enerji Uretim Sanayi ve Ticaret A.S.",
+      name: "Trakya Enerji Üretim A.Ş.",
+      officialName: "Trakya Enerji Üretim Sanayi ve Ticaret A.Ş.",
       countryCode: "TR",
-      address: "Tekirdag Yolu 5. km No:3",
-      economicActivity: "Elektrik uretimi (NACE 35.11)",
+      address: "Tekirdağ Yolu 5. km No:3",
+      economicActivity: "Elektrik üretimi (NACE 35.11)",
       email: "info@trakyaenerji.com.tr",
-      cityName: "Tekirdag",
+      cityName: "Tekirdağ",
     },
     installation: {
-      name: "Trakya Enerji - Tekirdag Dogalgaz Santrali",
-      address: "Tekirdag Enerji Uretim Bolgesi",
+      name: "Trakya Enerji - Tekirdağ Doğalgaz Santrali",
+      address: "Tekirdağ Enerji Üretim Bölgesi",
       latitude: "41.0027",
       longitude: "27.5127",
       countryCode: "TR",
-      cityName: "Tekirdag",
+      cityName: "Tekirdağ",
       startDate: "2024-01-01",
       endDate: "2024-12-31",
       goodsCategoryCodes: ["ELECTRICITY"],
       productionRoutes: ["NATURAL_GAS_CCGT"],
       emissions: [
         {
-          sourceStreamName: "Dogalgaz (CCGT Turbin)",
+          sourceStreamName: "Doğalgaz (CCGT Türbin)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -738,7 +738,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
           energyContentTJ: 16800,
         },
         {
-          sourceStreamName: "Dogalgaz (Yardimci Kazan)",
+          sourceStreamName: "Doğalgaz (Yardımcı Kazan)",
           emissionTypeCode: "SS",
           emissionMethodCode: "Calculation based - Standard",
           typeOfGhgCode: "CO2",
@@ -759,7 +759,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       fuelBalances: [
         {
-          name: "Dogalgaz (Toplam)",
+          name: "Doğalgaz (Toplam)",
           totalFuelInput: 17040,
           directFuelForCbamGoods: 16800,
           fuelForElectricity: 16800,
@@ -782,7 +782,7 @@ export const CBAM_SAMPLE_SECTORS: CbamSampleSector[] = [
       ],
       productionProcesses: [
         {
-          name: "Kombine Cevrim Dogalgaz Santrali",
+          name: "Kombine Çevrim Doğalgaz Santrali",
           goodsCategoryCode: "ELECTRICITY",
           totalProduction: 1200000,
           producedForMarket: 1150000,

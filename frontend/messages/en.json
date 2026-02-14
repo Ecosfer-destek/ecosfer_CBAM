@@ -970,6 +970,7 @@
     "deleteSuccess": "Sample data deleted successfully",
     "deleteError": "An error occurred while deleting sample data",
     "alreadyLoaded": "Loaded",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "cancel": "Cancel"
   }
 }

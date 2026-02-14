@@ -970,6 +970,7 @@
     "deleteSuccess": "Beispieldaten erfolgreich gelöscht",
     "deleteError": "Beim Löschen der Beispieldaten ist ein Fehler aufgetreten",
     "alreadyLoaded": "Geladen",
-    "loading": "Wird geladen..."
+    "loading": "Wird geladen...",
+    "cancel": "Abbrechen"
   }
 }

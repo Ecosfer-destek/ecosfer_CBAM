@@ -62,7 +62,7 @@
     "installationData": "Tesis Verileri",
     "emissions": "Emisyonlar",
     "productionProcesses": "Üretim Süreçleri",
-    "cbamReferenceData": "CBAM Referans Verisi",
+    "cbamReferenceData": "CBAM Referans Verileri",
     "reports": "CBAM Raporları",
     "declarations": "Yıllık Beyannameler",
     "verification": "Doğrulama",
@@ -899,7 +899,7 @@
     "unauthorized": "Yetkisiz işlem"
   },
   "cbamReference": {
-    "title": "CBAM Referans Verisi",
+    "title": "CBAM Referans Verileri",
     "subtitle": "6 sektör için jenerik firma ve tesis verileri - eğitim ve referans amaçlı",
     "cement": "Çimento",
     "cementDesc": "Klinker ve çimento üretimi. Kalsinasyon prosesinden yüksek CO2 emisyonu. AB CBAM kapsamında en büyük sektörlerden biri.",
@@ -907,7 +907,7 @@
     "ironSteelDesc": "EAF (Elektrik Ark Fırını) ve BF-BOF üretim rotaları. Hurda bazlı EAF üretimi daha düşük emisyon yoğunluğuna sahiptir.",
     "aluminium": "Alüminyum",
     "aluminiumDesc": "Hall-Héroult elektroliz prosesi. Anot tüketiminden CO2 ve anot etkisinden PFC emisyonları. Yüksek elektrik tüketimi.",
-    "fertilisers": "Gübreler",
+    "fertilisers": "Gübre",
     "fertilisersDesc": "Haber-Bosch amonyak sentezi ve nitrik asit üretimi. Doğalgaz hem hammadde hem yakıt. N2O emisyonları önemli.",
     "hydrogen": "Hidrojen",
     "hydrogenDesc": "Buhar Metan Reformasyonu (SMR) ile gri hidrojen üretimi. Doğalgaz hem hammadde hem yakıt olarak kullanılır.",
@@ -970,6 +970,7 @@
     "deleteSuccess": "Örnek veri başarıyla silindi",
     "deleteError": "Örnek veri silinirken bir hata oluştu",
     "alreadyLoaded": "Yüklendi",
-    "loading": "Yükleniyor..."
+    "loading": "Yükleniyor...",
+    "cancel": "İptal"
   }
 }
