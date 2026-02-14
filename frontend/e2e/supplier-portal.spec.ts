@@ -9,16 +9,16 @@ test.describe("Supplier Management", () => {
 
     test("should display suppliers page with heading", async ({ page }) => {
       await expect(
-        page.getByRole("heading", { name: "Tedarikciler" })
+        page.getByRole("heading", { name: "Tedarikçiler" })
       ).toBeVisible({ timeout: 10000 });
       await expect(
-        page.getByText("Tedarikci yonetimi ve CBAM emisyon anketleri")
+        page.getByText("Tedarikçi yönetimi ve CBAM emisyon anketleri")
       ).toBeVisible();
     });
 
-    test("should display 'Yeni Tedarikci' button", async ({ page }) => {
+    test("should display 'Yeni Tedarikçi' button", async ({ page }) => {
       const newButton = page.getByRole("button", {
-        name: /Yeni Tedarikci/i,
+        name: /Yeni Tedarikçi/i,
       });
       await expect(newButton).toBeVisible({ timeout: 10000 });
     });
@@ -26,7 +26,7 @@ test.describe("Supplier Management", () => {
     test("should display supplier list card with table", async ({
       page,
     }) => {
-      await expect(page.getByText("Tedarikci Listesi")).toBeVisible({
+      await expect(page.getByText("Tedarikçi Listesi")).toBeVisible({
         timeout: 10000,
       });
 
@@ -34,9 +34,9 @@ test.describe("Supplier Management", () => {
       await expect(table).toBeVisible();
 
       // Verify column headers
-      await expect(page.getByText("Tedarikci")).toBeVisible();
+      await expect(page.getByText("Tedarikçi")).toBeVisible();
       await expect(page.getByText("E-posta")).toBeVisible();
-      await expect(page.getByText("Ulke")).toBeVisible();
+      await expect(page.getByText("Ülke")).toBeVisible();
       await expect(page.getByText("Anket")).toBeVisible();
       await expect(page.getByText("Mal")).toBeVisible();
       await expect(page.getByText("Davet Durumu")).toBeVisible();
@@ -53,7 +53,7 @@ test.describe("Supplier Management", () => {
         // Either an actual supplier row or the empty state message
         const text = await bodyRows.first().textContent();
         expect(
-          text?.includes("Henuz tedarikci bulunmuyor") ||
+          text?.includes("Henüz tedarikçi bulunmuyor") ||
             text?.length! > 0
         ).toBeTruthy();
       }
@@ -61,39 +61,39 @@ test.describe("Supplier Management", () => {
 
     test("should open create supplier dialog", async ({ page }) => {
       await page
-        .getByRole("button", { name: /Yeni Tedarikci/i })
+        .getByRole("button", { name: /Yeni Tedarikçi/i })
         .click();
 
       // Dialog should appear with form fields
       await expect(
-        page.getByRole("heading", { name: "Yeni Tedarikci" })
+        page.getByRole("heading", { name: "Yeni Tedarikçi" })
       ).toBeVisible({ timeout: 5000 });
 
-      await expect(page.getByText("Tedarikci Adi *")).toBeVisible();
-      await expect(page.getByPlaceholder("Sirket adi")).toBeVisible();
+      await expect(page.getByText("Tedarikçi Adı *")).toBeVisible();
+      await expect(page.getByPlaceholder("Şirket adı")).toBeVisible();
       await expect(
-        page.getByPlaceholder("iletisim@firma.com")
+        page.getByPlaceholder("iletişim@firma.com")
       ).toBeVisible();
       await expect(page.getByText("Telefon")).toBeVisible();
-      await expect(page.getByText("Yetkili Kisi")).toBeVisible();
-      await expect(page.getByText("Vergi Numarasi")).toBeVisible();
+      await expect(page.getByText("Yetkili Kişi")).toBeVisible();
+      await expect(page.getByText("Vergi Numarası")).toBeVisible();
       await expect(page.getByText("Vergi Dairesi")).toBeVisible();
     });
 
     test("should close create dialog on cancel", async ({ page }) => {
       await page
-        .getByRole("button", { name: /Yeni Tedarikci/i })
+        .getByRole("button", { name: /Yeni Tedarikçi/i })
         .click();
 
       await expect(
-        page.getByRole("heading", { name: "Yeni Tedarikci" })
+        page.getByRole("heading", { name: "Yeni Tedarikçi" })
       ).toBeVisible({ timeout: 5000 });
 
-      await page.getByRole("button", { name: /Iptal/i }).click();
+      await page.getByRole("button", { name: /İptal/i }).click();
 
       // Dialog should close
       await expect(
-        page.getByRole("heading", { name: "Yeni Tedarikci" })
+        page.getByRole("heading", { name: "Yeni Tedarikçi" })
       ).not.toBeVisible({ timeout: 3000 });
     });
 
@@ -107,7 +107,7 @@ test.describe("Supplier Management", () => {
         const firstRowText = await rows.first().textContent();
         if (
           firstRowText &&
-          !firstRowText.includes("Henuz tedarikci bulunmuyor")
+          !firstRowText.includes("Henüz tedarikçi bulunmuyor")
         ) {
           // Click view (Eye) button
           const viewBtn = rows.first().locator("button").first();
@@ -131,7 +131,7 @@ test.describe("Supplier Management", () => {
         const firstRowText = await rows.first().textContent();
         if (
           firstRowText &&
-          !firstRowText.includes("Henuz tedarikci bulunmuyor")
+          !firstRowText.includes("Henüz tedarikçi bulunmuyor")
         ) {
           page.on("dialog", (dialog) => dialog.dismiss());
           // Delete button is typically last in the actions
@@ -142,7 +142,7 @@ test.describe("Supplier Management", () => {
           await deleteBtn.click();
           // Page should remain intact
           await expect(
-            page.getByRole("heading", { name: "Tedarikciler" })
+            page.getByRole("heading", { name: "Tedarikçiler" })
           ).toBeVisible();
         }
       }
@@ -159,28 +159,28 @@ test.describe("Supplier Management", () => {
       page,
     }) => {
       await expect(
-        page.getByRole("heading", { name: "Tedarikci Anketi" })
+        page.getByRole("heading", { name: "Tedarikçi Anketi" })
       ).toBeVisible({ timeout: 10000 });
       await expect(
         page.getByText(
-          "CBAM kapsaminda tedarikci emisyon anketlerini inceleyin ve onaylayin"
+          "CBAM kapsamında tedarikçi emisyon anketlerini inceleyin ve onaylayın"
         )
       ).toBeVisible();
     });
 
     test("should display status filter tabs", async ({ page }) => {
       // Status filter tabs
-      await expect(page.getByRole("tab", { name: /Tumu/i })).toBeVisible({
+      await expect(page.getByRole("tab", { name: /Tümü/i })).toBeVisible({
         timeout: 10000,
       });
       await expect(
         page.getByRole("tab", { name: /Taslak/i })
       ).toBeVisible();
       await expect(
-        page.getByRole("tab", { name: /Gonderildi/i })
+        page.getByRole("tab", { name: /Gönderildi/i })
       ).toBeVisible();
       await expect(
-        page.getByRole("tab", { name: /Onaylandi/i })
+        page.getByRole("tab", { name: /Onaylandı/i })
       ).toBeVisible();
     });
 
@@ -193,9 +193,9 @@ test.describe("Supplier Management", () => {
       await expect(table).toBeVisible();
 
       // Column headers
-      await expect(page.getByText("Tedarikci")).toBeVisible();
+      await expect(page.getByText("Tedarikçi")).toBeVisible();
       await expect(page.getByText("Mal (CN Kodu)")).toBeVisible();
-      await expect(page.getByText("Donem")).toBeVisible();
+      await expect(page.getByText("Dönem")).toBeVisible();
       await expect(page.getByText("Durum")).toBeVisible();
       await expect(page.getByText("Emisyonlar")).toBeVisible();
     });
@@ -206,16 +206,16 @@ test.describe("Supplier Management", () => {
       // Table should update (may show 0 or filtered results)
       await page.waitForTimeout(500);
 
-      // Click on "Gonderildi" tab
-      await page.getByRole("tab", { name: /Gonderildi/i }).click();
+      // Click on "Gönderildi" tab
+      await page.getByRole("tab", { name: /Gönderildi/i }).click();
       await page.waitForTimeout(500);
 
-      // Click on "Onaylandi" tab
-      await page.getByRole("tab", { name: /Onaylandi/i }).click();
+      // Click on "Onaylandı" tab
+      await page.getByRole("tab", { name: /Onaylandı/i }).click();
       await page.waitForTimeout(500);
 
-      // Click back to "Tumu"
-      await page.getByRole("tab", { name: /Tumu/i }).click();
+      // Click back to "Tümü"
+      await page.getByRole("tab", { name: /Tümü/i }).click();
       await page.waitForTimeout(500);
     });
 
@@ -229,24 +229,24 @@ test.describe("Supplier Management", () => {
         const firstRowText = await rows.first().textContent();
         if (
           firstRowText &&
-          !firstRowText.includes("Henuz anket bulunmuyor") &&
+          !firstRowText.includes("Henüz anket bulunmuyor") &&
           !firstRowText.includes("durumunda anket bulunmuyor")
         ) {
           // Click on the first row
           await rows.first().click();
 
           // Detail dialog should appear
-          await expect(page.getByText("Anket Detayi")).toBeVisible({
+          await expect(page.getByText("Anket Detayı")).toBeVisible({
             timeout: 5000,
           });
 
           // Verify detail sections
           await expect(
-            page.getByText("Tedarikci Bilgileri")
+            page.getByText("Tedarikçi Bilgileri")
           ).toBeVisible();
           await expect(page.getByText("Mal Bilgileri")).toBeVisible();
           await expect(
-            page.getByText("Raporlama Donemi")
+            page.getByText("Raporlama Dönemi")
           ).toBeVisible();
           await expect(
             page.getByText("Emisyon Verileri")

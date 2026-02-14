@@ -22,13 +22,13 @@ test.describe("Installation Data Management", () => {
       await expect(table).toBeVisible({ timeout: 10000 });
 
       await expect(page.getByText("Tesis")).toBeVisible();
-      await expect(page.getByText("Sirket")).toBeVisible();
-      await expect(page.getByText("Baslangic")).toBeVisible();
-      await expect(page.getByText("Bitis")).toBeVisible();
+      await expect(page.getByText("Şirket")).toBeVisible();
+      await expect(page.getByText("Başlangıç")).toBeVisible();
+      await expect(page.getByText("Bitiş")).toBeVisible();
     });
 
-    test("should display 'Yeni Veri Kaydi' button", async ({ page }) => {
-      const newButton = page.getByRole("link", { name: /Yeni Veri Kaydi/i });
+    test("should display 'Yeni Veri Kaydı' button", async ({ page }) => {
+      const newButton = page.getByRole("link", { name: /Yeni Veri Kaydı/i });
       await expect(newButton).toBeVisible({ timeout: 10000 });
     });
 
@@ -38,7 +38,7 @@ test.describe("Installation Data Management", () => {
     });
 
     test("should show pagination info", async ({ page }) => {
-      await expect(page.getByText(/Toplam .* kayit/)).toBeVisible({
+      await expect(page.getByText(/Toplam .* kayıt/)).toBeVisible({
         timeout: 10000,
       });
     });
@@ -54,7 +54,7 @@ test.describe("Installation Data Management", () => {
 
       if (rowCount > 0) {
         const firstRowText = await rows.first().textContent();
-        if (firstRowText && !firstRowText.includes("Kayit bulunamadi")) {
+        if (firstRowText && !firstRowText.includes("Kayıt bulunamadı")) {
           const viewLink = rows
             .first()
             .locator('a[href*="/dashboard/installation-data/"]')
@@ -78,7 +78,7 @@ test.describe("Installation Data Management", () => {
             page.getByRole("tab", { name: /D: Prosesler/i })
           ).toBeVisible();
           await expect(
-            page.getByRole("tab", { name: /E: Prekursorler/i })
+            page.getByRole("tab", { name: /E: Prekürsörler/i })
           ).toBeVisible();
         }
       }
@@ -90,7 +90,7 @@ test.describe("Installation Data Management", () => {
 
       if (rowCount > 0) {
         const firstRowText = await rows.first().textContent();
-        if (firstRowText && !firstRowText.includes("Kayit bulunamadi")) {
+        if (firstRowText && !firstRowText.includes("Kayıt bulunamadı")) {
           const viewLink = rows
             .first()
             .locator('a[href*="/dashboard/installation-data/"]')
@@ -102,14 +102,14 @@ test.describe("Installation Data Management", () => {
 
           // Tab A should be active by default - verify its content
           await expect(
-            page.getByText("Tesis ve Donem Bilgileri")
+            page.getByText("Tesis ve Dönem Bilgileri")
           ).toBeVisible({ timeout: 10000 });
 
           // Switch to Tab B: Emissions
           await page
             .getByRole("tab", { name: /B: Emisyonlar/i })
             .click();
-          await expect(page.getByText("Emisyon Kayitlari")).toBeVisible({
+          await expect(page.getByText("Emisyon Kayıtları")).toBeVisible({
             timeout: 5000,
           });
 
@@ -118,7 +118,7 @@ test.describe("Installation Data Management", () => {
             .getByRole("tab", { name: /C: Enerji/i })
             .click();
           await expect(
-            page.getByText("Yakit Dengesi (Fuel Balance)")
+            page.getByText("Yakıt Dengesi (Fuel Balance)")
           ).toBeVisible({ timeout: 5000 });
 
           // Switch to Tab D: Processes
@@ -126,21 +126,21 @@ test.describe("Installation Data Management", () => {
             .getByRole("tab", { name: /D: Prosesler/i })
             .click();
           await expect(
-            page.getByText("Ilgili Uretim Surecleri")
+            page.getByText("İlgili Üretim Süreçleri")
           ).toBeVisible({ timeout: 5000 });
 
           // Switch to Tab E: Precursors
           await page
-            .getByRole("tab", { name: /E: Prekursorler/i })
+            .getByRole("tab", { name: /E: Prekürsörler/i })
             .click();
           await expect(
-            page.getByText("Satin Alinan Prekursorler")
+            page.getByText("Satın Alınan Prekürsörler")
           ).toBeVisible({ timeout: 5000 });
         }
       }
     });
 
-    test("should display 'Listeye Don' back button on detail page", async ({
+    test("should display 'Listeye Dön' back button on detail page", async ({
       page,
     }) => {
       const rows = page.locator("table tbody tr");
@@ -148,7 +148,7 @@ test.describe("Installation Data Management", () => {
 
       if (rowCount > 0) {
         const firstRowText = await rows.first().textContent();
-        if (firstRowText && !firstRowText.includes("Kayit bulunamadi")) {
+        if (firstRowText && !firstRowText.includes("Kayıt bulunamadı")) {
           const viewLink = rows
             .first()
             .locator('a[href*="/dashboard/installation-data/"]')
@@ -159,7 +159,7 @@ test.describe("Installation Data Management", () => {
           });
 
           const backLink = page.getByRole("link", {
-            name: /Listeye Don/i,
+            name: /Listeye Dön/i,
           });
           await expect(backLink).toBeVisible({ timeout: 10000 });
         }
@@ -172,7 +172,7 @@ test.describe("Installation Data Management", () => {
 
       if (rowCount > 0) {
         const firstRowText = await rows.first().textContent();
-        if (firstRowText && !firstRowText.includes("Kayit bulunamadi")) {
+        if (firstRowText && !firstRowText.includes("Kayıt bulunamadı")) {
           const viewLink = rows
             .first()
             .locator('a[href*="/dashboard/installation-data/"]')
@@ -198,7 +198,7 @@ test.describe("Installation Data Management", () => {
 
       if (rowCount > 0) {
         const firstRowText = await rows.first().textContent();
-        if (firstRowText && !firstRowText.includes("Kayit bulunamadi")) {
+        if (firstRowText && !firstRowText.includes("Kayıt bulunamadı")) {
           const viewLink = rows
             .first()
             .locator('a[href*="/dashboard/installation-data/"]')

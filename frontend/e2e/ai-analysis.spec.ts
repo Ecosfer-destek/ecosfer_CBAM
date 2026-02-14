@@ -21,11 +21,11 @@ test.describe("AI Analysis Dashboard", () => {
     });
 
     test("should display installation selector card", async ({ page }) => {
-      await expect(page.getByText("Tesis Secin")).toBeVisible({
+      await expect(page.getByText("Tesis Seçin")).toBeVisible({
         timeout: 10000,
       });
       await expect(
-        page.getByText("Analiz icin tesis secin")
+        page.getByText("Analiz için tesis seçin")
       ).toBeVisible();
     });
 
@@ -56,13 +56,13 @@ test.describe("AI Analysis Dashboard", () => {
 
     test("should display forecast period selector", async ({ page }) => {
       await expect(
-        page.getByText("Tahmin Donemi (yil)")
+        page.getByText("Tahmin Dönemi (yıl)")
       ).toBeVisible({ timeout: 10000 });
     });
 
-    test("should display 'Tahmin Olustur' button", async ({ page }) => {
+    test("should display 'Tahmin Oluştur' button", async ({ page }) => {
       const forecastBtn = page.getByRole("button", {
-        name: /Tahmin Olustur/i,
+        name: /Tahmin Oluştur/i,
       });
       await expect(forecastBtn).toBeVisible({ timeout: 10000 });
     });
@@ -71,7 +71,7 @@ test.describe("AI Analysis Dashboard", () => {
       page,
     }) => {
       const forecastBtn = page.getByRole("button", {
-        name: /Tahmin Olustur/i,
+        name: /Tahmin Oluştur/i,
       });
       await expect(forecastBtn).toBeDisabled();
     });
@@ -118,7 +118,7 @@ test.describe("AI Analysis Dashboard", () => {
     }) => {
       await page.getByRole("tab", { name: /Rapor/i }).click();
 
-      await expect(page.getByText("Akilli Raporlama")).toBeVisible({
+      await expect(page.getByText("Akıllı Raporlama")).toBeVisible({
         timeout: 10000,
       });
       await expect(
@@ -137,7 +137,7 @@ test.describe("AI Analysis Dashboard", () => {
       // Dil label appears for language
       // Check that narrative-specific controls exist
       await expect(
-        page.getByRole("button", { name: /Rapor Olustur/i })
+        page.getByRole("button", { name: /Rapor Oluştur/i })
       ).toBeVisible();
     });
 
@@ -147,7 +147,7 @@ test.describe("AI Analysis Dashboard", () => {
       await page.getByRole("tab", { name: /Rapor/i }).click();
 
       const reportBtn = page.getByRole("button", {
-        name: /Rapor Olustur/i,
+        name: /Rapor Oluştur/i,
       });
       await expect(reportBtn).toBeDisabled();
     });
@@ -168,7 +168,7 @@ test.describe("AI Analysis Dashboard", () => {
 
       // Switch to Narrative/Report
       await page.getByRole("tab", { name: /Rapor/i }).click();
-      await expect(page.getByText("Akilli Raporlama")).toBeVisible({
+      await expect(page.getByText("Akıllı Raporlama")).toBeVisible({
         timeout: 5000,
       });
 

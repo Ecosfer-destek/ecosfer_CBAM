@@ -10,11 +10,11 @@ test.describe("Company CRUD Operations", () => {
     test("should display companies page with correct heading", async ({
       page,
     }) => {
-      await expect(page.getByRole("heading", { name: "Sirketler" })).toBeVisible({
+      await expect(page.getByRole("heading", { name: "Şirketler" })).toBeVisible({
         timeout: 10000,
       });
       await expect(
-        page.getByText("CBAM kapsamindaki sirketleri yonetin")
+        page.getByText("CBAM kapsamındaki şirketleri yönetin")
       ).toBeVisible();
     });
 
@@ -24,41 +24,41 @@ test.describe("Company CRUD Operations", () => {
       await expect(table).toBeVisible({ timeout: 10000 });
 
       // Verify expected column headers exist
-      await expect(page.getByText("Sirket Adi")).toBeVisible();
+      await expect(page.getByText("Şirket Adı")).toBeVisible();
       await expect(page.getByText("Vergi No")).toBeVisible();
-      await expect(page.getByText("Ulke")).toBeVisible();
-      await expect(page.getByText("Sehir")).toBeVisible();
+      await expect(page.getByText("Ülke")).toBeVisible();
+      await expect(page.getByText("Şehir")).toBeVisible();
       await expect(page.getByText("E-posta")).toBeVisible();
     });
 
-    test("should display 'Yeni Sirket' button in toolbar", async ({
+    test("should display 'Yeni Şirket' button in toolbar", async ({
       page,
     }) => {
-      const newButton = page.getByRole("link", { name: /Yeni Sirket/i });
+      const newButton = page.getByRole("link", { name: /Yeni Şirket/i });
       await expect(newButton).toBeVisible({ timeout: 10000 });
     });
 
     test("should display search input with placeholder", async ({ page }) => {
-      const searchInput = page.getByPlaceholder("Sirket ara...");
+      const searchInput = page.getByPlaceholder("Şirket ara...");
       await expect(searchInput).toBeVisible({ timeout: 10000 });
     });
 
     test("should show pagination controls", async ({ page }) => {
       // The DataTable always shows pagination section
-      await expect(page.getByText(/Toplam .* kayit/)).toBeVisible({
+      await expect(page.getByText(/Toplam .* kayıt/)).toBeVisible({
         timeout: 10000,
       });
       await expect(page.getByText(/Sayfa/)).toBeVisible();
     });
 
     test("should filter table when typing in search", async ({ page }) => {
-      const searchInput = page.getByPlaceholder("Sirket ara...");
+      const searchInput = page.getByPlaceholder("Şirket ara...");
       await expect(searchInput).toBeVisible({ timeout: 10000 });
 
       // Type a random search term that likely won't match
       await searchInput.fill("zzz_nonexistent_company_test");
-      // After filtering, either "Kayit bulunamadi" appears or 0 rows
-      await expect(page.getByText(/Toplam 0 kayit|Kayit bulunamadi/)).toBeVisible({
+      // After filtering, either "Kayıt bulunamadı" appears or 0 rows
+      await expect(page.getByText(/Toplam 0 kayıt|Kayıt bulunamadı/)).toBeVisible({
         timeout: 5000,
       });
     });
@@ -66,10 +66,10 @@ test.describe("Company CRUD Operations", () => {
 
   test.describe("Create Company", () => {
     test("should navigate to new company form page", async ({ page }) => {
-      await page.getByRole("link", { name: /Yeni Sirket/i }).click();
+      await page.getByRole("link", { name: /Yeni Şirket/i }).click();
       await page.waitForURL("/dashboard/companies/new");
       await expect(
-        page.getByRole("heading", { name: "Yeni Sirket" })
+        page.getByRole("heading", { name: "Yeni Şirket" })
       ).toBeVisible({ timeout: 10000 });
     });
 
@@ -82,10 +82,10 @@ test.describe("Company CRUD Operations", () => {
         timeout: 10000,
       });
       await expect(page.getByText("Konum Bilgileri")).toBeVisible();
-      await expect(page.getByText("Iletisim Bilgileri")).toBeVisible();
+      await expect(page.getByText("İletişim Bilgileri")).toBeVisible();
 
       // Required field label
-      await expect(page.getByLabel("Sirket Adi *")).toBeVisible();
+      await expect(page.getByLabel("Şirket Adı *")).toBeVisible();
     });
 
     test("should show validation error when submitting empty name", async ({
@@ -95,7 +95,7 @@ test.describe("Company CRUD Operations", () => {
       await page.waitForLoadState("networkidle");
 
       // Click submit without filling anything
-      await page.getByRole("button", { name: /Olustur/i }).click();
+      await page.getByRole("button", { name: /Oluştur/i }).click();
 
       // Validation error should appear for required name field
       await expect(page.locator(".text-destructive").first()).toBeVisible({
@@ -107,17 +107,17 @@ test.describe("Company CRUD Operations", () => {
       await page.goto("/dashboard/companies/new");
       await page.waitForLoadState("networkidle");
 
-      const uniqueName = `E2E Test Sirket ${Date.now()}`;
-      await page.getByLabel("Sirket Adi *").fill(uniqueName);
+      const uniqueName = `E2E Test Şirket ${Date.now()}`;
+      await page.getByLabel("Şirket Adı *").fill(uniqueName);
       await page.getByLabel("Resmi Ad").fill(`${uniqueName} A.S.`);
 
       // Submit form
-      await page.getByRole("button", { name: /Olustur/i }).click();
+      await page.getByRole("button", { name: /Oluştur/i }).click();
 
       // Should redirect back to companies list
       await page.waitForURL("/dashboard/companies", { timeout: 15000 });
       await expect(
-        page.getByRole("heading", { name: "Sirketler" })
+        page.getByRole("heading", { name: "Şirketler" })
       ).toBeVisible({ timeout: 10000 });
     });
 
@@ -125,7 +125,7 @@ test.describe("Company CRUD Operations", () => {
       await page.goto("/dashboard/companies/new");
       await page.waitForLoadState("networkidle");
 
-      await page.getByRole("button", { name: /Iptal/i }).click();
+      await page.getByRole("button", { name: /İptal/i }).click();
       await page.waitForURL("/dashboard/companies", { timeout: 10000 });
     });
   });
@@ -139,11 +139,11 @@ test.describe("Company CRUD Operations", () => {
       const rowCount = await rows.count();
 
       if (rowCount > 0) {
-        // Check if the row contains actual data (not the "Kayit bulunamadi" message)
+        // Check if the row contains actual data (not the "Kayıt bulunamadı" message)
         const firstRowText = await rows.first().textContent();
         if (
           firstRowText &&
-          !firstRowText.includes("Kayit bulunamadi")
+          !firstRowText.includes("Kayıt bulunamadı")
         ) {
           // Click the first view (Eye) icon button link
           const viewLink = rows.first().locator('a[href*="/dashboard/companies/"]').first();
@@ -160,11 +160,11 @@ test.describe("Company CRUD Operations", () => {
       await page.waitForLoadState("networkidle");
 
       // Verify all form fields are present
-      await expect(page.getByLabel("Sirket Adi *")).toBeVisible({
+      await expect(page.getByLabel("Şirket Adı *")).toBeVisible({
         timeout: 10000,
       });
       await expect(page.getByLabel("Resmi Ad")).toBeVisible();
-      await expect(page.getByLabel("Vergi Numarasi")).toBeVisible();
+      await expect(page.getByLabel("Vergi Numarası")).toBeVisible();
       await expect(page.getByLabel("Ekonomik Faaliyet")).toBeVisible();
       await expect(page.getByLabel("Adres")).toBeVisible();
       await expect(page.getByLabel("Posta Kodu")).toBeVisible();
@@ -179,10 +179,10 @@ test.describe("Company CRUD Operations", () => {
       await page.waitForLoadState("networkidle");
 
       // Country, City, District selectors exist
-      const countryTrigger = page.getByText("Ulke secin");
+      const countryTrigger = page.getByText("Ülke seçin");
       await expect(countryTrigger).toBeVisible({ timeout: 10000 });
 
-      const cityTrigger = page.getByText("Sehir secin");
+      const cityTrigger = page.getByText("Şehir seçin");
       await expect(cityTrigger).toBeVisible();
     });
   });
@@ -198,7 +198,7 @@ test.describe("Company CRUD Operations", () => {
         const firstRowText = await rows.first().textContent();
         if (
           firstRowText &&
-          !firstRowText.includes("Kayit bulunamadi")
+          !firstRowText.includes("Kayıt bulunamadı")
         ) {
           // Set up dialog handler to cancel
           page.on("dialog", (dialog) => dialog.dismiss());
@@ -209,7 +209,7 @@ test.describe("Company CRUD Operations", () => {
 
           // Dialog would have been triggered and dismissed - page should still show list
           await expect(
-            page.getByRole("heading", { name: "Sirketler" })
+            page.getByRole("heading", { name: "Şirketler" })
           ).toBeVisible();
         }
       }

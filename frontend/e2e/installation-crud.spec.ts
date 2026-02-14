@@ -14,7 +14,7 @@ test.describe("Installation CRUD Operations", () => {
         page.getByRole("heading", { name: "Tesisler" })
       ).toBeVisible({ timeout: 10000 });
       await expect(
-        page.getByText("CBAM kapsamindaki tesisleri yonetin")
+        page.getByText("CBAM kapsamındaki tesisleri yönetin")
       ).toBeVisible();
     });
 
@@ -24,10 +24,10 @@ test.describe("Installation CRUD Operations", () => {
       const table = page.locator("table");
       await expect(table).toBeVisible({ timeout: 10000 });
 
-      await expect(page.getByText("Tesis Adi")).toBeVisible();
-      await expect(page.getByText("Sirket")).toBeVisible();
-      await expect(page.getByText("Ulke")).toBeVisible();
-      await expect(page.getByText("Sehir")).toBeVisible();
+      await expect(page.getByText("Tesis Adı")).toBeVisible();
+      await expect(page.getByText("Şirket")).toBeVisible();
+      await expect(page.getByText("Ülke")).toBeVisible();
+      await expect(page.getByText("Şehir")).toBeVisible();
     });
 
     test("should display 'Yeni Tesis' button", async ({ page }) => {
@@ -43,7 +43,7 @@ test.describe("Installation CRUD Operations", () => {
     });
 
     test("should show pagination info", async ({ page }) => {
-      await expect(page.getByText(/Toplam .* kayit/)).toBeVisible({
+      await expect(page.getByText(/Toplam .* kayıt/)).toBeVisible({
         timeout: 10000,
       });
     });
@@ -53,7 +53,7 @@ test.describe("Installation CRUD Operations", () => {
       await expect(searchInput).toBeVisible({ timeout: 10000 });
       await searchInput.fill("zzz_nonexistent_installation");
       await expect(
-        page.getByText(/Toplam 0 kayit|Kayit bulunamadi/)
+        page.getByText(/Toplam 0 kayıt|Kayıt bulunamadı/)
       ).toBeVisible({ timeout: 5000 });
     });
   });
@@ -79,9 +79,9 @@ test.describe("Installation CRUD Operations", () => {
         timeout: 10000,
       });
       await expect(page.getByText("Konum Bilgileri")).toBeVisible();
-      await expect(page.getByText("Iletisim Bilgileri")).toBeVisible();
+      await expect(page.getByText("İletişim Bilgileri")).toBeVisible();
 
-      await expect(page.getByLabel("Tesis Adi *")).toBeVisible();
+      await expect(page.getByLabel("Tesis Adı *")).toBeVisible();
     });
 
     test("should display company selector on installation form", async ({
@@ -91,7 +91,7 @@ test.describe("Installation CRUD Operations", () => {
       await page.waitForLoadState("networkidle");
 
       // Company selector should exist
-      const companyTrigger = page.getByText("Sirket secin");
+      const companyTrigger = page.getByText("Şirket seçin");
       await expect(companyTrigger).toBeVisible({ timeout: 10000 });
     });
 
@@ -101,7 +101,7 @@ test.describe("Installation CRUD Operations", () => {
       await page.goto("/dashboard/installations/new");
       await page.waitForLoadState("networkidle");
 
-      await page.getByRole("button", { name: /Olustur/i }).click();
+      await page.getByRole("button", { name: /Oluştur/i }).click();
 
       // Validation error for required fields
       await expect(page.locator(".text-destructive").first()).toBeVisible({
@@ -113,7 +113,7 @@ test.describe("Installation CRUD Operations", () => {
       await page.goto("/dashboard/installations/new");
       await page.waitForLoadState("networkidle");
 
-      await page.getByRole("button", { name: /Iptal/i }).click();
+      await page.getByRole("button", { name: /İptal/i }).click();
       await page.waitForURL("/dashboard/installations", { timeout: 10000 });
     });
   });
@@ -127,7 +127,7 @@ test.describe("Installation CRUD Operations", () => {
 
       if (rowCount > 0) {
         const firstRowText = await rows.first().textContent();
-        if (firstRowText && !firstRowText.includes("Kayit bulunamadi")) {
+        if (firstRowText && !firstRowText.includes("Kayıt bulunamadı")) {
           const viewLink = rows
             .first()
             .locator('a[href*="/dashboard/installations/"]')
@@ -148,7 +148,7 @@ test.describe("Installation CRUD Operations", () => {
 
       if (rowCount > 0) {
         const firstRowText = await rows.first().textContent();
-        if (firstRowText && !firstRowText.includes("Kayit bulunamadi")) {
+        if (firstRowText && !firstRowText.includes("Kayıt bulunamadı")) {
           page.on("dialog", (dialog) => dialog.dismiss());
           const deleteBtn = rows.first().locator("button").last();
           await deleteBtn.click();
