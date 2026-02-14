@@ -27,6 +27,7 @@ import {
   Globe,
   ShieldCheck,
   ClipboardList,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -65,6 +66,7 @@ function getMenuGroups(role: UserRole, t: (key: string) => string): MenuGroup[] 
         { title: t("installationData"), href: "/dashboard/installation-data", icon: FileSpreadsheet, visible: perms.showInstallationData },
         { title: t("emissions"), href: "/dashboard/emissions", icon: Flame, visible: perms.showEmissions },
         { title: t("productionProcesses"), href: "/dashboard/production-processes", icon: Package, visible: perms.showProductionProcesses },
+        { title: t("cbamReferenceData"), href: "/dashboard/cbam-reference-data", icon: BookOpen, visible: perms.showCbamReferenceData },
       ],
     },
     {
