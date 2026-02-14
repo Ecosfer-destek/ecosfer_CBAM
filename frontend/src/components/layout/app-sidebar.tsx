@@ -33,6 +33,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getMenuItemsForRole } from "@/lib/auth/roles";
 import { UserRole } from "@prisma/client";
+import { useTranslations } from "next-intl";
 
 interface MenuItem {
   title: string;
@@ -46,46 +47,46 @@ interface MenuGroup {
   items: MenuItem[];
 }
 
-function getMenuGroups(role: UserRole): MenuGroup[] {
+function getMenuGroups(role: UserRole, t: (key: string) => string): MenuGroup[] {
   const perms = getMenuItemsForRole(role);
 
   return [
     {
-      label: "Genel",
+      label: t("general"),
       items: [
-        { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard, visible: true },
+        { title: t("dashboard"), href: "/dashboard", icon: LayoutDashboard, visible: true },
       ],
     },
     {
-      label: "CBAM Yönetimi",
+      label: t("cbamManagement"),
       items: [
-        { title: "Şirketler", href: "/dashboard/companies", icon: Building2, visible: perms.showCompanies },
-        { title: "Tesisler", href: "/dashboard/installations", icon: Factory, visible: perms.showInstallations },
-        { title: "Tesis Verileri", href: "/dashboard/installation-data", icon: FileSpreadsheet, visible: perms.showInstallationData },
-        { title: "Emisyonlar", href: "/dashboard/emissions", icon: Flame, visible: perms.showEmissions },
-        { title: "Üretim Süreçleri", href: "/dashboard/production-processes", icon: Package, visible: perms.showProductionProcesses },
+        { title: t("companies"), href: "/dashboard/companies", icon: Building2, visible: perms.showCompanies },
+        { title: t("installations"), href: "/dashboard/installations", icon: Factory, visible: perms.showInstallations },
+        { title: t("installationData"), href: "/dashboard/installation-data", icon: FileSpreadsheet, visible: perms.showInstallationData },
+        { title: t("emissions"), href: "/dashboard/emissions", icon: Flame, visible: perms.showEmissions },
+        { title: t("productionProcesses"), href: "/dashboard/production-processes", icon: Package, visible: perms.showProductionProcesses },
       ],
     },
     {
-      label: "Raporlama",
+      label: t("reporting"),
       items: [
-        { title: "CBAM Raporları", href: "/dashboard/reports", icon: FileText, visible: perms.showReports },
-        { title: "Yıllık Beyannameler", href: "/dashboard/declarations", icon: Globe, visible: perms.showDeclarations },
-        { title: "Doğrulama", href: "/dashboard/verification", icon: ShieldCheck, visible: perms.showVerification },
+        { title: t("reports"), href: "/dashboard/reports", icon: FileText, visible: perms.showReports },
+        { title: t("declarations"), href: "/dashboard/declarations", icon: Globe, visible: perms.showDeclarations },
+        { title: t("verification"), href: "/dashboard/verification", icon: ShieldCheck, visible: perms.showVerification },
       ],
     },
     {
-      label: "Tedarikçi & AI",
+      label: t("supplierAi"),
       items: [
-        { title: "Tedarikçiler", href: "/dashboard/suppliers", icon: Users, visible: perms.showSuppliers },
-        { title: "Tedarikçi Anketi", href: "/dashboard/supplier-survey", icon: ClipboardList, visible: perms.showSupplierPortal },
-        { title: "AI Analiz", href: "/dashboard/ai-analysis", icon: BarChart3, visible: perms.showAiAnalysis },
+        { title: t("suppliers"), href: "/dashboard/suppliers", icon: Users, visible: perms.showSuppliers },
+        { title: t("supplierSurvey"), href: "/dashboard/supplier-survey", icon: ClipboardList, visible: perms.showSupplierPortal },
+        { title: t("aiAnalysis"), href: "/dashboard/ai-analysis", icon: BarChart3, visible: perms.showAiAnalysis },
       ],
     },
     {
-      label: "Yönetim",
+      label: t("administration"),
       items: [
-        { title: "Ayarlar", href: "/dashboard/settings", icon: Settings, visible: perms.showSettings },
+        { title: t("settings"), href: "/dashboard/settings", icon: Settings, visible: perms.showSettings },
       ],
     },
   ];
@@ -94,19 +95,21 @@ function getMenuGroups(role: UserRole): MenuGroup[] {
 export function AppSidebar() {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const t = useTranslations("sidebar");
+  const tc = useTranslations("common");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userRole = ((session?.user as any)?.role as UserRole) || ("OPERATOR" as UserRole);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const tenantName = (session?.user as any)?.tenantName || "";
 
-  const menuGroups = getMenuGroups(userRole);
+  const menuGroups = getMenuGroups(userRole, t);
 
   return (
     <Sidebar>
       <SidebarHeader className="border-b px-6 py-4">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground font-bold text-sm">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-hero-gradient text-white font-bold text-sm">
             E
           </div>
           <div>
@@ -151,7 +154,7 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="border-t p-4">
         <p className="text-xs text-muted-foreground text-center">
-          Ecosfer SKDM Platform v2.0
+          {tc("platform")}
         </p>
       </SidebarFooter>
     </Sidebar>

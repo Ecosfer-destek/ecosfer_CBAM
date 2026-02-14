@@ -13,6 +13,7 @@ export default function DashboardLayout({
     <SidebarProvider>
       <AppSidebar />
       <main className="flex-1 overflow-auto">
+        <div className="h-0.5 bg-hero-gradient" />
         <header className="flex h-14 items-center justify-between border-b px-4">
           <div className="flex items-center gap-2">
             <SidebarTrigger />
