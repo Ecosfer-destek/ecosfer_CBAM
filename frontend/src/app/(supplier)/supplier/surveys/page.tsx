@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -46,14 +47,9 @@ import {
 } from "@/actions/supplier";
 import { toast } from "sonner";
 
-const STATUS_LABELS: Record<string, string> = {
-  DRAFT: "Taslak",
-  SUBMITTED: "Gönderildi",
-  APPROVED: "Onaylandı",
-  REJECTED: "Reddedildi",
-};
-
 export default function SupplierSurveysPage() {
+  const t = useTranslations("supplier");
+  const tCommon = useTranslations("common");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [surveys, setSurveys] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -107,7 +103,7 @@ export default function SupplierSurveysPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Anket oluşturuldu");
+      toast.success(t("survey.created"));
       setShowCreate(false);
       resetForm();
       reload();
@@ -134,17 +130,17 @@ export default function SupplierSurveysPage() {
     const result = await submitSupplierSurvey(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Anket gönderildi");
+      toast.success(t("survey.submitted"));
       reload();
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu anketi silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(t("survey.confirmDelete"))) return;
     const result = await deleteSupplierSurvey(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Anket silindi");
+      toast.success(t("survey.deleted"));
       reload();
     }
   }
@@ -153,28 +149,28 @@ export default function SupplierSurveysPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Emisyon Anketleri</h1>
+          <h1 className="text-3xl font-bold">{t("survey.surveysTitle")}</h1>
           <p className="text-muted-foreground">
-            CBAM emisyon verilerinizi gönderin
+            {t("survey.surveysSubtitle")}
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Yeni Anket
+              {t("survey.newSurvey")}
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>Yeni Emisyon Anketi</DialogTitle>
+              <DialogTitle>{t("survey.newSurveyDialog")}</DialogTitle>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-4 py-4">
               <div className="space-y-2">
-                <Label>Mal</Label>
+                <Label>{t("survey.good")}</Label>
                 <Select value={goodId} onValueChange={setGoodId}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Mal seçin (opsiyonel)" />
+                    <SelectValue placeholder={t("survey.goodPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -187,58 +183,58 @@ export default function SupplierSurveysPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Emisyon Faktörü Kaynağı</Label>
+                <Label>{t("survey.emissionFactorSource")}</Label>
                 <Input
                   value={emissionFactorSource}
                   onChange={(e) => setEmissionFactorSource(e.target.value)}
-                  placeholder="örneğin: Varsayılan değer, Ölçüm"
+                  placeholder={t("survey.emissionFactorPlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Dönem Başlangıç</Label>
+                <Label>{t("survey.periodStart")}</Label>
                 <Input type="date" value={periodStart} onChange={(e) => setPeriodStart(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Dönem Bitiş</Label>
+                <Label>{t("survey.periodEnd")}</Label>
                 <Input type="date" value={periodEnd} onChange={(e) => setPeriodEnd(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Spesifik Gömülü Emisyon (tCO2e/t)</Label>
+                <Label>{t("survey.specificEmissionsUnit")}</Label>
                 <Input type="number" step="0.0001" value={specificEmissions} onChange={(e) => setSpecificEmissions(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Doğrudan Emisyon (tCO2e)</Label>
+                <Label>{t("survey.directEmissionsUnit")}</Label>
                 <Input type="number" step="0.0001" value={directEmissions} onChange={(e) => setDirectEmissions(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Dolaylı Emisyon (tCO2e)</Label>
+                <Label>{t("survey.indirectEmissionsUnit")}</Label>
                 <Input type="number" step="0.0001" value={indirectEmissions} onChange={(e) => setIndirectEmissions(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Üretim Hacmi (ton)</Label>
+                <Label>{t("survey.productionVolumeUnit")}</Label>
                 <Input type="number" step="0.01" value={productionVolume} onChange={(e) => setProductionVolume(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Elektrik Tüketimi (MWh)</Label>
+                <Label>{t("survey.electricityConsumptionUnit")}</Label>
                 <Input type="number" step="0.01" value={electricityConsumption} onChange={(e) => setElectricityConsumption(e.target.value)} />
               </div>
               <div className="space-y-2">
-                <Label>Isı Tüketimi (TJ)</Label>
+                <Label>{t("survey.heatConsumptionUnit")}</Label>
                 <Input type="number" step="0.0001" value={heatConsumption} onChange={(e) => setHeatConsumption(e.target.value)} />
               </div>
               <div className="col-span-2 space-y-2">
-                <Label>İzleme Metodolojisi</Label>
+                <Label>{t("survey.monitoringMethodology")}</Label>
                 <Input value={methodology} onChange={(e) => setMethodology(e.target.value)} />
               </div>
               <div className="col-span-2 space-y-2">
-                <Label>Notlar</Label>
+                <Label>{tCommon("notes")}</Label>
                 <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} />
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setShowCreate(false)}>İptal</Button>
+              <Button variant="outline" onClick={() => setShowCreate(false)}>{tCommon("cancel")}</Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                {isCreating ? tCommon("creating") : tCommon("create")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -249,27 +245,27 @@ export default function SupplierSurveysPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ClipboardList className="h-5 w-5" />
-            Anketlerim
+            {t("survey.mySurveys")}
           </CardTitle>
-          <CardDescription>Toplam {surveys.length} anket</CardDescription>
+          <CardDescription>{t("survey.totalSurveys", { count: surveys.length })}</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mal</TableHead>
-                <TableHead>Dönem</TableHead>
-                <TableHead>Spesifik Em.</TableHead>
-                <TableHead>Doğrudan Em.</TableHead>
-                <TableHead>Durum</TableHead>
-                <TableHead className="text-right">İşlemler</TableHead>
+                <TableHead>{t("survey.good")}</TableHead>
+                <TableHead>{t("survey.period")}</TableHead>
+                <TableHead>{t("survey.specificEm")}</TableHead>
+                <TableHead>{t("survey.directEm")}</TableHead>
+                <TableHead>{tCommon("status")}</TableHead>
+                <TableHead className="text-right">{tCommon("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {surveys.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                    Henüz anketiniz bulunmuyor
+                    {t("survey.noSurveys")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -277,7 +273,7 @@ export default function SupplierSurveysPage() {
                 surveys.map((s: any) => (
                   <TableRow key={s.id}>
                     <TableCell className="font-medium">
-                      {s.supplierGood?.name || "Genel"}
+                      {s.supplierGood?.name || t("survey.general")}
                     </TableCell>
                     <TableCell>
                       {s.reportingPeriodStart
@@ -300,7 +296,7 @@ export default function SupplierSurveysPage() {
                     </TableCell>
                     <TableCell>
                       <Badge variant={s.status === "APPROVED" ? "default" : "secondary"}>
-                        {STATUS_LABELS[s.status] || s.status}
+                        {t(`survey.statuses.${s.status}` as any) || s.status}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
@@ -312,7 +308,7 @@ export default function SupplierSurveysPage() {
                             onClick={() => handleSubmit(s.id)}
                           >
                             <Send className="h-3 w-3 mr-1" />
-                            Gönder
+                            {t("survey.send")}
                           </Button>
                         )}
                         <Button

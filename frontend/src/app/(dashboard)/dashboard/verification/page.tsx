@@ -39,8 +39,12 @@ import {
   deleteAuthorisation,
 } from "@/actions/declaration";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export default function VerificationPage() {
+  const t = useTranslations("verification");
+  const tc = useTranslations("common");
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [plans, setPlans] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,7 +71,7 @@ export default function VerificationPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("İzleme planı oluşturuldu");
+      toast.success(t("planCreated"));
       setShowPlanDialog(false);
       setPlanName("");
       setPlanVersion("");
@@ -77,11 +81,11 @@ export default function VerificationPage() {
   }
 
   async function handleDeletePlan(id: string) {
-    if (!confirm("Bu izleme planını silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(t("confirmDeletePlan"))) return;
     const result = await deleteMonitoringPlan(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("İzleme planı silindi");
+      toast.success(t("planDeleted"));
       getMonitoringPlans().then(setPlans);
     }
   }
@@ -95,7 +99,7 @@ export default function VerificationPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Yetkilendirme başvurusu oluşturuldu");
+      toast.success(t("applicationCreated"));
       setShowAuthDialog(false);
       setAuthName("");
       setAuthType("");
@@ -105,11 +109,11 @@ export default function VerificationPage() {
   }
 
   async function handleDeleteAuth(id: string) {
-    if (!confirm("Bu başvuruyu silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(t("confirmDeleteApplication"))) return;
     const result = await deleteAuthorisation(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Başvuru silindi");
+      toast.success(t("applicationDeleted"));
       getAuthorisations().then(setAuths);
     }
   }
@@ -117,16 +121,16 @@ export default function VerificationPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Doğrulama</h1>
+        <h1 className="text-3xl font-bold">{t("title")}</h1>
         <p className="text-muted-foreground">
-          İzleme planları ve yetkilendirme başvuruları
+          {t("subtitle")}
         </p>
       </div>
 
       <Tabs defaultValue="plans" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="plans">İzleme Planları</TabsTrigger>
-          <TabsTrigger value="authorisations">Yetkilendirme</TabsTrigger>
+          <TabsTrigger value="plans">{t("monitoringPlans")}</TabsTrigger>
+          <TabsTrigger value="authorisations">{t("authorisation")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="plans" className="space-y-4">
@@ -135,35 +139,35 @@ export default function VerificationPage() {
               <div>
                 <CardTitle className="flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5" />
-                  İzleme Planları
+                  {t("monitoringPlansCard")}
                 </CardTitle>
-                <CardDescription>{plans.length} plan</CardDescription>
+                <CardDescription>{t("planCount", { count: plans.length })}</CardDescription>
               </div>
               <Dialog open={showPlanDialog} onOpenChange={setShowPlanDialog}>
                 <DialogTrigger asChild>
                   <Button size="sm">
                     <Plus className="mr-2 h-4 w-4" />
-                    Yeni Plan
+                    {t("newPlan")}
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Yeni İzleme Planı</DialogTitle>
+                    <DialogTitle>{t("newPlanDialog")}</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
-                      <Label>Plan Adı *</Label>
+                      <Label>{t("planName")} *</Label>
                       <Input value={planName} onChange={(e) => setPlanName(e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Versiyon</Label>
+                      <Label>{tc("version")}</Label>
                       <Input value={planVersion} onChange={(e) => setPlanVersion(e.target.value)} />
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setShowPlanDialog(false)}>İptal</Button>
+                    <Button variant="outline" onClick={() => setShowPlanDialog(false)}>{tc("cancel")}</Button>
                     <Button onClick={handleCreatePlan} disabled={isCreating || !planName}>
-                      {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                      {isCreating ? tc("creating") : tc("create")}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -173,18 +177,18 @@ export default function VerificationPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Ad</TableHead>
-                    <TableHead>Versiyon</TableHead>
-                    <TableHead>Durum</TableHead>
-                    <TableHead>Oluşturma</TableHead>
-                    <TableHead className="text-right">İşlem</TableHead>
+                    <TableHead>{tc("name")}</TableHead>
+                    <TableHead>{tc("version")}</TableHead>
+                    <TableHead>{tc("status")}</TableHead>
+                    <TableHead>{tc("createdAt")}</TableHead>
+                    <TableHead className="text-right">{tc("actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {plans.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                        Henüz izleme planı yok
+                        {t("noPlans")}
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -214,34 +218,34 @@ export default function VerificationPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Yetkilendirme Başvuruları</CardTitle>
-                <CardDescription>{auths.length} başvuru</CardDescription>
+                <CardTitle>{t("authorisationCard")}</CardTitle>
+                <CardDescription>{t("applicationCount", { count: auths.length })}</CardDescription>
               </div>
               <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
                 <DialogTrigger asChild>
                   <Button size="sm">
                     <Plus className="mr-2 h-4 w-4" />
-                    Yeni Başvuru
+                    {t("newApplication")}
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Yeni Yetkilendirme Başvurusu</DialogTitle>
+                    <DialogTitle>{t("newApplicationDialog")}</DialogTitle>
                   </DialogHeader>
                   <div className="space-y-4 py-4">
                     <div className="space-y-2">
-                      <Label>Başvuran Adı *</Label>
+                      <Label>{t("applicantName")} *</Label>
                       <Input value={authName} onChange={(e) => setAuthName(e.target.value)} />
                     </div>
                     <div className="space-y-2">
-                      <Label>Basvuran Tipi</Label>
+                      <Label>{t("applicantType")}</Label>
                       <Input value={authType} onChange={(e) => setAuthType(e.target.value)} />
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button variant="outline" onClick={() => setShowAuthDialog(false)}>İptal</Button>
+                    <Button variant="outline" onClick={() => setShowAuthDialog(false)}>{tc("cancel")}</Button>
                     <Button onClick={handleCreateAuth} disabled={isCreating || !authName}>
-                      {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                      {isCreating ? tc("creating") : tc("create")}
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -251,19 +255,19 @@ export default function VerificationPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Başvuran</TableHead>
-                    <TableHead>Tip</TableHead>
-                    <TableHead>Durum</TableHead>
-                    <TableHead>Başvuru No</TableHead>
-                    <TableHead>Tarih</TableHead>
-                    <TableHead className="text-right">İşlem</TableHead>
+                    <TableHead>{t("applicantName")}</TableHead>
+                    <TableHead>{tc("type")}</TableHead>
+                    <TableHead>{tc("status")}</TableHead>
+                    <TableHead>{t("applicationNo")}</TableHead>
+                    <TableHead>{tc("date")}</TableHead>
+                    <TableHead className="text-right">{tc("actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {auths.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                        Henüz başvuru yok
+                        {t("noApplications")}
                       </TableCell>
                     </TableRow>
                   ) : (

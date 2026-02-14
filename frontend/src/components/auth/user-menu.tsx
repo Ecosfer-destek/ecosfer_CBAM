@@ -13,18 +13,11 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
-
-const ROLE_LABELS: Record<string, string> = {
-  SUPER_ADMIN: "Sistem Yoneticisi",
-  COMPANY_ADMIN: "Sirket Yoneticisi",
-  OPERATOR: "Operator",
-  SUPPLIER: "Tedarikci",
-  CBAM_DECLARANT: "CBAM Beyancisi",
-  VERIFIER: "Dogrulayici",
-};
+import { useTranslations } from "next-intl";
 
 export function UserMenu() {
   const { data: session } = useSession();
+  const t = useTranslations("auth");
 
   if (!session?.user) return null;
 
@@ -37,6 +30,15 @@ export function UserMenu() {
     .join("")
     .toUpperCase()
     .slice(0, 2);
+
+  const ROLE_LABELS: Record<string, string> = {
+    SUPER_ADMIN: t("roles.SUPER_ADMIN"),
+    COMPANY_ADMIN: t("roles.COMPANY_ADMIN"),
+    OPERATOR: t("roles.OPERATOR"),
+    SUPPLIER: t("roles.SUPPLIER"),
+    CBAM_DECLARANT: t("roles.CBAM_DECLARANT"),
+    VERIFIER: t("roles.VERIFIER"),
+  };
 
   return (
     <DropdownMenu>
@@ -65,13 +67,13 @@ export function UserMenu() {
         <DropdownMenuItem asChild>
           <Link href="/dashboard/settings/profile">
             <User className="mr-2 h-4 w-4" />
-            Profil
+            {t("profile")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/dashboard/settings">
             <Settings className="mr-2 h-4 w-4" />
-            Ayarlar
+            {t("settings")}
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -80,7 +82,7 @@ export function UserMenu() {
           className="text-destructive"
         >
           <LogOut className="mr-2 h-4 w-4" />
-          Cikis Yap
+          {t("logout")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

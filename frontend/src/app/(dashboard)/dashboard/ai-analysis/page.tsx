@@ -49,11 +49,14 @@ import {
 } from "recharts";
 import { getInstallations } from "@/actions/installation";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyData = any;
 
 export default function AiAnalysisPage() {
+  const t = useTranslations("ai");
+
   const [installations, setInstallations] = useState<AnyData[]>([]);
   const [selectedInstId, setSelectedInstId] = useState("");
   const [activeTab, setActiveTab] = useState("forecast");
@@ -79,7 +82,7 @@ export default function AiAnalysisPage() {
 
   async function handleForecast() {
     if (!selectedInstId) {
-      toast.error("Tesis seçiniz");
+      toast.error(t("selectInstallationRequired"));
       return;
     }
     setForecastLoading(true);
@@ -95,19 +98,19 @@ export default function AiAnalysisPage() {
       const data = await res.json();
       setForecastData(data);
       if (data.status === "success") {
-        toast.success("Tahmin oluşturuldu");
+        toast.success(t("forecastCreated"));
       } else {
         toast.info(data.message);
       }
     } catch {
-      toast.error("Tahmin servisi ile bağlantı kurulamadı");
+      toast.error(t("forecastError"));
     }
     setForecastLoading(false);
   }
 
   async function handleAnomalies() {
     if (!selectedInstId) {
-      toast.error("Tesis seçiniz");
+      toast.error(t("selectInstallationRequired"));
       return;
     }
     setAnomalyLoading(true);
@@ -123,19 +126,19 @@ export default function AiAnalysisPage() {
       const data = await res.json();
       setAnomalyData(data);
       if (data.status === "success") {
-        toast.success(`${data.anomalies?.length || 0} anomali tespit edildi`);
+        toast.success(`${data.anomalies?.length || 0} ${t("anomaliesDetected")}`);
       } else {
         toast.info(data.message);
       }
     } catch {
-      toast.error("Anomali servisi ile bağlantı kurulamadı");
+      toast.error(t("anomalyError"));
     }
     setAnomalyLoading(false);
   }
 
   async function handleNarrative() {
     if (!selectedInstId) {
-      toast.error("Tesis seçiniz");
+      toast.error(t("selectInstallationRequired"));
       return;
     }
     setNarrativeLoading(true);
@@ -152,12 +155,12 @@ export default function AiAnalysisPage() {
       const data = await res.json();
       setNarrativeData(data);
       if (data.status === "success") {
-        toast.success("Rapor oluşturuldu");
+        toast.success(t("narrativeCreated"));
       } else {
         toast.info(data.message);
       }
     } catch {
-      toast.error("Rapor servisi ile bağlantı kurulamadı");
+      toast.error(t("narrativeError"));
     }
     setNarrativeLoading(false);
   }
@@ -204,9 +207,9 @@ export default function AiAnalysisPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">AI Analiz</h1>
+        <h1 className="text-3xl font-bold">{t("title")}</h1>
         <p className="text-muted-foreground">
-          Yapay zeka destekli emisyon analizi ve tahminler
+          {t("subtitle")}
         </p>
       </div>
 
@@ -215,13 +218,13 @@ export default function AiAnalysisPage() {
         <CardContent className="pt-6">
           <div className="flex items-end gap-4">
             <div className="flex-1 space-y-2">
-              <Label>Tesis Seçin</Label>
+              <Label>{t("selectInstallation")}</Label>
               <Select
                 value={selectedInstId}
                 onValueChange={setSelectedInstId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Analiz için tesis seçin" />
+                  <SelectValue placeholder={t("selectInstallationPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {installations.map((inst: AnyData) => (
@@ -241,15 +244,15 @@ export default function AiAnalysisPage() {
         <TabsList className="grid grid-cols-3 w-full max-w-md">
           <TabsTrigger value="forecast" className="gap-1.5">
             <TrendingUp className="h-4 w-4" />
-            Tahmin
+            {t("forecast")}
           </TabsTrigger>
           <TabsTrigger value="anomalies" className="gap-1.5">
             <AlertTriangle className="h-4 w-4" />
-            Anomali
+            {t("anomaly")}
           </TabsTrigger>
           <TabsTrigger value="narrative" className="gap-1.5">
             <FileText className="h-4 w-4" />
-            Rapor
+            {t("narrative")}
           </TabsTrigger>
         </TabsList>
 
@@ -259,17 +262,16 @@ export default function AiAnalysisPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5" />
-                Emisyon Tahmini
+                {t("forecastTitle")}
               </CardTitle>
               <CardDescription>
-                Geçmiş verilere dayalı emisyon trendi tahmini (XGBoost /
-                Linear Regression)
+                {t("forecastDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-end gap-4 mb-6">
                 <div className="space-y-2">
-                  <Label>Tahmin Dönemi (yıl)</Label>
+                  <Label>{t("forecastPeriod")}</Label>
                   <Select
                     value={forecastPeriods}
                     onValueChange={setForecastPeriods}
@@ -278,9 +280,9 @@ export default function AiAnalysisPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="3">3 Yıl</SelectItem>
-                      <SelectItem value="6">6 Yıl</SelectItem>
-                      <SelectItem value="12">12 Yıl</SelectItem>
+                      <SelectItem value="3">{t("forecastYears3")}</SelectItem>
+                      <SelectItem value="6">{t("forecastYears6")}</SelectItem>
+                      <SelectItem value="12">{t("forecastYears12")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -293,7 +295,7 @@ export default function AiAnalysisPage() {
                   ) : (
                     <RefreshCw className="mr-2 h-4 w-4" />
                   )}
-                  Tahmin Oluştur
+                  {t("generateForecast")}
                 </Button>
               </div>
 
@@ -312,22 +314,22 @@ export default function AiAnalysisPage() {
                         }
                         className="text-sm"
                       >
-                        Trend:{" "}
+                        {t("trend")}
                         {forecastData.trend.direction === "increasing"
-                          ? "Artış"
+                          ? t("trendUp")
                           : forecastData.trend.direction === "decreasing"
-                            ? "Azalış"
-                            : "Sabit"}{" "}
+                            ? t("trendDown")
+                            : t("trendStable")}{" "}
                         (%{forecastData.trend.change_pct})
                       </Badge>
                       {forecastData.model && (
                         <Badge variant="outline" className="text-sm">
-                          Model: {forecastData.model}
+                          {t("model")}{forecastData.model}
                         </Badge>
                       )}
                       {forecastData.r2_score != null && (
                         <Badge variant="outline" className="text-sm">
-                          R2: {forecastData.r2_score.toFixed(3)}
+                          {t("r2Score")}{forecastData.r2_score.toFixed(3)}
                         </Badge>
                       )}
                     </div>
@@ -351,14 +353,14 @@ export default function AiAnalysisPage() {
                           dataKey="upper"
                           stroke="none"
                           fill="#e0e7ff"
-                          name="Üst Sınır"
+                          name={t("chartUpper")}
                         />
                         <Area
                           type="monotone"
                           dataKey="lower"
                           stroke="none"
                           fill="#ffffff"
-                          name="Alt Sınır"
+                          name={t("chartLower")}
                         />
                         <Line
                           type="monotone"
@@ -366,7 +368,7 @@ export default function AiAnalysisPage() {
                           stroke="#2563eb"
                           strokeWidth={2}
                           dot={{ r: 4 }}
-                          name="Gerçek"
+                          name={t("chartActual")}
                         />
                         <Line
                           type="monotone"
@@ -375,7 +377,7 @@ export default function AiAnalysisPage() {
                           strokeWidth={2}
                           strokeDasharray="5 5"
                           dot={{ r: 4 }}
-                          name="Tahmin"
+                          name={t("chartForecast")}
                         />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -399,10 +401,10 @@ export default function AiAnalysisPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
-                Anomali Tespiti
+                {t("anomalyTitle")}
               </CardTitle>
               <CardDescription>
-                IsolationForest ile veri anomalileri ve kalite kontrolu
+                {t("anomalyDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -416,23 +418,22 @@ export default function AiAnalysisPage() {
                   ) : (
                     <Shield className="mr-2 h-4 w-4" />
                   )}
-                  Anomali Tara
+                  {t("scanAnomalies")}
                 </Button>
 
                 {anomalyData?.summary && (
                   <div className="flex gap-2">
                     <Badge variant="destructive">
-                      Kritik: {anomalyData.summary.critical}
+                      {t("critical")}{anomalyData.summary.critical}
                     </Badge>
                     <Badge variant="default">
-                      Uyari: {anomalyData.summary.warning}
+                      {t("warningCount")}{anomalyData.summary.warning}
                     </Badge>
                     <Badge variant="secondary">
-                      Bilgi: {anomalyData.summary.info}
+                      {t("info")}{anomalyData.summary.info}
                     </Badge>
                     <Badge variant="outline">
-                      Veri Kalitesi: %
-                      {anomalyData.summary.data_quality_score}
+                      {t("dataQuality").replace("%", `%${anomalyData.summary.data_quality_score}`)}
                     </Badge>
                   </div>
                 )}
@@ -442,12 +443,12 @@ export default function AiAnalysisPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Ciddiyet</TableHead>
-                      <TableHead>Tip</TableHead>
-                      <TableHead>Yil</TableHead>
-                      <TableHead>Kaynak</TableHead>
+                      <TableHead>{t("severity")}</TableHead>
+                      <TableHead>{t("anomalyType")}</TableHead>
+                      <TableHead>{t("year")}</TableHead>
+                      <TableHead>{t("source")}</TableHead>
                       <TableHead className="max-w-xs">
-                        Açıklama
+                        {t("anomalyDesc")}
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -462,21 +463,21 @@ export default function AiAnalysisPage() {
                               }
                             >
                               {a.severity === "critical"
-                                ? "Kritik"
+                                ? t("severityCritical")
                                 : a.severity === "warning"
-                                  ? "Uyarı"
-                                  : "Bilgi"}
+                                  ? t("severityWarning")
+                                  : t("severityInfo")}
                             </Badge>
                           </TableCell>
                           <TableCell className="text-sm">
                             {a.type === "emission_outlier"
-                              ? "Emisyon Aykırı Değeri"
+                              ? t("typeOutlier")
                               : a.type === "balance_mismatch"
-                                ? "Denge Uyumsuzluğu"
+                                ? t("typeBalanceMismatch")
                                 : a.type === "negative_value"
-                                  ? "Negatif Değer"
+                                  ? t("typeNegative")
                                   : a.type === "sudden_change"
-                                    ? "Ani Değişim"
+                                    ? t("typeSuddenChange")
                                     : a.type}
                           </TableCell>
                           <TableCell>{a.year || "-"}</TableCell>
@@ -497,7 +498,7 @@ export default function AiAnalysisPage() {
                 anomalyData.anomalies?.length === 0 && (
                   <div className="text-center py-8 text-muted-foreground">
                     <Shield className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p>Anomali tespit edilmedi. Veriler tutarlı görünüyor.</p>
+                    <p>{t("noAnomalies")}</p>
                   </div>
                 )}
 
@@ -516,16 +517,16 @@ export default function AiAnalysisPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
-                Akıllı Raporlama
+                {t("narrativeTitle")}
               </CardTitle>
               <CardDescription>
-                LangChain + Claude/GPT-4 ile doğal dil analiz raporu üretimi
+                {t("narrativeDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex items-end gap-4 mb-6">
                 <div className="space-y-2">
-                  <Label>Rapor Tipi</Label>
+                  <Label>{t("reportType")}</Label>
                   <Select
                     value={narrativeType}
                     onValueChange={setNarrativeType}
@@ -534,14 +535,14 @@ export default function AiAnalysisPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="summary">Özet</SelectItem>
-                      <SelectItem value="detailed">Detaylı</SelectItem>
-                      <SelectItem value="executive">Yönetici</SelectItem>
+                      <SelectItem value="summary">{t("typeSummary")}</SelectItem>
+                      <SelectItem value="detailed">{t("typeDetailed")}</SelectItem>
+                      <SelectItem value="executive">{t("typeExecutive")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Dil</Label>
+                  <Label>{t("reportLanguage")}</Label>
                   <Select
                     value={narrativeLang}
                     onValueChange={setNarrativeLang}
@@ -550,9 +551,9 @@ export default function AiAnalysisPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="tr">Türkçe</SelectItem>
-                      <SelectItem value="en">English</SelectItem>
-                      <SelectItem value="de">Deutsch</SelectItem>
+                      <SelectItem value="tr">{t("langTr")}</SelectItem>
+                      <SelectItem value="en">{t("langEn")}</SelectItem>
+                      <SelectItem value="de">{t("langDe")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -565,7 +566,7 @@ export default function AiAnalysisPage() {
                   ) : (
                     <FileText className="mr-2 h-4 w-4" />
                   )}
-                  Rapor Oluştur
+                  {t("generateReport")}
                 </Button>
               </div>
 
@@ -573,15 +574,15 @@ export default function AiAnalysisPage() {
                 <div className="space-y-3">
                   <div className="flex gap-2">
                     <Badge variant="outline">
-                      Model: {narrativeData.model || "N/A"}
+                      {t("model")}{narrativeData.model || "N/A"}
                     </Badge>
                     <Badge variant="outline">
-                      Dil:{" "}
+                      {t("narrativeLanguage")}
                       {narrativeData.language === "tr"
-                        ? "Türkçe"
+                        ? t("langTr")
                         : narrativeData.language === "en"
-                          ? "English"
-                          : "Deutsch"}
+                          ? t("langEn")
+                          : t("langDe")}
                     </Badge>
                   </div>
                   <div className="bg-muted/50 border rounded-lg p-4 prose prose-sm max-w-none dark:prose-invert">

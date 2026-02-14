@@ -55,13 +55,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-
-const INVITATION_LABELS: Record<string, string> = {
-  PENDING: "Bekliyor",
-  INVITED: "Davet Edildi",
-  REGISTERED: "Kayıt Oldu",
-  ACTIVE: "Aktif",
-};
+import { useTranslations } from "next-intl";
 
 const INVITATION_VARIANTS: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
   PENDING: "secondary",
@@ -71,6 +65,9 @@ const INVITATION_VARIANTS: Record<string, "default" | "secondary" | "outline" | 
 };
 
 export default function SuppliersPage() {
+  const t = useTranslations("supplier");
+  const tc = useTranslations("common");
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [suppliers, setSuppliers] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -107,7 +104,7 @@ export default function SuppliersPage() {
 
   async function handleCreate() {
     if (!name.trim()) {
-      toast.error("Tedarikçi adı zorunludur");
+      toast.error(t("nameRequired"));
       return;
     }
     setIsCreating(true);
@@ -125,7 +122,7 @@ export default function SuppliersPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Tedarikçi oluşturuldu");
+      toast.success(t("created"));
       setShowCreate(false);
       resetForm();
       reload();
@@ -150,17 +147,17 @@ export default function SuppliersPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Davet gönderildi");
+      toast.success(t("inviteSent"));
       reload();
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu tedarikçiyi silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(t("confirmDelete"))) return;
     const result = await deleteSupplier(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Tedarikçi silindi");
+      toast.success(t("deleted"));
       reload();
     }
   }
@@ -176,75 +173,75 @@ export default function SuppliersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Tedarikçiler</h1>
+          <h1 className="text-3xl font-bold">{t("title")}</h1>
           <p className="text-muted-foreground">
-            Tedarikçi yönetimi ve CBAM emisyon anketleri
+            {t("subtitle")}
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Yeni Tedarikçi
+              {t("createDialog")}
             </Button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>Yeni Tedarikçi</DialogTitle>
+              <DialogTitle>{t("createDialog")}</DialogTitle>
             </DialogHeader>
             <div className="grid grid-cols-2 gap-4 py-4">
               <div className="space-y-2">
-                <Label>Tedarikçi Adı *</Label>
+                <Label>{t("name")} *</Label>
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Şirket adı"
+                  placeholder={t("companyPlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label>E-posta</Label>
+                <Label>{t("email")}</Label>
                 <Input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="iletişim@firma.com"
+                  placeholder={t("emailPlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Telefon</Label>
+                <Label>{t("phone")}</Label>
                 <Input
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+90 xxx xxx xx xx"
+                  placeholder={t("phonePlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Yetkili Kişi</Label>
+                <Label>{t("contactPerson")}</Label>
                 <Input
                   value={contactPerson}
                   onChange={(e) => setContactPerson(e.target.value)}
-                  placeholder="Ad Soyad"
+                  placeholder={t("contactPlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Vergi Numarası</Label>
+                <Label>{t("taxNumber")}</Label>
                 <Input
                   value={taxNumber}
                   onChange={(e) => setTaxNumber(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Vergi Dairesi</Label>
+                <Label>{t("taxOffice")}</Label>
                 <Input
                   value={taxOffice}
                   onChange={(e) => setTaxOffice(e.target.value)}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Ülke</Label>
+                <Label>{t("country")}</Label>
                 <Select value={countryId} onValueChange={setCountryId}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Ülke seçin" />
+                    <SelectValue placeholder={t("selectCountry")} />
                   </SelectTrigger>
                   <SelectContent>
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -257,10 +254,10 @@ export default function SuppliersPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>Şirket</Label>
+                <Label>{t("company")}</Label>
                 <Select value={companyId} onValueChange={setCompanyId}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Şirket seçin" />
+                    <SelectValue placeholder={t("selectCompany")} />
                   </SelectTrigger>
                   <SelectContent>
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -273,7 +270,7 @@ export default function SuppliersPage() {
                 </Select>
               </div>
               <div className="col-span-2 space-y-2">
-                <Label>Adres</Label>
+                <Label>{t("address")}</Label>
                 <Textarea
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
@@ -283,10 +280,10 @@ export default function SuppliersPage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                İptal
+                {tc("cancel")}
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                {isCreating ? tc("creating") : tc("create")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -298,21 +295,21 @@ export default function SuppliersPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Users className="h-5 w-5" />
-            Tedarikçi Listesi
+            {t("supplierList")}
           </CardTitle>
-          <CardDescription>Toplam {suppliers.length} tedarikçi</CardDescription>
+          <CardDescription>{t("total", { count: suppliers.length })}</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Tedarikçi</TableHead>
-                <TableHead>E-posta</TableHead>
-                <TableHead>Ülke</TableHead>
-                <TableHead>Anket</TableHead>
-                <TableHead>Mal</TableHead>
-                <TableHead>Davet Durumu</TableHead>
-                <TableHead className="text-right">İşlemler</TableHead>
+                <TableHead>{t("name")}</TableHead>
+                <TableHead>{t("email")}</TableHead>
+                <TableHead>{t("country")}</TableHead>
+                <TableHead>{t("surveys")}</TableHead>
+                <TableHead>{t("goods")}</TableHead>
+                <TableHead>{t("invitationStatus")}</TableHead>
+                <TableHead className="text-right">{tc("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -322,7 +319,7 @@ export default function SuppliersPage() {
                     colSpan={7}
                     className="text-center text-muted-foreground py-8"
                   >
-                    Henüz tedarikçi bulunmuyor
+                    {t("noSuppliers")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -361,9 +358,7 @@ export default function SuppliersPage() {
                           INVITATION_VARIANTS[s.invitationStatus] || "secondary"
                         }
                       >
-                        {INVITATION_LABELS[s.invitationStatus] ||
-                          s.invitationStatus ||
-                          "Bekliyor"}
+                        {t(`statuses.${s.invitationStatus || "PENDING"}` as Parameters<typeof t>[0])}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
@@ -372,7 +367,7 @@ export default function SuppliersPage() {
                           variant="outline"
                           size="icon"
                           onClick={() => handleViewDetail(s.id)}
-                          title="Detay"
+                          title={tc("detail")}
                         >
                           <Eye className="h-4 w-4" />
                         </Button>
@@ -383,17 +378,17 @@ export default function SuppliersPage() {
                               variant="outline"
                               size="sm"
                               onClick={() => handleInvite(s.id)}
-                              title="Davet Gönder"
+                              title={t("invite")}
                             >
                               <Mail className="h-3 w-3 mr-1" />
-                              Davet
+                              {t("inviteBtn")}
                             </Button>
                           )}
                         <Button
                           variant="outline"
                           size="icon"
                           onClick={() => handleDelete(s.id)}
-                          title="Sil"
+                          title={tc("delete")}
                         >
                           <Trash2 className="h-4 w-4 text-destructive" />
                         </Button>
@@ -415,7 +410,7 @@ export default function SuppliersPage() {
         <DialogContent className="max-w-3xl">
           <DialogHeader>
             <DialogTitle>
-              {selectedSupplier?.name} - Detay
+              {selectedSupplier?.name} {t("detailTitle")}
             </DialogTitle>
           </DialogHeader>
           {selectedSupplier && (
@@ -423,37 +418,37 @@ export default function SuppliersPage() {
               {/* Supplier Info */}
               <div className="grid grid-cols-3 gap-3 text-sm">
                 <div>
-                  <p className="text-muted-foreground">E-posta</p>
+                  <p className="text-muted-foreground">{t("email")}</p>
                   <p className="font-medium">
                     {selectedSupplier.email || "-"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Telefon</p>
+                  <p className="text-muted-foreground">{t("phone")}</p>
                   <p className="font-medium">
                     {selectedSupplier.phone || "-"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Ülke</p>
+                  <p className="text-muted-foreground">{t("country")}</p>
                   <p className="font-medium">
                     {selectedSupplier.country?.name || "-"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Yetkili</p>
+                  <p className="text-muted-foreground">{t("contactPerson")}</p>
                   <p className="font-medium">
                     {selectedSupplier.contactPerson || "-"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Vergi No</p>
+                  <p className="text-muted-foreground">{t("taxNumber")}</p>
                   <p className="font-medium">
                     {selectedSupplier.taxNumber || "-"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground">Davet Durumu</p>
+                  <p className="text-muted-foreground">{t("invitationStatus")}</p>
                   <Badge
                     variant={
                       INVITATION_VARIANTS[
@@ -461,9 +456,7 @@ export default function SuppliersPage() {
                       ] || "secondary"
                     }
                   >
-                    {INVITATION_LABELS[
-                      selectedSupplier.invitationStatus
-                    ] || "Bekliyor"}
+                    {t(`statuses.${selectedSupplier.invitationStatus || "PENDING"}` as Parameters<typeof t>[0])}
                   </Badge>
                 </div>
               </div>
@@ -473,13 +466,13 @@ export default function SuppliersPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <ClipboardList className="h-4 w-4" />
-                    Emisyon Anketleri ({supplierSurveys.length})
+                    {t("emissionSurveys")} ({supplierSurveys.length})
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   {supplierSurveys.length === 0 ? (
                     <p className="text-sm text-muted-foreground py-2">
-                      Henüz anket yok
+                      {t("noSurveys")}
                     </p>
                   ) : (
                     <div className="space-y-2">
@@ -492,7 +485,7 @@ export default function SuppliersPage() {
                           >
                             <div>
                               <p className="font-medium">
-                                {survey.supplierGood?.name || "Genel"}
+                                {survey.supplierGood?.name || t("survey.title")}
                               </p>
                               <p className="text-xs text-muted-foreground">
                                 {survey.reportingPeriodStart
@@ -516,13 +509,7 @@ export default function SuppliersPage() {
                                     : "secondary"
                                 }
                               >
-                                {survey.status === "DRAFT"
-                                  ? "Taslak"
-                                  : survey.status === "SUBMITTED"
-                                    ? "Gönderildi"
-                                    : survey.status === "APPROVED"
-                                      ? "Onaylandı"
-                                      : survey.status}
+                                {t(`survey.statuses.${survey.status}` as Parameters<typeof t>[0])}
                               </Badge>
                               {survey.specificEmbeddedEmissions && (
                                 <p className="text-xs text-muted-foreground mt-1">
@@ -547,7 +534,7 @@ export default function SuppliersPage() {
               variant="outline"
               onClick={() => setSelectedSupplier(null)}
             >
-              Kapat
+              {tc("close")}
             </Button>
           </DialogFooter>
         </DialogContent>

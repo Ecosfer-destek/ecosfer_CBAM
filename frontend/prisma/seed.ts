@@ -36,13 +36,13 @@ async function main() {
   // ========================================
   // 2. Admin Users (one per tenant)
   // ========================================
-  const passwordHash = await bcrypt.hash("Admin123!", 12);
+  const passwordHash = await bcrypt.hash("Ankara3406.", 12);
 
   await prisma.user.upsert({
-    where: { email: "admin@ecosfer.com" },
+    where: { email: "info@ecosfer.com" },
     update: {},
     create: {
-      email: "admin@ecosfer.com",
+      email: "info@ecosfer.com",
       name: "Ecosfer Admin",
       passwordHash,
       role: "SUPER_ADMIN",

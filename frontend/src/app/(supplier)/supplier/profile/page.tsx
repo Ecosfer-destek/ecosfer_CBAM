@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,6 +17,8 @@ import { User, Save } from "lucide-react";
 import { toast } from "sonner";
 
 export default function SupplierProfilePage() {
+  const t = useTranslations("supplier");
+  const tCommon = useTranslations("common");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -66,12 +69,12 @@ export default function SupplierProfilePage() {
         }),
       });
       if (res.ok) {
-        toast.success("Profil güncellendi");
+        toast.success(t("portal.profileSaved"));
       } else {
-        toast.error("Profil güncellenirken bir hata oluştu");
+        toast.error(t("portal.profileSaveError"));
       }
     } catch {
-      toast.error("Profil güncellenirken bir hata oluştu");
+      toast.error(t("portal.profileSaveError"));
     }
     setIsSaving(false);
   }
@@ -79,9 +82,9 @@ export default function SupplierProfilePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Profilim</h1>
+        <h1 className="text-3xl font-bold">{t("portal.profile")}</h1>
         <p className="text-muted-foreground">
-          Tedarikçi bilgilerinizi görüntüleyin ve güncelleyin
+          {t("portal.subtitle")}
         </p>
       </div>
 
@@ -89,77 +92,77 @@ export default function SupplierProfilePage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <User className="h-5 w-5" />
-            Tedarikçi Bilgileri
+            {t("portal.supplierInfo")}
           </CardTitle>
           <CardDescription>
-            CBAM beyannamelerinde kullanılacak tedarikçi bilgileriniz
+            {t("portal.supplierInfoDesc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Şirket Adı</Label>
+              <Label>{t("portal.companyName")}</Label>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Tedarikçi şirket adı"
+                placeholder={t("portal.companyNamePlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label>E-posta</Label>
+              <Label>{t("email")}</Label>
               <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="iletişim@firma.com"
+                placeholder={t("portal.emailPlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label>Telefon</Label>
+              <Label>{t("phone")}</Label>
               <Input
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+90 xxx xxx xx xx"
+                placeholder={t("phonePlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label>Yetkili Kişi</Label>
+              <Label>{t("portal.contactPerson")}</Label>
               <Input
                 value={contactPerson}
                 onChange={(e) => setContactPerson(e.target.value)}
-                placeholder="Ad Soyad"
+                placeholder={t("portal.contactPlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label>Vergi Numarası</Label>
+              <Label>{t("portal.taxNumber")}</Label>
               <Input
                 value={taxNumber}
                 onChange={(e) => setTaxNumber(e.target.value)}
-                placeholder="Vergi numarası"
+                placeholder={t("portal.taxNumberPlaceholder")}
               />
             </div>
             <div className="space-y-2">
-              <Label>Vergi Dairesi</Label>
+              <Label>{t("portal.taxOffice")}</Label>
               <Input
                 value={taxOffice}
                 onChange={(e) => setTaxOffice(e.target.value)}
-                placeholder="Vergi dairesi"
+                placeholder={t("portal.taxOfficePlaceholder")}
               />
             </div>
             <div className="col-span-2 space-y-2">
-              <Label>Adres</Label>
+              <Label>{t("portal.address")}</Label>
               <Textarea
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 rows={2}
-                placeholder="Şirket adresi"
+                placeholder={t("portal.addressPlaceholder")}
               />
             </div>
           </div>
           <div className="mt-6 flex justify-end">
             <Button onClick={handleSave} disabled={isSaving}>
               <Save className="mr-2 h-4 w-4" />
-              {isSaving ? "Kaydediliyor..." : "Kaydet"}
+              {isSaving ? tCommon("saving") : tCommon("save")}
             </Button>
           </div>
         </CardContent>

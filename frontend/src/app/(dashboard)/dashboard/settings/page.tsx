@@ -7,47 +7,50 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { User, Users, Building2, Shield, Globe } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
-const settingsItems = [
-  {
-    title: "Profil",
-    description: "Hesap bilgilerinizi görüntüleyin ve şifrenizi değiştirin",
-    href: "/dashboard/settings/profile",
-    icon: User,
-  },
-  {
-    title: "Kullanıcı Yönetimi",
-    description: "Şirketinizdeki kullanıcıları yönetin",
-    href: "/dashboard/settings/users",
-    icon: Users,
-  },
-  {
-    title: "Tenant Ayarları",
-    description: "Organizasyon bilgileri, dil ve bölgesel ayarlar",
-    href: "/dashboard/settings/tenant",
-    icon: Globe,
-  },
-  {
-    title: "Şirket Ayarları",
-    description: "Şirket bilgilerini güncelleyin",
-    href: "/dashboard/companies",
-    icon: Building2,
-  },
-  {
-    title: "Güvenlik",
-    description: "Şifre değişikliği, oturum yönetimi ve erişim kontrolleri",
-    href: "/dashboard/settings/security",
-    icon: Shield,
-  },
-];
+export default async function SettingsPage() {
+  const t = await getTranslations("settings");
 
-export default function SettingsPage() {
+  const settingsItems = [
+    {
+      title: t("profile"),
+      description: t("profileDesc"),
+      href: "/dashboard/settings/profile",
+      icon: User,
+    },
+    {
+      title: t("userManagement"),
+      description: t("userManagementDesc"),
+      href: "/dashboard/settings/users",
+      icon: Users,
+    },
+    {
+      title: t("tenant"),
+      description: t("tenantDesc"),
+      href: "/dashboard/settings/tenant",
+      icon: Globe,
+    },
+    {
+      title: t("companySettings"),
+      description: t("companySettingsDesc"),
+      href: "/dashboard/companies",
+      icon: Building2,
+    },
+    {
+      title: t("security"),
+      description: t("securityDesc"),
+      href: "/dashboard/settings/security",
+      icon: Shield,
+    },
+  ];
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Ayarlar</h1>
+        <h1 className="text-3xl font-bold">{t("title")}</h1>
         <p className="text-muted-foreground">
-          Platform ayarlarını yönetin
+          {t("subtitle")}
         </p>
       </div>
 

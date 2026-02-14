@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,6 +38,8 @@ import {
 import { toast } from "sonner";
 
 export default function SupplierGoodsPage() {
+  const t = useTranslations("supplier");
+  const tCommon = useTranslations("common");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [goods, setGoods] = useState<any[]>([]);
   const [showCreate, setShowCreate] = useState(false);
@@ -57,7 +60,7 @@ export default function SupplierGoodsPage() {
 
   async function handleCreate() {
     if (!name.trim()) {
-      toast.error("Mal adı zorunludur");
+      toast.error(t("portal.goodNameRequired"));
       return;
     }
     setIsCreating(true);
@@ -70,7 +73,7 @@ export default function SupplierGoodsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Mal oluşturuldu");
+      toast.success(t("portal.goodCreated"));
       setShowCreate(false);
       setName("");
       setCode("");
@@ -82,11 +85,11 @@ export default function SupplierGoodsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu malı silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(t("portal.goodDeleteConfirm"))) return;
     const result = await deleteSupplierGood(id);
     if (result.error) toast.error(result.error);
     else {
-      toast.success("Mal silindi");
+      toast.success(t("portal.goodDeleted"));
       reload();
     }
   }
@@ -95,65 +98,65 @@ export default function SupplierGoodsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Mallarım</h1>
+          <h1 className="text-3xl font-bold">{t("portal.goodsTitle")}</h1>
           <p className="text-muted-foreground">
-            CBAM kapsamındaki mallarınızı yönetin
+            {t("portal.goodsSubtitle")}
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Yeni Mal
+              {t("portal.newGood")}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni Mal Ekle</DialogTitle>
+              <DialogTitle>{t("portal.newGoodDialog")}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Mal Adı *</Label>
+                <Label>{t("portal.goodName")} *</Label>
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="örneğin: Çelik Levha"
+                  placeholder={t("portal.goodNamePlaceholder")}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label>Kod</Label>
+                  <Label>{t("portal.code")}</Label>
                   <Input
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    placeholder="örneğin: STL-001"
+                    placeholder={t("portal.codePlaceholder")}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>CN Kodu</Label>
+                  <Label>{t("portal.cnCode")}</Label>
                   <Input
                     value={cnCode}
                     onChange={(e) => setCnCode(e.target.value)}
-                    placeholder="örneğin: 7208 10 00"
+                    placeholder={t("portal.cnCodePlaceholder")}
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label>Açıklama</Label>
+                <Label>{tCommon("description")}</Label>
                 <Textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={2}
-                  placeholder="Mal hakkında açıklama"
+                  placeholder={t("portal.descriptionPlaceholder")}
                 />
               </div>
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                İptal
+                {tCommon("cancel")}
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                {isCreating ? tCommon("creating") : tCommon("create")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -164,19 +167,19 @@ export default function SupplierGoodsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Package className="h-5 w-5" />
-            Mal Listem
+            {t("portal.goodsList")}
           </CardTitle>
-          <CardDescription>Toplam {goods.length} mal</CardDescription>
+          <CardDescription>{t("portal.goodsTotal", { count: goods.length })}</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mal Adı</TableHead>
-                <TableHead>Kod</TableHead>
-                <TableHead>CN Kodu</TableHead>
-                <TableHead>Kategori</TableHead>
-                <TableHead className="text-right">İşlemler</TableHead>
+                <TableHead>{t("portal.goodName")}</TableHead>
+                <TableHead>{t("portal.code")}</TableHead>
+                <TableHead>{t("portal.cnCode")}</TableHead>
+                <TableHead>{t("portal.category")}</TableHead>
+                <TableHead className="text-right">{tCommon("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -186,7 +189,7 @@ export default function SupplierGoodsPage() {
                     colSpan={5}
                     className="text-center text-muted-foreground py-8"
                   >
-                    Henüz malınız bulunmuyor
+                    {t("portal.noGoods")}
                   </TableCell>
                 </TableRow>
               ) : (

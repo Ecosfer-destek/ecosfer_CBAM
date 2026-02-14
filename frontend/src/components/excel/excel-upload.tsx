@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Upload, FileSpreadsheet, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface SheetResult {
   imported: boolean;
@@ -40,6 +41,8 @@ interface ExcelUploadProps {
 }
 
 export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploadProps) {
+  const t = useTranslations("excel");
+  const tc = useTranslations("common");
   const [status, setStatus] = useState<ImportStatus>("idle");
   const [result, setResult] = useState<ImportResult | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -50,7 +53,7 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
     if (!file) return;
 
     if (!file.name.endsWith(".xlsx") && !file.name.endsWith(".xls")) {
-      toast.error("Lütfen bir Excel dosyası (.xlsx) seçin");
+      toast.error(t("invalidFile"));
       return;
     }
 
@@ -87,16 +90,16 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
           (importResult.sheetD?.recordsUpdated || 0) +
           (importResult.sheetE?.recordsUpdated || 0);
         toast.success(
-          `Import başarılı! ${totalCreated} kayıt oluşturuldu, ${totalUpdated} güncellendi`
+          t("importSuccess", { created: totalCreated, updated: totalUpdated })
         );
         onImportComplete?.();
       } else {
         setStatus("error");
-        toast.error(importResult.error || "Import sırasında bir hata oluştu");
+        toast.error(importResult.error || t("importError"));
       }
     } catch (error) {
       setStatus("error");
-      toast.error("Excel import sırasında bir hata oluştu");
+      toast.error(t("importGeneralError"));
       console.error("Import error:", error);
     }
 
@@ -116,11 +119,10 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileSpreadsheet className="h-5 w-5" />
-          CBAM Excel Import
+          {t("importTitle")}
         </CardTitle>
         <CardDescription>
-          CBAM Excel dosyasını yükleyerek 5 sayfadaki verileri içeri aktarın
-          (A: Tesis, B: Emisyon, C: Denge, D: Prosesler, E: Prekursörler)
+          {t("importDesc")} {t("sheetsDesc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -142,12 +144,12 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
             {status === "uploading" || status === "processing" ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {status === "uploading" ? "Yükleniyor..." : "İşleniyor..."}
+                {status === "uploading" ? t("uploading") : t("processing")}
               </>
             ) : (
               <>
                 <Upload className="mr-2 h-4 w-4" />
-                Excel Dosyası Seç
+                {t("selectFile")}
               </>
             )}
           </Button>
@@ -155,24 +157,24 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
             <span className="text-sm text-muted-foreground">{fileName}</span>
           )}
           {status === "success" && (
-            <Badge className="bg-green-100 text-green-800">Başarılı</Badge>
+            <Badge className="bg-green-100 text-green-800">{t("successBadge")}</Badge>
           )}
           {status === "error" && (
-            <Badge variant="destructive">Hata</Badge>
+            <Badge variant="destructive">{t("errorBadge")}</Badge>
           )}
         </div>
 
         {/* Results */}
         {result && (
           <div className="border rounded-lg p-4 space-y-3">
-            <h4 className="font-medium text-sm">Import Sonuçları</h4>
+            <h4 className="font-medium text-sm">{t("results")}</h4>
             <div className="grid grid-cols-5 gap-3 text-sm">
               {[
-                { name: "A: Tesis", sheet: result.sheetA },
-                { name: "B: Emisyon", sheet: result.sheetB },
-                { name: "C: Denge", sheet: result.sheetC },
-                { name: "D: Prosesler", sheet: result.sheetD },
-                { name: "E: Prekursör", sheet: result.sheetE },
+                { name: t("sheetA"), sheet: result.sheetA },
+                { name: t("sheetB"), sheet: result.sheetB },
+                { name: t("sheetC"), sheet: result.sheetC },
+                { name: t("sheetD"), sheet: result.sheetD },
+                { name: t("sheetE"), sheet: result.sheetE },
               ].map(({ name, sheet }) => (
                 <div key={name} className="border rounded p-2 space-y-1">
                   <div className="flex items-center gap-1">
@@ -182,14 +184,14 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
                   {sheet && (
                     <div className="text-xs text-muted-foreground">
                       {sheet.recordsCreated > 0 && (
-                        <div>+{sheet.recordsCreated} yeni</div>
+                        <div>{t("newRecords", { count: sheet.recordsCreated })}</div>
                       )}
                       {sheet.recordsUpdated > 0 && (
-                        <div>~{sheet.recordsUpdated} güncellendi</div>
+                        <div>{t("updatedRecords", { count: sheet.recordsUpdated })}</div>
                       )}
                       {sheet.warnings.length > 0 && (
                         <div className="text-amber-600">
-                          {sheet.warnings.length} uyarı
+                          {t("warningCount", { count: sheet.warnings.length })}
                         </div>
                       )}
                       {sheet.errors.length > 0 && (
@@ -206,9 +208,7 @@ export function ExcelUpload({ installationDataId, onImportComplete }: ExcelUploa
         )}
 
         <p className="text-xs text-muted-foreground">
-          Desteklenen format: .xlsx (CBAM Communication Template).
-          5 sayfa otomatik import edilir: A_InstData, B_EmInst,
-          C_Emissions&amp;Energy, D_Processes, E_PurchPrec
+          {t("supportedFormat")}
         </p>
       </CardContent>
     </Card>

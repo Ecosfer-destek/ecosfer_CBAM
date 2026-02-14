@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Building2, Factory, Pencil } from "lucide-react";
 import Link from "next/link";
 import { CompanyForm } from "../company-form";
+import { useTranslations } from "next-intl";
 
 interface CompanyDetail {
   id: string;
@@ -51,6 +52,8 @@ function InfoRow({ label, value }: { label: string; value: string | null | undef
 }
 
 export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
+  const t = useTranslations("company");
+  const tc = useTranslations("common");
   const searchParams = useSearchParams();
   const isEditing = searchParams.get("edit") === "true";
 
@@ -58,7 +61,7 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Şirket Düzenle</h1>
+          <h1 className="text-3xl font-bold">{t("editTitle")}</h1>
           <p className="text-muted-foreground">{company.name}</p>
         </div>
         <CompanyForm company={company} />
@@ -85,7 +88,7 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
         <Button asChild>
           <Link href={`/dashboard/companies/${company.id}?edit=true`}>
             <Pencil className="mr-2 h-4 w-4" />
-            Düzenle
+            {tc("edit")}
           </Link>
         </Button>
       </div>
@@ -95,38 +98,38 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Building2 className="h-5 w-5" />
-              Temel Bilgiler
+              {t("basicInfo")}
             </CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
-            <InfoRow label="Şirket Adı" value={company.name} />
-            <InfoRow label="Resmi Ad" value={company.officialName} />
-            <InfoRow label="Vergi No" value={company.taxNumber} />
-            <InfoRow label="Ekonomik Faaliyet" value={company.economicActivity} />
+            <InfoRow label={t("name")} value={company.name} />
+            <InfoRow label={t("officialName")} value={company.officialName} />
+            <InfoRow label={t("taxNumber")} value={company.taxNumber} />
+            <InfoRow label={t("economicActivity")} value={company.economicActivity} />
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Konum</CardTitle>
+            <CardTitle>{t("locationInfo")}</CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
-            <InfoRow label="Ülke" value={company.country?.name} />
-            <InfoRow label="Şehir" value={company.city?.name} />
-            <InfoRow label="İlçe" value={company.district?.name} />
-            <InfoRow label="Vergi Dairesi" value={company.taxOffice?.name} />
-            <InfoRow label="Adres" value={company.address} />
-            <InfoRow label="Posta Kodu" value={company.postCode} />
+            <InfoRow label={t("country")} value={company.country?.name} />
+            <InfoRow label={t("city")} value={company.city?.name} />
+            <InfoRow label={t("district")} value={company.district?.name} />
+            <InfoRow label={t("taxOffice")} value={company.taxOffice?.name} />
+            <InfoRow label={t("address")} value={company.address} />
+            <InfoRow label={t("postalCode")} value={company.postCode} />
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>İletişim</CardTitle>
+            <CardTitle>{t("contactInfo")}</CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
-            <InfoRow label="E-posta" value={company.email} />
-            <InfoRow label="Telefon" value={company.phone} />
+            <InfoRow label={t("email")} value={company.email} />
+            <InfoRow label={t("phone")} value={company.phone} />
           </CardContent>
         </Card>
 
@@ -134,16 +137,16 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Factory className="h-5 w-5" />
-              Tesisler
+              {t("installations")}
             </CardTitle>
             <CardDescription>
-              Bu şirkete ait {company.installations.length} tesis
+              {t("installationCount", { count: company.installations.length })}
             </CardDescription>
           </CardHeader>
           <CardContent>
             {company.installations.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                Henüz tesis bulunmuyor
+                {t("noInstallations")}
               </p>
             ) : (
               <div className="space-y-2">
@@ -163,7 +166,7 @@ export function CompanyDetailClient({ company }: { company: CompanyDetail }) {
             <Separator className="my-4" />
             <Button variant="outline" size="sm" asChild>
               <Link href={`/dashboard/installations/new?companyId=${company.id}`}>
-                Yeni Tesis Ekle
+                {t("addInstallation")}
               </Link>
             </Button>
           </CardContent>

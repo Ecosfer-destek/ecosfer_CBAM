@@ -18,37 +18,18 @@ import {
 } from "@/components/ui/select";
 import { FileText, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
-const REPORT_TYPES = [
-  {
-    value: "installation-summary",
-    label: "Tesis Özet Raporu",
-    description: "Tesis, emisyon, denge ve üretim verilerinin özeti",
-  },
-  {
-    value: "declaration",
-    label: "CBAM Beyanname Raporu",
-    description: "Yıllık beyanname özeti ve sertifika bilgileri",
-  },
-  {
-    value: "emission-detail",
-    label: "Emisyon Detay Raporu",
-    description: "Tüm emisyon kaynaklarının detaylı listesi (yatay format)",
-  },
-  {
-    value: "supplier-survey",
-    label: "Tedarikçi Anket Raporu",
-    description: "Tedarikçi bilgileri ve anket durumu",
-  },
-  {
-    value: "custom",
-    label: "Özel Rapor",
-    description: "Rapor şablonu ve bölümlerinden oluşturulan rapor",
-  },
-];
+const REPORT_TYPE_KEYS = [
+  "installation-summary",
+  "declaration",
+  "emission-detail",
+  "supplier-survey",
+  "custom",
+] as const;
 
 const LANGUAGES = [
-  { value: "tr", label: "Türkçe" },
+  { value: "tr", label: "Turkce" },
   { value: "en", label: "English" },
   { value: "de", label: "Deutsch" },
 ];
@@ -58,6 +39,7 @@ interface PdfReportGeneratorProps {
 }
 
 export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorProps) {
+  const t = useTranslations("pdf");
   const [reportType, setReportType] = useState("installation-summary");
   const [language, setLanguage] = useState("tr");
   const [loading, setLoading] = useState(false);
@@ -76,8 +58,8 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: "PDF oluşturma hatası" }));
-        toast.error(errorData.error || "PDF oluşturma hatası");
+        const errorData = await response.json().catch(() => ({ error: t("generateError") }));
+        toast.error(errorData.error || t("generateError"));
         return;
       }
 
@@ -95,41 +77,53 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      toast.success("PDF rapor indirildi");
+      toast.success(t("downloadSuccess"));
     } catch (error) {
-      toast.error("PDF oluşturma sırasında hata oluştu");
+      toast.error(t("generateGeneralError"));
       console.error("PDF generation error:", error);
     } finally {
       setLoading(false);
     }
   }
 
-  const selectedReport = REPORT_TYPES.find((r) => r.value === reportType);
+  const selectedReportDesc = t(`reportTypeDescriptions.${reportType}` as
+    "reportTypeDescriptions.installation-summary" |
+    "reportTypeDescriptions.declaration" |
+    "reportTypeDescriptions.emission-detail" |
+    "reportTypeDescriptions.supplier-survey" |
+    "reportTypeDescriptions.custom"
+  );
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="h-5 w-5" />
-          PDF Rapor Üretimi
+          {t("generateTitle")}
         </CardTitle>
         <CardDescription>
-          5 farklı rapor tipinde PDF dosyası oluşturun
+          {t("pdfDesc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Report Type */}
           <div className="space-y-1">
-            <label className="text-sm font-medium">Rapor Tipi</label>
+            <label className="text-sm font-medium">{t("reportType")}</label>
             <Select value={reportType} onValueChange={setReportType}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {REPORT_TYPES.map((rt) => (
-                  <SelectItem key={rt.value} value={rt.value}>
-                    {rt.label}
+                {REPORT_TYPE_KEYS.map((key) => (
+                  <SelectItem key={key} value={key}>
+                    {t(`reportTypes.${key}` as
+                      "reportTypes.installation-summary" |
+                      "reportTypes.declaration" |
+                      "reportTypes.emission-detail" |
+                      "reportTypes.supplier-survey" |
+                      "reportTypes.custom"
+                    )}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -138,7 +132,7 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
 
           {/* Language */}
           <div className="space-y-1">
-            <label className="text-sm font-medium">Dil</label>
+            <label className="text-sm font-medium">{t("language")}</label>
             <Select value={language} onValueChange={setLanguage}>
               <SelectTrigger>
                 <SelectValue />
@@ -164,21 +158,21 @@ export function PdfReportGenerator({ installationDataId }: PdfReportGeneratorPro
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Oluşturuluyor...
+                  {t("generating")}
                 </>
               ) : (
                 <>
                   <Download className="mr-2 h-4 w-4" />
-                  PDF İndir
+                  {t("download")}
                 </>
               )}
             </Button>
           </div>
         </div>
 
-        {selectedReport && (
+        {selectedReportDesc && (
           <p className="text-xs text-muted-foreground">
-            {selectedReport.description}
+            {selectedReportDesc}
           </p>
         )}
       </CardContent>

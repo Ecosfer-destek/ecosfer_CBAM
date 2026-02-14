@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Card,
   CardContent,
@@ -13,14 +14,8 @@ import { ClipboardList, Package, FileCheck, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { getSupplierSurveys, getSupplierGoods } from "@/actions/supplier";
 
-const SURVEY_STATUS_LABELS: Record<string, string> = {
-  DRAFT: "Taslak",
-  SUBMITTED: "Gönderildi",
-  APPROVED: "Onaylandı",
-  REJECTED: "Reddedildi",
-};
-
 export default function SupplierDashboardPage() {
+  const t = useTranslations("supplier");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [surveys, setSurveys] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,9 +32,9 @@ export default function SupplierDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Tedarikçi Portalı</h1>
+        <h1 className="text-3xl font-bold">{t("portal.title")}</h1>
         <p className="text-muted-foreground">
-          CBAM emisyon verilerinizi yönetin ve anketlerinizi tamamlayın
+          {t("portal.subtitle")}
         </p>
       </div>
 
@@ -47,7 +42,7 @@ export default function SupplierDashboardPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Toplam Anket</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("portal.totalSurveys")}</CardTitle>
             <ClipboardList className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -56,7 +51,7 @@ export default function SupplierDashboardPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Bekleyen</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("portal.pending")}</CardTitle>
             <AlertCircle className="h-4 w-4 text-amber-500" />
           </CardHeader>
           <CardContent>
@@ -65,7 +60,7 @@ export default function SupplierDashboardPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Gönderilen</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("portal.submitted")}</CardTitle>
             <FileCheck className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
@@ -74,7 +69,7 @@ export default function SupplierDashboardPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Mallarım</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("portal.myGoods")}</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -86,15 +81,15 @@ export default function SupplierDashboardPage() {
       {/* Recent Surveys */}
       <Card>
         <CardHeader>
-          <CardTitle>Son Anketler</CardTitle>
+          <CardTitle>{t("portal.recentSurveys")}</CardTitle>
           <CardDescription>
-            En son emisyon anketleriniz
+            {t("portal.recentSurveysDesc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {surveys.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4">
-              Henüz anketiniz bulunmuyor.
+              {t("portal.noSurveys")}
             </p>
           ) : (
             <div className="space-y-3">
@@ -105,7 +100,7 @@ export default function SupplierDashboardPage() {
                 >
                   <div>
                     <p className="font-medium text-sm">
-                      {s.supplierGood?.name || "Genel Anket"}
+                      {s.supplierGood?.name || t("portal.generalSurvey")}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       {new Date(s.createdAt).toLocaleDateString("tr-TR")}
@@ -114,7 +109,7 @@ export default function SupplierDashboardPage() {
                   <Badge
                     variant={s.status === "APPROVED" ? "default" : "secondary"}
                   >
-                    {SURVEY_STATUS_LABELS[s.status] || s.status}
+                    {t(`survey.statuses.${s.status}` as any) || s.status}
                   </Badge>
                 </div>
               ))}
@@ -125,7 +120,7 @@ export default function SupplierDashboardPage() {
               href="/supplier/surveys"
               className="text-sm text-primary hover:underline"
             >
-              Tüm anketleri görüntüle →
+              {t("portal.viewAll")}
             </Link>
           </div>
         </CardContent>

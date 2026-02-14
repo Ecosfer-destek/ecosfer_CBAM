@@ -56,11 +56,14 @@ import {
   createFreeAllocationAdjustment,
   updateDeclaration,
 } from "@/actions/declaration";
+import { useTranslations } from "next-intl";
 
 // ============================================================================
 // Step 1: Select Installation & Year
 // ============================================================================
 export function StepSelectInstallation() {
+  const t = useTranslations("wizard");
+  const tc = useTranslations("common");
   const { year, setYear, installation, setInstallation, nextStep } =
     useDeclarationWizardStore();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -82,7 +85,7 @@ export function StepSelectInstallation() {
 
   function handleNext() {
     if (!selectedInstId || !selectedDataId) {
-      toast.error("Tesis ve veri dönemi seçin");
+      toast.error(t("selectInstallationAndPeriod"));
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,16 +104,16 @@ export function StepSelectInstallation() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Building className="h-5 w-5" />
-          Adım 1: Tesis ve Raporlama Yılı Seç
+          {t("step1Title")}
         </CardTitle>
         <CardDescription>
-          Beyanname için tesis, veri dönemi ve raporlama yılını seçin
+          {t("step1Desc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label>Raporlama Yılı *</Label>
+            <Label>{t("reportingYear")}</Label>
             <Input
               type="number"
               value={year}
@@ -121,10 +124,10 @@ export function StepSelectInstallation() {
           </div>
 
           <div className="space-y-2">
-            <Label>Tesis *</Label>
+            <Label>{t("installation")}</Label>
             <Select value={selectedInstId} onValueChange={setSelectedInstId}>
               <SelectTrigger>
-                <SelectValue placeholder="Tesis seçin" />
+                <SelectValue placeholder={t("selectInstallation")} />
               </SelectTrigger>
               <SelectContent>
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -138,10 +141,10 @@ export function StepSelectInstallation() {
           </div>
 
           <div className="space-y-2">
-            <Label>Veri Dönemi *</Label>
+            <Label>{t("dataPeriod")}</Label>
             <Select value={selectedDataId} onValueChange={setSelectedDataId}>
               <SelectTrigger>
-                <SelectValue placeholder="Dönem seçin" />
+                <SelectValue placeholder={t("selectPeriod")} />
               </SelectTrigger>
               <SelectContent>
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -164,7 +167,7 @@ export function StepSelectInstallation() {
         {installation && (
           <div className="border rounded-lg p-3 bg-muted/50">
             <p className="text-sm">
-              <span className="font-medium">Seçili:</span>{" "}
+              <span className="font-medium">{t("selected")}</span>{" "}
               {installation.companyName} / {installation.installationName}
             </p>
           </div>
@@ -172,7 +175,7 @@ export function StepSelectInstallation() {
 
         <div className="flex justify-end">
           <Button onClick={handleNext} disabled={!selectedInstId || !selectedDataId}>
-            Devam
+            {tc("next")}
           </Button>
         </div>
       </CardContent>
@@ -184,6 +187,8 @@ export function StepSelectInstallation() {
 // Step 2: Review Imported Goods
 // ============================================================================
 export function StepReviewGoods() {
+  const t = useTranslations("wizard");
+  const tc = useTranslations("common");
   const { installation, goods, setGoods, nextStep, prevStep } =
     useDeclarationWizardStore();
   const [loading, setLoading] = useState(true);
@@ -214,29 +219,29 @@ export function StepReviewGoods() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Package className="h-5 w-5" />
-          Adım 2: İthal Malları Gözden Geçir
+          {t("step2Title")}
         </CardTitle>
         <CardDescription>
-          Tesis verisinden elde edilen ithal mal kategorileri
+          {t("step2Desc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {loading ? (
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" /> Yükleniyor...
+            <Loader2 className="h-4 w-4 animate-spin" /> {tc("loading")}
           </div>
         ) : goods.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            İthal mal verisi bulunamadı. Excel import ile veri yükleyin.
+            {t("noGoodsData")}
           </p>
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Kategori</TableHead>
-                <TableHead>CN Kodu</TableHead>
-                <TableHead>Rota Tipi</TableHead>
-                <TableHead>Rotalar</TableHead>
+                <TableHead>{t("category")}</TableHead>
+                <TableHead>{t("cnCode")}</TableHead>
+                <TableHead>{t("routeType")}</TableHead>
+                <TableHead>{t("routes")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -253,8 +258,8 @@ export function StepReviewGoods() {
         )}
 
         <div className="flex justify-between">
-          <Button variant="outline" onClick={prevStep}>Geri</Button>
-          <Button onClick={nextStep}>Devam</Button>
+          <Button variant="outline" onClick={prevStep}>{tc("back")}</Button>
+          <Button onClick={nextStep}>{tc("next")}</Button>
         </div>
       </CardContent>
     </Card>
@@ -265,6 +270,8 @@ export function StepReviewGoods() {
 // Step 3: Review Embedded Emissions
 // ============================================================================
 export function StepReviewEmissions() {
+  const t = useTranslations("wizard");
+  const tc = useTranslations("common");
   const { installation, emissions, setEmissions, nextStep, prevStep } =
     useDeclarationWizardStore();
   const [loading, setLoading] = useState(true);
@@ -298,31 +305,31 @@ export function StepReviewEmissions() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Flame className="h-5 w-5" />
-          Adım 3: Gömülü Emisyonları Gözden Geçir
+          {t("step3Title")}
         </CardTitle>
         <CardDescription>
-          Tesis verisindeki emisyon kaynakları
+          {t("step3Desc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {loading ? (
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin" /> Yükleniyor...
+            <Loader2 className="h-4 w-4 animate-spin" /> {tc("loading")}
           </div>
         ) : emissions.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            Emisyon verisi bulunamadı.
+            {t("noEmissionsData")}
           </p>
         ) : (
           <>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Kaynak</TableHead>
-                  <TableHead>Tip</TableHead>
-                  <TableHead>Yöntem</TableHead>
-                  <TableHead className="text-right">CO2e Fosil</TableHead>
-                  <TableHead className="text-right">CO2e Bio</TableHead>
+                  <TableHead>{t("source")}</TableHead>
+                  <TableHead>{t("emissionType")}</TableHead>
+                  <TableHead>{t("method")}</TableHead>
+                  <TableHead className="text-right">{t("co2eFossil")}</TableHead>
+                  <TableHead className="text-right">{t("co2eBio")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -338,15 +345,15 @@ export function StepReviewEmissions() {
               </TableBody>
             </Table>
             <div className="flex gap-4 text-sm">
-              <span><strong>Toplam CO2e Fosil:</strong> {totalCo2eFossil.toFixed(4)} tCO2e</span>
-              <span><strong>Toplam CO2e Bio:</strong> {totalCo2eBio.toFixed(4)} tCO2e</span>
+              <span><strong>{t("totalCo2eFossil")}</strong> {totalCo2eFossil.toFixed(4)} tCO2e</span>
+              <span><strong>{t("totalCo2eBio")}</strong> {totalCo2eBio.toFixed(4)} tCO2e</span>
             </div>
           </>
         )}
 
         <div className="flex justify-between">
-          <Button variant="outline" onClick={prevStep}>Geri</Button>
-          <Button onClick={nextStep}>Devam</Button>
+          <Button variant="outline" onClick={prevStep}>{tc("back")}</Button>
+          <Button onClick={nextStep}>{tc("next")}</Button>
         </div>
       </CardContent>
     </Card>
@@ -357,6 +364,8 @@ export function StepReviewEmissions() {
 // Step 4: Certificate Surrender
 // ============================================================================
 export function StepCertificateSurrender() {
+  const t = useTranslations("wizard");
+  const tc = useTranslations("common");
   const {
     certificateSurrenders,
     addCertificateSurrender,
@@ -377,7 +386,7 @@ export function StepCertificateSurrender() {
 
   function handleAdd() {
     if (!certId) {
-      toast.error("Sertifika seçin");
+      toast.error(t("selectCertificateError"));
       return;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -399,20 +408,20 @@ export function StepCertificateSurrender() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileCheck className="h-5 w-5" />
-          Adım 4: Sertifika Teslimi Tahsisi
+          {t("step4Title")}
         </CardTitle>
         <CardDescription>
-          CBAM sertifikalarını beyanname ile ilişkilendirin
+          {t("step4Desc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Add surrender form */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
           <div className="space-y-1">
-            <Label className="text-xs">Sertifika</Label>
+            <Label className="text-xs">{t("certificate")}</Label>
             <Select value={certId} onValueChange={setCertId}>
               <SelectTrigger>
-                <SelectValue placeholder="Seç" />
+                <SelectValue placeholder={t("select")} />
               </SelectTrigger>
               <SelectContent>
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
@@ -425,7 +434,7 @@ export function StepCertificateSurrender() {
             </Select>
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Adet</Label>
+            <Label className="text-xs">{t("quantity")}</Label>
             <Input
               type="number"
               value={qty}
@@ -434,7 +443,7 @@ export function StepCertificateSurrender() {
             />
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Tarih</Label>
+            <Label className="text-xs">{tc("date")}</Label>
             <Input
               type="date"
               value={date}
@@ -442,7 +451,7 @@ export function StepCertificateSurrender() {
             />
           </div>
           <Button onClick={handleAdd} size="sm">
-            <Plus className="h-4 w-4 mr-1" /> Ekle
+            <Plus className="h-4 w-4 mr-1" /> {tc("add")}
           </Button>
         </div>
 
@@ -452,10 +461,10 @@ export function StepCertificateSurrender() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Sertifika No</TableHead>
-                  <TableHead>Adet</TableHead>
-                  <TableHead>Tarih</TableHead>
-                  <TableHead className="text-right">Sil</TableHead>
+                  <TableHead>{t("certificateNo")}</TableHead>
+                  <TableHead>{t("quantity")}</TableHead>
+                  <TableHead>{tc("date")}</TableHead>
+                  <TableHead className="text-right">{tc("delete")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -477,13 +486,13 @@ export function StepCertificateSurrender() {
                 ))}
               </TableBody>
             </Table>
-            <p className="text-sm"><strong>Toplam teslim:</strong> {totalSurrendered} sertifika</p>
+            <p className="text-sm"><strong>{t("totalSurrender")}</strong> {totalSurrendered} {t("certificateUnit")}</p>
           </>
         )}
 
         <div className="flex justify-between">
-          <Button variant="outline" onClick={prevStep}>Geri</Button>
-          <Button onClick={nextStep}>Devam</Button>
+          <Button variant="outline" onClick={prevStep}>{tc("back")}</Button>
+          <Button onClick={nextStep}>{tc("next")}</Button>
         </div>
       </CardContent>
     </Card>
@@ -494,6 +503,8 @@ export function StepCertificateSurrender() {
 // Step 5: Free Allocation Adjustment
 // ============================================================================
 export function StepFreeAllocation() {
+  const t = useTranslations("wizard");
+  const tc = useTranslations("common");
   const {
     freeAllocations,
     addFreeAllocation,
@@ -508,7 +519,7 @@ export function StepFreeAllocation() {
 
   function handleAdd() {
     if (!adjType || !adjAmount) {
-      toast.error("Tip ve tutar zorunludur");
+      toast.error(t("typeAndAmountRequired"));
       return;
     }
     addFreeAllocation({
@@ -526,29 +537,29 @@ export function StepFreeAllocation() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Scale className="h-5 w-5" />
-          Adım 5: Ücretsiz Tahsis Düzeltmesi
+          {t("step5Title")}
         </CardTitle>
         <CardDescription>
-          AB ücretsiz tahsis düzeltmelerini ekleyin
+          {t("step5Desc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
           <div className="space-y-1">
-            <Label className="text-xs">Tip</Label>
+            <Label className="text-xs">{t("adjustmentType")}</Label>
             <Select value={adjType} onValueChange={setAdjType}>
               <SelectTrigger>
-                <SelectValue placeholder="Seç" />
+                <SelectValue placeholder={t("select")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="DEDUCTION">Düşürme</SelectItem>
-                <SelectItem value="CREDIT">Kredi</SelectItem>
-                <SelectItem value="ADJUSTMENT">Düzeltme</SelectItem>
+                <SelectItem value="DEDUCTION">{t("deduction")}</SelectItem>
+                <SelectItem value="CREDIT">{t("credit")}</SelectItem>
+                <SelectItem value="ADJUSTMENT">{t("adjustment")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Tutar (tCO2e)</Label>
+            <Label className="text-xs">{t("amount")}</Label>
             <Input
               type="number"
               step="0.01"
@@ -557,11 +568,11 @@ export function StepFreeAllocation() {
             />
           </div>
           <div className="space-y-1">
-            <Label className="text-xs">Açıklama</Label>
+            <Label className="text-xs">{tc("description")}</Label>
             <Input value={adjDesc} onChange={(e) => setAdjDesc(e.target.value)} />
           </div>
           <Button onClick={handleAdd} size="sm">
-            <Plus className="h-4 w-4 mr-1" /> Ekle
+            <Plus className="h-4 w-4 mr-1" /> {tc("add")}
           </Button>
         </div>
 
@@ -569,10 +580,10 @@ export function StepFreeAllocation() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Tip</TableHead>
-                <TableHead>Tutar</TableHead>
-                <TableHead>Açıklama</TableHead>
-                <TableHead className="text-right">Sil</TableHead>
+                <TableHead>{t("adjustmentType")}</TableHead>
+                <TableHead>{t("amount")}</TableHead>
+                <TableHead>{tc("description")}</TableHead>
+                <TableHead className="text-right">{tc("delete")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -597,8 +608,8 @@ export function StepFreeAllocation() {
         )}
 
         <div className="flex justify-between">
-          <Button variant="outline" onClick={prevStep}>Geri</Button>
-          <Button onClick={nextStep}>Devam</Button>
+          <Button variant="outline" onClick={prevStep}>{tc("back")}</Button>
+          <Button onClick={nextStep}>{tc("next")}</Button>
         </div>
       </CardContent>
     </Card>
@@ -609,6 +620,8 @@ export function StepFreeAllocation() {
 // Step 6: Verification Statement
 // ============================================================================
 export function StepVerification() {
+  const t = useTranslations("wizard");
+  const tc = useTranslations("common");
   const { verification, setVerification, nextStep, prevStep } =
     useDeclarationWizardStore();
 
@@ -617,30 +630,30 @@ export function StepVerification() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ShieldCheck className="h-5 w-5" />
-          Adım 6: Doğrulama Beyanı
+          {t("step6Title")}
         </CardTitle>
         <CardDescription>
-          Akredite doğrulayıcı bilgilerini girin
+          {t("step6Desc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Doğrulayıcı Adı</Label>
+            <Label>{t("verifierName")}</Label>
             <Input
               value={verification.verifierName}
               onChange={(e) => setVerification({ verifierName: e.target.value })}
             />
           </div>
           <div className="space-y-2">
-            <Label>Akreditasyon No</Label>
+            <Label>{t("accreditationNo")}</Label>
             <Input
               value={verification.accreditationNo}
               onChange={(e) => setVerification({ accreditationNo: e.target.value })}
             />
           </div>
           <div className="space-y-2">
-            <Label>Görüş</Label>
+            <Label>{t("opinion")}</Label>
             <Select
               value={verification.opinion}
               onValueChange={(v) => setVerification({ opinion: v })}
@@ -649,24 +662,24 @@ export function StepVerification() {
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="UNQUALIFIED">Sınırsız (Unqualified)</SelectItem>
-                <SelectItem value="QUALIFIED">Sınırlı (Qualified)</SelectItem>
-                <SelectItem value="ADVERSE">Olumsuz (Adverse)</SelectItem>
-                <SelectItem value="DISCLAIMER">Görüş Bildirmeme (Disclaimer)</SelectItem>
+                <SelectItem value="UNQUALIFIED">{t("opinionUnqualified")}</SelectItem>
+                <SelectItem value="QUALIFIED">{t("opinionQualified")}</SelectItem>
+                <SelectItem value="ADVERSE">{t("opinionAdverse")}</SelectItem>
+                <SelectItem value="DISCLAIMER">{t("opinionDisclaimer")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="space-y-2">
-            <Label>Doğrulama Dönemi</Label>
+            <Label>{t("verificationPeriod")}</Label>
             <Input
               value={verification.period}
               onChange={(e) => setVerification({ period: e.target.value })}
-              placeholder="örneğin: 2025-Q1 - 2025-Q4"
+              placeholder={t("verificationPeriodPlaceholder")}
             />
           </div>
         </div>
         <div className="space-y-2">
-          <Label>Notlar</Label>
+          <Label>{tc("notes")}</Label>
           <Textarea
             value={verification.notes}
             onChange={(e) => setVerification({ notes: e.target.value })}
@@ -675,8 +688,8 @@ export function StepVerification() {
         </div>
 
         <div className="flex justify-between">
-          <Button variant="outline" onClick={prevStep}>Geri</Button>
-          <Button onClick={nextStep}>Devam</Button>
+          <Button variant="outline" onClick={prevStep}>{tc("back")}</Button>
+          <Button onClick={nextStep}>{tc("next")}</Button>
         </div>
       </CardContent>
     </Card>
@@ -687,6 +700,8 @@ export function StepVerification() {
 // Step 7: Review & Submit
 // ============================================================================
 export function StepReviewSubmit() {
+  const t = useTranslations("wizard");
+  const tc = useTranslations("common");
   const store = useDeclarationWizardStore();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -702,7 +717,7 @@ export function StepReviewSubmit() {
 
   async function handleSubmit() {
     if (!store.installation) {
-      toast.error("Tesis seçilmedi");
+      toast.error(t("installationNotSelected"));
       return;
     }
 
@@ -715,7 +730,7 @@ export function StepReviewSubmit() {
       });
 
       if (declResult.error || !declResult.id) {
-        toast.error(declResult.error || "Beyanname oluşturulamadı");
+        toast.error(declResult.error || t("declarationCreateError"));
         setSubmitting(false);
         return;
       }
@@ -750,9 +765,9 @@ export function StepReviewSubmit() {
       });
 
       setSubmitted(true);
-      toast.success("Beyanname başarıyla gönderildi!");
+      toast.success(t("submitSuccess"));
     } catch (error) {
-      toast.error("Gönderim sırasında hata oluştu");
+      toast.error(t("submitError"));
       console.error("Submit error:", error);
     }
     setSubmitting(false);
@@ -763,10 +778,10 @@ export function StepReviewSubmit() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Send className="h-5 w-5" />
-          Adım 7: İnceleme ve Gönder
+          {t("step7Title")}
         </CardTitle>
         <CardDescription>
-          Tüm bilgileri son kez gözden geçirin ve beyannameyi gönderin
+          {t("step7Desc")}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -774,10 +789,10 @@ export function StepReviewSubmit() {
           <div className="text-center py-8 space-y-4">
             <CheckCircle2 className="h-16 w-16 text-green-600 mx-auto" />
             <h3 className="text-xl font-bold text-green-700">
-              Beyanname Başarıyla Gönderildi!
+              {t("submittedTitle")}
             </h3>
             <p className="text-muted-foreground">
-              Beyanname ID: {store.declarationId}
+              {t("declarationId")} {store.declarationId}
             </p>
             <div className="flex justify-center gap-4">
               <Button
@@ -787,11 +802,11 @@ export function StepReviewSubmit() {
                   setSubmitted(false);
                 }}
               >
-                Yeni Beyanname
+                {t("newDeclaration")}
               </Button>
               <Button asChild>
                 <a href={`/dashboard/declarations/${store.declarationId}`}>
-                  Beyanname Detay
+                  {t("declarationDetail")}
                 </a>
               </Button>
             </div>
@@ -801,19 +816,19 @@ export function StepReviewSubmit() {
             {/* Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground">Yıl</p>
+                <p className="text-xs text-muted-foreground">{t("yearLabel")}</p>
                 <p className="text-2xl font-bold">{store.year}</p>
               </div>
               <div className="border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground">İthal Mal</p>
+                <p className="text-xs text-muted-foreground">{t("importedGoods")}</p>
                 <p className="text-2xl font-bold">{store.goods.length}</p>
               </div>
               <div className="border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground">Emisyon</p>
+                <p className="text-xs text-muted-foreground">{t("emissionLabel")}</p>
                 <p className="text-2xl font-bold">{store.emissions.length}</p>
               </div>
               <div className="border rounded-lg p-3 text-center">
-                <p className="text-xs text-muted-foreground">Sertifika</p>
+                <p className="text-xs text-muted-foreground">{t("certificateLabel")}</p>
                 <p className="text-2xl font-bold">{totalCerts}</p>
               </div>
             </div>
@@ -821,27 +836,27 @@ export function StepReviewSubmit() {
             {/* Detail */}
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Tesis:</span>
+                <span className="text-muted-foreground">{t("installationLabel")}</span>
                 <span className="font-medium">{store.installation?.installationName || "-"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Şirket:</span>
+                <span className="text-muted-foreground">{t("companyLabel")}</span>
                 <span className="font-medium">{store.installation?.companyName || "-"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Toplam Emisyon:</span>
+                <span className="text-muted-foreground">{t("totalEmission")}</span>
                 <span className="font-medium">{totalEmissions.toFixed(4)} tCO2e</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Sertifika Teslimleri:</span>
-                <span className="font-medium">{store.certificateSurrenders.length} işlem ({totalCerts} adet)</span>
+                <span className="text-muted-foreground">{t("certificateSurrenders")}</span>
+                <span className="font-medium">{t("transactionCount", { count: store.certificateSurrenders.length, total: totalCerts })}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Tahsis Düzeltmeleri:</span>
-                <span className="font-medium">{store.freeAllocations.length} işlem</span>
+                <span className="text-muted-foreground">{t("allocationAdjustments")}</span>
+                <span className="font-medium">{t("transactionLabel", { count: store.freeAllocations.length })}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Doğrulayıcı:</span>
+                <span className="text-muted-foreground">{t("verifier")}</span>
                 <span className="font-medium">
                   {store.verification.verifierName || "-"}
                   {store.verification.opinion && (
@@ -852,27 +867,27 @@ export function StepReviewSubmit() {
             </div>
 
             <div className="space-y-2">
-              <Label>Ek Notlar</Label>
+              <Label>{t("additionalNotes")}</Label>
               <Textarea
                 value={store.notes}
                 onChange={(e) => store.setNotes(e.target.value)}
                 rows={2}
-                placeholder="Beyanname ile ilgili notlar..."
+                placeholder={t("notesPlaceholder")}
               />
             </div>
 
             <div className="flex justify-between">
-              <Button variant="outline" onClick={store.prevStep}>Geri</Button>
+              <Button variant="outline" onClick={store.prevStep}>{tc("back")}</Button>
               <Button onClick={handleSubmit} disabled={submitting}>
                 {submitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Gönderiliyor...
+                    {t("submitting")}
                   </>
                 ) : (
                   <>
                     <Send className="mr-2 h-4 w-4" />
-                    Beyannameyi Gönder
+                    {t("submitDeclaration")}
                   </>
                 )}
               </Button>

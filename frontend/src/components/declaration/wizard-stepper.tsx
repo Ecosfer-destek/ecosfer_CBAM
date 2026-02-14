@@ -3,8 +3,10 @@
 import { WIZARD_STEPS, useDeclarationWizardStore } from "@/stores/declaration-wizard-store";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function WizardStepper() {
+  const t = useTranslations("wizard");
   const { currentStep, setCurrentStep } = useDeclarationWizardStore();
   const currentIdx = WIZARD_STEPS.findIndex((s) => s.key === currentStep);
 
@@ -37,7 +39,7 @@ export function WizardStepper() {
               >
                 {isCompleted ? <Check className="h-3.5 w-3.5" /> : step.step}
               </span>
-              <span className="hidden lg:inline">{step.label}</span>
+              <span className="hidden lg:inline">{t(step.labelKey as "step1" | "step2" | "step3" | "step4" | "step5" | "step6" | "step7")}</span>
             </button>
             {idx < WIZARD_STEPS.length - 1 && (
               <div

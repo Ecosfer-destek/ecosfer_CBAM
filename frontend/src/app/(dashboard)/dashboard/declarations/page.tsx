@@ -37,15 +37,7 @@ import {
   deleteDeclaration,
 } from "@/actions/declaration";
 import { toast } from "sonner";
-
-const STATUS_LABELS: Record<string, string> = {
-  DRAFT: "Taslak",
-  SUBMITTED: "Gönderildi",
-  UNDER_REVIEW: "İncelemede",
-  APPROVED: "Onaylandı",
-  REJECTED: "Reddedildi",
-  AMENDED: "Düzeltildi",
-};
+import { useTranslations } from "next-intl";
 
 const STATUS_VARIANTS: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
   DRAFT: "secondary",
@@ -57,6 +49,9 @@ const STATUS_VARIANTS: Record<string, "default" | "secondary" | "destructive" | 
 };
 
 export default function DeclarationsPage() {
+  const t = useTranslations("declaration");
+  const tc = useTranslations("common");
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [declarations, setDeclarations] = useState<any[]>([]);
   const [showCreate, setShowCreate] = useState(false);
@@ -74,7 +69,7 @@ export default function DeclarationsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Beyanname oluşturuldu");
+      toast.success(t("created"));
       setShowCreate(false);
       setNotes("");
       getDeclarations().then(setDeclarations);
@@ -83,12 +78,12 @@ export default function DeclarationsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu beyannameyi silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(t("confirmDelete"))) return;
     const result = await deleteDeclaration(id);
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Beyanname silindi");
+      toast.success(t("deleted"));
       getDeclarations().then(setDeclarations);
     }
   }
@@ -97,32 +92,32 @@ export default function DeclarationsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Yıllık Beyannameler</h1>
+          <h1 className="text-3xl font-bold">{t("title")}</h1>
           <p className="text-muted-foreground">
-            CBAM yıllık beyannamelerini yönetin
+            {t("subtitle")}
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" asChild>
             <Link href="/dashboard/declarations/wizard">
               <Wand2 className="mr-2 h-4 w-4" />
-              Sihirbaz ile Oluştur
+              {t("wizardCreate")}
             </Link>
           </Button>
           <Dialog open={showCreate} onOpenChange={setShowCreate}>
             <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
-                Hızlı Oluştur
+                {t("quickCreate")}
               </Button>
             </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni Yıllık Beyanname</DialogTitle>
+              <DialogTitle>{t("createDialog")}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Yıl *</Label>
+                <Label>{t("year")} *</Label>
                 <Input
                   type="number"
                   value={year}
@@ -132,7 +127,7 @@ export default function DeclarationsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Notlar</Label>
+                <Label>{tc("notes")}</Label>
                 <Textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
@@ -142,10 +137,10 @@ export default function DeclarationsPage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                İptal
+                {tc("cancel")}
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                {isCreating ? tc("creating") : tc("create")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -157,29 +152,29 @@ export default function DeclarationsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Globe className="h-5 w-5" />
-            Beyannameler
+            {t("declarationList")}
           </CardTitle>
           <CardDescription>
-            Toplam {declarations.length} beyanname
+            {t("total", { count: declarations.length })}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Yıl</TableHead>
-                <TableHead>Durum</TableHead>
-                <TableHead>Toplam Emisyon</TableHead>
-                <TableHead>Sertifika</TableHead>
-                <TableHead>Gönderim Tarihi</TableHead>
-                <TableHead className="text-right">İşlemler</TableHead>
+                <TableHead>{t("year")}</TableHead>
+                <TableHead>{t("status")}</TableHead>
+                <TableHead>{t("totalEmissions")}</TableHead>
+                <TableHead>{t("certificates")}</TableHead>
+                <TableHead>{t("submissionDate")}</TableHead>
+                <TableHead className="text-right">{tc("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {declarations.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                    Henüz beyanname bulunmuyor
+                    {t("noDeclarations")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -188,7 +183,7 @@ export default function DeclarationsPage() {
                     <TableCell className="font-medium">{d.year}</TableCell>
                     <TableCell>
                       <Badge variant={STATUS_VARIANTS[d.status] || "secondary"}>
-                        {STATUS_LABELS[d.status] || d.status}
+                        {t(`statuses.${d.status}` as Parameters<typeof t>[0])}
                       </Badge>
                     </TableCell>
                     <TableCell>

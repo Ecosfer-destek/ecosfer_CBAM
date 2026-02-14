@@ -45,16 +45,20 @@ import {
   createReportSection,
 } from "@/actions/report";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
-const REPORT_TYPES = [
-  { value: "installation-summary", label: "Tesis Özet Raporu" },
-  { value: "declaration", label: "CBAM Beyanname Raporu" },
-  { value: "emission-detail", label: "Emisyon Detay Raporu" },
-  { value: "supplier-survey", label: "Tedarikçi Anket Raporu" },
-  { value: "custom", label: "Özel Rapor" },
-];
+const REPORT_TYPE_KEYS = [
+  "installation-summary",
+  "declaration",
+  "emission-detail",
+  "supplier-survey",
+  "custom",
+] as const;
 
 export default function ReportsPage() {
+  const t = useTranslations("reports");
+  const tc = useTranslations("common");
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [reports, setReports] = useState<any[]>([]);
   const [showCreate, setShowCreate] = useState(false);
@@ -82,7 +86,7 @@ export default function ReportsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Rapor oluşturuldu");
+      toast.success(t("created"));
       setShowCreate(false);
       setCoverTitle("");
       setCoverContent("");
@@ -92,12 +96,12 @@ export default function ReportsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Bu raporu silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(tc("confirmDelete"))) return;
     const result = await deleteReport(id);
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Rapor silindi");
+      toast.success(t("deleted"));
       loadReports();
     }
   }
@@ -114,7 +118,7 @@ export default function ReportsPage() {
     if (!selectedReport) return;
     const result = await createReportSection({
       part: "PART1",
-      sectionTitle: "Yeni Bölüm",
+      sectionTitle: t("newSection"),
       sectionLevel: "HEADING",
       orderNo: (selectedReport.reportSections?.length || 0) + 1,
       reportId: selectedReport.id,
@@ -122,7 +126,7 @@ export default function ReportsPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Bölüm eklendi");
+      toast.success(t("sectionAdded"));
       const updated = await getReport(selectedReport.id);
       setSelectedReport(updated);
     }
@@ -143,7 +147,7 @@ export default function ReportsPage() {
 
       if (!response.ok) {
         const err = await response.json();
-        toast.error(err.error || "PDF oluşturulamadı");
+        toast.error(err.error || t("pdfError"));
         return;
       }
 
@@ -154,9 +158,9 @@ export default function ReportsPage() {
       a.download = `CBAM_Report_${pdfType}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
-      toast.success("PDF indirildi");
+      toast.success(t("pdfDownloaded"));
     } catch {
-      toast.error("PDF oluşturulurken bir hata oluştu");
+      toast.error(t("pdfGenerateError"));
     } finally {
       setIsGeneratingPdf(false);
     }
@@ -166,25 +170,25 @@ export default function ReportsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">CBAM Raporları</h1>
+          <h1 className="text-3xl font-bold">{t("title")}</h1>
           <p className="text-muted-foreground">
-            Raporları oluşturun ve yönetin
+            {t("subtitle")}
           </p>
         </div>
         <Dialog open={showCreate} onOpenChange={setShowCreate}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Yeni Rapor
+              {t("createNew")}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni Rapor Oluştur</DialogTitle>
+              <DialogTitle>{t("createNewDialog")}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Rapor Başlığı</Label>
+                <Label>{t("reportTitle")}</Label>
                 <Input
                   value={coverTitle}
                   onChange={(e) => setCoverTitle(e.target.value)}
@@ -192,7 +196,7 @@ export default function ReportsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label>Açıklama</Label>
+                <Label>{tc("description")}</Label>
                 <Textarea
                   value={coverContent}
                   onChange={(e) => setCoverContent(e.target.value)}
@@ -202,10 +206,10 @@ export default function ReportsPage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowCreate(false)}>
-                İptal
+                {tc("cancel")}
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                {isCreating ? tc("creating") : tc("create")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -217,31 +221,31 @@ export default function ReportsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileDown className="h-5 w-5" />
-            PDF Rapor Oluştur
+            {t("createPdf")}
           </CardTitle>
           <CardDescription>
-            Seçili rapor tipine göre PDF oluşturun
+            {t("createNewDesc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-end gap-4">
             <div className="space-y-2 flex-1">
-              <Label>Rapor Tipi</Label>
+              <Label>{t("reportType")}</Label>
               <Select value={pdfType} onValueChange={setPdfType}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {REPORT_TYPES.map((t) => (
-                    <SelectItem key={t.value} value={t.value}>
-                      {t.label}
+                  {REPORT_TYPE_KEYS.map((key) => (
+                    <SelectItem key={key} value={key}>
+                      {t(`reportTypes.${key}` as Parameters<typeof t>[0])}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Dil</Label>
+              <Label>{t("language")}</Label>
               <Select value={pdfLang} onValueChange={setPdfLang}>
                 <SelectTrigger className="w-[100px]">
                   <SelectValue />
@@ -255,7 +259,7 @@ export default function ReportsPage() {
             </div>
             <Button onClick={handleGeneratePdf} disabled={isGeneratingPdf}>
               <FileDown className="mr-2 h-4 w-4" />
-              {isGeneratingPdf ? "Oluşturuluyor..." : "PDF İndir"}
+              {isGeneratingPdf ? tc("creating") : t("downloadPdf")}
             </Button>
           </div>
         </CardContent>
@@ -266,18 +270,18 @@ export default function ReportsPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Raporlar
+            {t("reportList")}
           </CardTitle>
-          <CardDescription>Toplam {reports.length} rapor</CardDescription>
+          <CardDescription>{t("total", { count: reports.length })}</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Başlık</TableHead>
-                <TableHead>Bölüm Sayısı</TableHead>
-                <TableHead>Oluşturma</TableHead>
-                <TableHead className="text-right">İşlemler</TableHead>
+                <TableHead>{t("reportTitle")}</TableHead>
+                <TableHead>{t("sections")}</TableHead>
+                <TableHead>{tc("createdAt")}</TableHead>
+                <TableHead className="text-right">{tc("actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -287,7 +291,7 @@ export default function ReportsPage() {
                     colSpan={4}
                     className="text-center text-muted-foreground py-8"
                   >
-                    Henüz rapor bulunmuyor
+                    {t("noReports")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -298,11 +302,11 @@ export default function ReportsPage() {
                     onClick={() => handleViewDetail(r.id)}
                   >
                     <TableCell className="font-medium">
-                      {r.coverTitle || "İsimsiz Rapor"}
+                      {r.coverTitle || t("untitledReport")}
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline">
-                        {r.reportSections?.length || 0} bölüm
+                        {r.reportSections?.length || 0} {t("sectionCount")}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -345,7 +349,7 @@ export default function ReportsPage() {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
-              {selectedReport?.coverTitle || "Rapor Detayı"}
+              {selectedReport?.coverTitle || t("detail")}
             </DialogTitle>
           </DialogHeader>
           {selectedReport && (
@@ -356,23 +360,23 @@ export default function ReportsPage() {
                 </p>
               )}
               <div className="text-sm">
-                <span className="font-medium">Oluşturma: </span>
+                <span className="font-medium">{t("createdAtLabel")}</span>
                 {new Date(selectedReport.createdAt).toLocaleDateString("tr-TR")}
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium">
-                    Bölümleri ({selectedReport.reportSections?.length || 0})
+                    {t("sectionsLabel")} ({selectedReport.reportSections?.length || 0})
                   </h4>
                   <Button size="sm" variant="outline" onClick={handleAddSection}>
                     <Plus className="mr-1 h-3 w-3" />
-                    Bölüm Ekle
+                    {t("addSection")}
                   </Button>
                 </div>
                 {selectedReport.reportSections?.length === 0 ? (
                   <p className="text-sm text-muted-foreground py-4 text-center">
-                    Henüz bölüm eklenmemiş
+                    {t("noSections")}
                   </p>
                 ) : (
                   <div className="space-y-2">
@@ -391,7 +395,7 @@ export default function ReportsPage() {
                               <Badge variant="outline">{section.part}</Badge>
                               <Badge variant="secondary">
                                 {section.reportSectionContents?.length || 0}{" "}
-                                içerik
+                                {t("content")}
                               </Badge>
                             </div>
                           </div>
@@ -405,7 +409,7 @@ export default function ReportsPage() {
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowDetail(false)}>
-              Kapat
+              {tc("close")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -27,6 +27,7 @@ import { createCompany, updateCompany } from "@/actions/company";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface LookupItem {
   id: string;
@@ -38,6 +39,8 @@ interface CompanyFormProps {
 }
 
 export function CompanyForm({ company }: CompanyFormProps) {
+  const t = useTranslations("company");
+  const tc = useTranslations("common");
   const router = useRouter();
   const isEditing = !!company;
 
@@ -94,7 +97,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success(isEditing ? "Şirket güncellendi" : "Şirket oluşturuldu");
+      toast.success(isEditing ? t("updated") : t("created"));
       router.push("/dashboard/companies");
       router.refresh();
     }
@@ -105,24 +108,24 @@ export function CompanyForm({ company }: CompanyFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-3xl">
       <Card>
         <CardHeader>
-          <CardTitle>Temel Bilgiler</CardTitle>
-          <CardDescription>Şirket bilgilerini girin</CardDescription>
+          <CardTitle>{t("basicInfo")}</CardTitle>
+          <CardDescription>{t("basicInfoDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Şirket Adı *</Label>
+              <Label htmlFor="name">{t("name")} *</Label>
               <Input id="name" {...register("name")} />
               {errors.name && (
                 <p className="text-sm text-destructive">{errors.name.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="officialName">Resmi Ad</Label>
+              <Label htmlFor="officialName">{t("officialName")}</Label>
               <Input id="officialName" {...register("officialName")} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="taxNumber">Vergi Numarası</Label>
+              <Label htmlFor="taxNumber">{t("taxNumber")}</Label>
               <Input id="taxNumber" {...register("taxNumber")} maxLength={11} />
               {errors.taxNumber && (
                 <p className="text-sm text-destructive">
@@ -131,7 +134,7 @@ export function CompanyForm({ company }: CompanyFormProps) {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="economicActivity">Ekonomik Faaliyet</Label>
+              <Label htmlFor="economicActivity">{t("economicActivity")}</Label>
               <Input
                 id="economicActivity"
                 {...register("economicActivity")}
@@ -143,18 +146,18 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Konum Bilgileri</CardTitle>
+          <CardTitle>{t("locationInfo")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label>Ülke</Label>
+              <Label>{t("country")}</Label>
               <Select
                 value={countryId || ""}
                 onValueChange={(v) => setValue("countryId", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Ülke seçin" />
+                  <SelectValue placeholder={t("selectCountry")} />
                 </SelectTrigger>
                 <SelectContent>
                   {countries.map((c) => (
@@ -166,14 +169,14 @@ export function CompanyForm({ company }: CompanyFormProps) {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Şehir</Label>
+              <Label>{t("city")}</Label>
               <Select
                 value={cityId || ""}
                 onValueChange={(v) => setValue("cityId", v || null)}
                 disabled={!countryId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Şehir seçin" />
+                  <SelectValue placeholder={t("selectCity")} />
                 </SelectTrigger>
                 <SelectContent>
                   {cities.map((c) => (
@@ -185,14 +188,14 @@ export function CompanyForm({ company }: CompanyFormProps) {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>İlçe</Label>
+              <Label>{t("district")}</Label>
               <Select
                 value={watch("districtId") || ""}
                 onValueChange={(v) => setValue("districtId", v || null)}
                 disabled={!cityId}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="İlçe seçin" />
+                  <SelectValue placeholder={t("selectDistrict")} />
                 </SelectTrigger>
                 <SelectContent>
                   {districts.map((d) => (
@@ -206,32 +209,32 @@ export function CompanyForm({ company }: CompanyFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="address">Adres</Label>
+            <Label htmlFor="address">{t("address")}</Label>
             <Textarea id="address" {...register("address")} rows={2} />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="postCode">Posta Kodu</Label>
+              <Label htmlFor="postCode">{t("postalCode")}</Label>
               <Input id="postCode" {...register("postCode")} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="poBox">PK</Label>
+              <Label htmlFor="poBox">{t("poBox")}</Label>
               <Input id="poBox" {...register("poBox")} />
             </div>
             <div className="space-y-2">
-              <Label>Vergi Dairesi</Label>
+              <Label>{t("taxOffice")}</Label>
               <Select
                 value={watch("taxOfficeId") || ""}
                 onValueChange={(v) => setValue("taxOfficeId", v || null)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Vergi dairesi seçin" />
+                  <SelectValue placeholder={t("selectTaxOffice")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {taxOffices.map((t) => (
-                    <SelectItem key={t.id} value={t.id}>
-                      {t.name}
+                  {taxOffices.map((to) => (
+                    <SelectItem key={to.id} value={to.id}>
+                      {to.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -241,15 +244,15 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="latitude">Enlem</Label>
+              <Label htmlFor="latitude">{t("latitude")}</Label>
               <Input id="latitude" {...register("latitude")} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="longitude">Boylam</Label>
+              <Label htmlFor="longitude">{t("longitude")}</Label>
               <Input id="longitude" {...register("longitude")} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="unlocode">UN/LOCODE</Label>
+              <Label htmlFor="unlocode">{t("unLocode")}</Label>
               <Input id="unlocode" {...register("unlocode")} />
             </div>
           </div>
@@ -258,19 +261,19 @@ export function CompanyForm({ company }: CompanyFormProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>İletişim Bilgileri</CardTitle>
+          <CardTitle>{t("contactInfo")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="email">E-posta</Label>
+              <Label htmlFor="email">{t("email")}</Label>
               <Input id="email" type="email" {...register("email")} />
               {errors.email && (
                 <p className="text-sm text-destructive">{errors.email.message}</p>
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="phone">Telefon</Label>
+              <Label htmlFor="phone">{t("phone")}</Label>
               <Input id="phone" {...register("phone")} />
             </div>
           </div>
@@ -280,14 +283,14 @@ export function CompanyForm({ company }: CompanyFormProps) {
       <div className="flex gap-4">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isEditing ? "Güncelle" : "Oluştur"}
+          {isEditing ? tc("update") : tc("create")}
         </Button>
         <Button
           type="button"
           variant="outline"
           onClick={() => router.push("/dashboard/companies")}
         >
-          İptal
+          {tc("cancel")}
         </Button>
       </div>
     </form>

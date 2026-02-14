@@ -1,12 +1,15 @@
 import { CompanyForm } from "../company-form";
+import { getTranslations } from "next-intl/server";
 
-export default function NewCompanyPage() {
+export default async function NewCompanyPage() {
+  const t = await getTranslations("company");
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Yeni Şirket</h1>
+        <h1 className="text-3xl font-bold">{t("createTitle")}</h1>
         <p className="text-muted-foreground">
-          Yeni bir şirket kaydı oluşturun
+          {t("createDesc")}
         </p>
       </div>
       <CompanyForm />

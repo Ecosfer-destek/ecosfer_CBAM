@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import Link from "next/link";
 import { registerUser } from "@/actions/auth";
+import { useTranslations } from "next-intl";
 
 interface Tenant {
   id: string;
@@ -38,6 +39,8 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const t = useTranslations("auth");
+  const tc = useTranslations("common");
 
   useEffect(() => {
     fetch("/api/tenants")
@@ -52,7 +55,7 @@ export default function RegisterPage() {
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Şifreler eşleşmiyor");
+      setError(t("passwordMismatch"));
       setIsLoading(false);
       return;
     }
@@ -65,7 +68,7 @@ export default function RegisterPage() {
         setSuccess(true);
       }
     } catch {
-      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
+      setError(tc("generalError"));
     } finally {
       setIsLoading(false);
     }
@@ -76,14 +79,14 @@ export default function RegisterPage() {
       <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold">Kayıt Başarılı</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t("registerSuccess")}</CardTitle>
             <CardDescription>
-              Hesabınız oluşturuldu. Giriş yapabilirsiniz.
+              {t("registerSuccessDesc")}
             </CardDescription>
           </CardHeader>
           <CardFooter className="justify-center">
             <Button asChild>
-              <Link href="/login">Giriş Yap</Link>
+              <Link href="/login">{t("login")}</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -95,9 +98,9 @@ export default function RegisterPage() {
     <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold">Kayıt Ol</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t("registerTitle")}</CardTitle>
           <CardDescription>
-            Ecosfer SKDM Platformu&apos;na kayıt olun
+            {t("registerSubtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -108,7 +111,7 @@ export default function RegisterPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="name">Ad Soyad</Label>
+              <Label htmlFor="name">{t("fullName")}</Label>
               <Input
                 id="name"
                 value={name}
@@ -118,11 +121,11 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">E-posta</Label>
+              <Label htmlFor="email">{t("email")}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="örnek@ecosfer.com"
+                placeholder={t("emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -130,22 +133,22 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="tenant">Şirket</Label>
+              <Label htmlFor="tenant">{t("company")}</Label>
               <Select value={tenantId} onValueChange={setTenantId}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Şirket seçiniz" />
+                  <SelectValue placeholder={t("companyPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {tenants.map((t) => (
-                    <SelectItem key={t.id} value={t.id}>
-                      {t.name}
+                  {tenants.map((tenant) => (
+                    <SelectItem key={tenant.id} value={tenant.id}>
+                      {tenant.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Şifre</Label>
+              <Label htmlFor="password">{t("password")}</Label>
               <Input
                 id="password"
                 type="password"
@@ -155,11 +158,11 @@ export default function RegisterPage() {
                 disabled={isLoading}
               />
               <p className="text-xs text-muted-foreground">
-                En az 8 karakter, bir büyük harf ve bir rakam içermelidir
+                {t("passwordHint")}
               </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Şifre Tekrar</Label>
+              <Label htmlFor="confirmPassword">{t("confirmPassword")}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -170,15 +173,15 @@ export default function RegisterPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Kaydediliyor..." : "Kayıt Ol"}
+              {isLoading ? t("registering") : t("registerTitle")}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Zaten hesabınız var mı?{" "}
+            {t("hasAccount")}{" "}
             <Link href="/login" className="text-primary hover:underline">
-              Giriş Yap
+              {t("login")}
             </Link>
           </p>
         </CardFooter>

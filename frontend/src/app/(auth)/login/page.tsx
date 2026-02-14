@@ -13,12 +13,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const t = useTranslations("auth");
+  const tc = useTranslations("common");
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -34,12 +38,12 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Geçersiz e-posta veya şifre");
+        setError(t("invalidCredentials"));
       } else {
         window.location.href = "/dashboard";
       }
     } catch {
-      setError("Bir hata oluştu. Lütfen tekrar deneyin.");
+      setError(tc("generalError"));
     } finally {
       setIsLoading(false);
     }
@@ -47,13 +51,16 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">
-            Ecosfer SKDM
+            {t("loginTitle")}
           </CardTitle>
           <CardDescription>
-            Sürdürülebilirlik Veri Yönetim Platformu
+            {t("loginSubtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -64,11 +71,11 @@ export default function LoginPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">E-posta</Label>
+              <Label htmlFor="email">{t("email")}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="örnek@ecosfer.com"
+                placeholder={t("emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -76,7 +83,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Şifre</Label>
+              <Label htmlFor="password">{t("password")}</Label>
               <Input
                 id="password"
                 type="password"
@@ -87,15 +94,15 @@ export default function LoginPage() {
               />
             </div>
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? "Giriş yapılıyor..." : "Giriş Yap"}
+              {isLoading ? t("loggingIn") : t("login")}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm text-muted-foreground">
-            Hesabınız yok mu?{" "}
+            {t("noAccount")}{" "}
             <Link href="/register" className="text-primary hover:underline">
-              Kayıt Ol
+              {t("register")}
             </Link>
           </p>
         </CardFooter>

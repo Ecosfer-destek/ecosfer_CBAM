@@ -33,20 +33,16 @@ import { createUser, deleteUser, updateUser } from "@/actions/auth";
 import { toast } from "sonner";
 import { Plus, Trash2, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
-const ROLE_LABELS: Record<string, string> = {
-  SUPER_ADMIN: "Sistem Yöneticisi",
-  COMPANY_ADMIN: "Şirket Yöneticisi",
-  OPERATOR: "Operatör",
-  SUPPLIER: "Tedarikçi",
-  CBAM_DECLARANT: "CBAM Beyancısı",
-  VERIFIER: "Doğrulayıcı",
-};
-
-const ROLES = Object.entries(ROLE_LABELS).map(([value, label]) => ({
-  value,
-  label,
-}));
+const ROLE_KEYS = [
+  "SUPER_ADMIN",
+  "COMPANY_ADMIN",
+  "OPERATOR",
+  "SUPPLIER",
+  "CBAM_DECLARANT",
+  "VERIFIER",
+] as const;
 
 interface User {
   id: string;
@@ -64,6 +60,9 @@ export function UserManagementClient({
   initialUsers: User[];
 }) {
   const router = useRouter();
+  const t = useTranslations("settings.usersPage");
+  const tAuth = useTranslations("auth");
+  const tCommon = useTranslations("common");
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [newUser, setNewUser] = useState({
     name: "",
@@ -79,7 +78,7 @@ export function UserManagementClient({
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Kullanıcı oluşturuldu");
+      toast.success(t("userCreated"));
       setShowCreateDialog(false);
       setNewUser({ name: "", email: "", password: "", role: "OPERATOR" });
       router.refresh();
@@ -93,19 +92,19 @@ export function UserManagementClient({
       toast.error(result.error);
     } else {
       toast.success(
-        currentActive ? "Kullanıcı devre dışı bırakıldı" : "Kullanıcı aktif edildi"
+        currentActive ? t("userDeactivated") : t("userActivated")
       );
       router.refresh();
     }
   }
 
   async function handleDelete(userId: string) {
-    if (!confirm("Bu kullanıcıyı silmek istediğinizden emin misiniz?")) return;
+    if (!confirm(t("confirmDelete"))) return;
     const result = await deleteUser(userId);
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Kullanıcı silindi");
+      toast.success(t("userDeleted"));
       router.refresh();
     }
   }
@@ -115,7 +114,7 @@ export function UserManagementClient({
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Kullanıcı rolü güncellendi");
+      toast.success(t("roleUpdated"));
       router.refresh();
     }
   }
@@ -127,19 +126,19 @@ export function UserManagementClient({
           <DialogTrigger asChild>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
-              Yeni Kullanıcı
+              {t("newUser")}
             </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Yeni Kullanıcı Oluştur</DialogTitle>
+              <DialogTitle>{t("createUser")}</DialogTitle>
               <DialogDescription>
-                Şirketinize yeni bir kullanıcı ekleyin
+                {t("createUserDesc")}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label>Ad Soyad</Label>
+                <Label>{t("fullName")}</Label>
                 <Input
                   value={newUser.name}
                   onChange={(e) =>
@@ -148,7 +147,7 @@ export function UserManagementClient({
                 />
               </div>
               <div className="space-y-2">
-                <Label>E-posta</Label>
+                <Label>{t("email")}</Label>
                 <Input
                   type="email"
                   value={newUser.email}
@@ -158,7 +157,7 @@ export function UserManagementClient({
                 />
               </div>
               <div className="space-y-2">
-                <Label>Şifre</Label>
+                <Label>{t("password")}</Label>
                 <Input
                   type="password"
                   value={newUser.password}
@@ -168,7 +167,7 @@ export function UserManagementClient({
                 />
               </div>
               <div className="space-y-2">
-                <Label>Rol</Label>
+                <Label>{t("role")}</Label>
                 <Select
                   value={newUser.role}
                   onValueChange={(v) =>
@@ -179,9 +178,9 @@ export function UserManagementClient({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {ROLES.map((r) => (
-                      <SelectItem key={r.value} value={r.value}>
-                        {r.label}
+                    {ROLE_KEYS.map((role) => (
+                      <SelectItem key={role} value={role}>
+                        {tAuth(`roles.${role}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -193,10 +192,10 @@ export function UserManagementClient({
                 variant="outline"
                 onClick={() => setShowCreateDialog(false)}
               >
-                İptal
+                {tCommon("cancel")}
               </Button>
               <Button onClick={handleCreate} disabled={isCreating}>
-                {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                {isCreating ? tCommon("creating") : tCommon("create")}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -207,19 +206,19 @@ export function UserManagementClient({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Ad Soyad</TableHead>
-              <TableHead>E-posta</TableHead>
-              <TableHead>Rol</TableHead>
-              <TableHead>Durum</TableHead>
-              <TableHead>Son Giriş</TableHead>
-              <TableHead className="text-right">İşlemler</TableHead>
+              <TableHead>{t("fullName")}</TableHead>
+              <TableHead>{t("email")}</TableHead>
+              <TableHead>{t("role")}</TableHead>
+              <TableHead>{t("status")}</TableHead>
+              <TableHead>{t("lastLogin")}</TableHead>
+              <TableHead className="text-right">{tCommon("actions")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {initialUsers.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                  Henüz kullanıcı bulunmuyor
+                  {t("noUsers")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -236,9 +235,9 @@ export function UserManagementClient({
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {ROLES.map((r) => (
-                          <SelectItem key={r.value} value={r.value}>
-                            {r.label}
+                        {ROLE_KEYS.map((role) => (
+                          <SelectItem key={role} value={role}>
+                            {tAuth(`roles.${role}`)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -246,12 +245,12 @@ export function UserManagementClient({
                   </TableCell>
                   <TableCell>
                     <Badge variant={user.isActive ? "default" : "secondary"}>
-                      {user.isActive ? "Aktif" : "Pasif"}
+                      {user.isActive ? t("active") : t("inactive")}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     {user.lastLoginAt
-                      ? new Date(user.lastLoginAt).toLocaleDateString("tr-TR")
+                      ? new Date(user.lastLoginAt).toLocaleDateString()
                       : "-"}
                   </TableCell>
                   <TableCell className="text-right">

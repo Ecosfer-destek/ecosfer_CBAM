@@ -9,14 +9,14 @@ export type WizardStep =
   | "verification"
   | "review-submit";
 
-export const WIZARD_STEPS: { key: WizardStep; label: string; step: number }[] = [
-  { key: "select-installation", label: "Tesis ve Yıl Seç", step: 1 },
-  { key: "review-goods", label: "İthal Mallar", step: 2 },
-  { key: "review-emissions", label: "Gömülü Emisyonlar", step: 3 },
-  { key: "certificate-surrender", label: "Sertifika Teslimi", step: 4 },
-  { key: "free-allocation", label: "Ücretsiz Tahsis", step: 5 },
-  { key: "verification", label: "Doğrulama", step: 6 },
-  { key: "review-submit", label: "İnceleme ve Gönder", step: 7 },
+export const WIZARD_STEPS: { key: WizardStep; labelKey: string; step: number }[] = [
+  { key: "select-installation", labelKey: "step1", step: 1 },
+  { key: "review-goods", labelKey: "step2", step: 2 },
+  { key: "review-emissions", labelKey: "step3", step: 3 },
+  { key: "certificate-surrender", labelKey: "step4", step: 4 },
+  { key: "free-allocation", labelKey: "step5", step: 5 },
+  { key: "verification", labelKey: "step6", step: 6 },
+  { key: "review-submit", labelKey: "step7", step: 7 },
 ];
 
 interface InstallationSelection {

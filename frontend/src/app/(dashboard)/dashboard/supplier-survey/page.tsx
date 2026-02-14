@@ -45,14 +45,9 @@ import {
   approveSupplierSurvey,
 } from "@/actions/supplier";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 type StatusFilter = "ALL" | "DRAFT" | "SUBMITTED" | "APPROVED";
-
-const STATUS_LABELS: Record<string, string> = {
-  DRAFT: "Taslak",
-  SUBMITTED: "Gönderildi",
-  APPROVED: "Onaylandı",
-};
 
 const STATUS_VARIANTS: Record<
   string,
@@ -77,6 +72,10 @@ function formatNumber(
 }
 
 export default function SupplierSurveyPage() {
+  const t = useTranslations("supplierSurvey");
+  const tc = useTranslations("common");
+  const ts = useTranslations("supplier");
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [surveys, setSurveys] = useState<any[]>([]);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
@@ -91,11 +90,11 @@ export default function SupplierSurveyPage() {
       const data = await getSupplierSurveysForAdmin();
       setSurveys(data);
     } catch {
-      toast.error("Anketler yüklenirken bir hata oluştu");
+      toast.error(t("loadError"));
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     reload();
@@ -119,7 +118,7 @@ export default function SupplierSurveyPage() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Anket onaylandı");
+      toast.success(t("surveyApproved"));
       // Update local state
       setSurveys((prev) =>
         prev.map((s) => (s.id === surveyId ? { ...s, status: "APPROVED" } : s))
@@ -137,9 +136,9 @@ export default function SupplierSurveyPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Tedarikçi Anketi</h1>
+        <h1 className="text-3xl font-bold">{t("title")}</h1>
         <p className="text-muted-foreground">
-          CBAM kapsamında tedarikçi emisyon anketlerini inceleyin ve onaylayın
+          {t("subtitle")}
         </p>
       </div>
 
@@ -150,16 +149,16 @@ export default function SupplierSurveyPage() {
       >
         <TabsList>
           <TabsTrigger value="ALL">
-            Tümü ({statusCounts.ALL})
+            {t("all")} ({statusCounts.ALL})
           </TabsTrigger>
           <TabsTrigger value="DRAFT">
-            Taslak ({statusCounts.DRAFT})
+            {t("draft")} ({statusCounts.DRAFT})
           </TabsTrigger>
           <TabsTrigger value="SUBMITTED">
-            Gönderildi ({statusCounts.SUBMITTED})
+            {t("submitted")} ({statusCounts.SUBMITTED})
           </TabsTrigger>
           <TabsTrigger value="APPROVED">
-            Onaylandı ({statusCounts.APPROVED})
+            {t("approved")} ({statusCounts.APPROVED})
           </TabsTrigger>
         </TabsList>
       </Tabs>
@@ -169,29 +168,29 @@ export default function SupplierSurveyPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ClipboardList className="h-5 w-5" />
-            Anket Listesi
+            {t("surveyList")}
           </CardTitle>
           <CardDescription>
-            Toplam {filteredSurveys.length} anket
-            {statusFilter !== "ALL" && ` (${STATUS_LABELS[statusFilter]})`}
+            {t("total", { count: filteredSurveys.length })}
+            {statusFilter !== "ALL" && ` (${statusFilter === "DRAFT" ? t("draft") : statusFilter === "SUBMITTED" ? t("submitted") : t("approved")})`}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-              <span className="ml-2 text-muted-foreground">Yükleniyor...</span>
+              <span className="ml-2 text-muted-foreground">{tc("loading")}</span>
             </div>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tedarikçi</TableHead>
-                  <TableHead>Mal (CN Kodu)</TableHead>
-                  <TableHead>Dönem</TableHead>
-                  <TableHead>Durum</TableHead>
-                  <TableHead>Emisyonlar</TableHead>
-                  <TableHead className="text-right">İşlemler</TableHead>
+                  <TableHead>{ts("name")}</TableHead>
+                  <TableHead>{t("good")} ({t("cnCode")})</TableHead>
+                  <TableHead>{t("period")}</TableHead>
+                  <TableHead>{tc("status")}</TableHead>
+                  <TableHead>{t("emissionData")}</TableHead>
+                  <TableHead className="text-right">{tc("actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -202,8 +201,8 @@ export default function SupplierSurveyPage() {
                       className="text-center text-muted-foreground py-8"
                     >
                       {statusFilter === "ALL"
-                        ? "Henüz anket bulunmuyor"
-                        : `${STATUS_LABELS[statusFilter]} durumunda anket bulunmuyor`}
+                        ? t("noSurveys")
+                        : t("noSurveysStatus", { status: statusFilter === "DRAFT" ? t("draft") : statusFilter === "SUBMITTED" ? t("submitted") : t("approved") })}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -229,7 +228,7 @@ export default function SupplierSurveyPage() {
                       <TableCell>
                         <div>
                           <p className="font-medium">
-                            {survey.supplierGood?.name || "Genel"}
+                            {survey.supplierGood?.name || t("general")}
                           </p>
                           {survey.supplierGood?.cnCode && (
                             <p className="text-xs text-muted-foreground">
@@ -251,7 +250,7 @@ export default function SupplierSurveyPage() {
                               : ""
                           }
                         >
-                          {STATUS_LABELS[survey.status] || survey.status}
+                          {survey.status === "DRAFT" ? t("draft") : survey.status === "SUBMITTED" ? t("submitted") : survey.status === "APPROVED" ? t("approved") : survey.status}
                         </Badge>
                       </TableCell>
                       <TableCell>
@@ -277,7 +276,7 @@ export default function SupplierSurveyPage() {
                             variant="outline"
                             size="icon"
                             onClick={() => setSelectedSurvey(survey)}
-                            title="Detay"
+                            title={tc("detail")}
                           >
                             <Eye className="h-4 w-4" />
                           </Button>
@@ -293,7 +292,7 @@ export default function SupplierSurveyPage() {
                               ) : (
                                 <CheckCircle2 className="h-3 w-3 mr-1" />
                               )}
-                              Onayla
+                              {tc("approve")}
                             </Button>
                           )}
                         </div>
@@ -316,11 +315,11 @@ export default function SupplierSurveyPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <ClipboardList className="h-5 w-5" />
-              Anket Detayı
+              {t("detailDialog")}
             </DialogTitle>
             <DialogDescription>
               {selectedSurvey?.supplier?.name} -{" "}
-              {selectedSurvey?.supplierGood?.name || "Genel"}
+              {selectedSurvey?.supplierGood?.name || t("general")}
             </DialogDescription>
           </DialogHeader>
           {selectedSurvey && (
@@ -337,8 +336,7 @@ export default function SupplierSurveyPage() {
                       : ""
                   }
                 >
-                  {STATUS_LABELS[selectedSurvey.status] ||
-                    selectedSurvey.status}
+                  {selectedSurvey.status === "DRAFT" ? t("draft") : selectedSurvey.status === "SUBMITTED" ? t("submitted") : selectedSurvey.status === "APPROVED" ? t("approved") : selectedSurvey.status}
                 </Badge>
                 {selectedSurvey.status === "SUBMITTED" && (
                   <Button
@@ -352,7 +350,7 @@ export default function SupplierSurveyPage() {
                     ) : (
                       <CheckCircle2 className="h-3 w-3 mr-1" />
                     )}
-                    Onayla
+                    {tc("approve")}
                   </Button>
                 )}
               </div>
@@ -362,19 +360,19 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <User className="h-4 w-4" />
-                    Tedarikçi Bilgileri
+                    {t("supplierInfo")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <p className="text-muted-foreground">Tedarikçi</p>
+                      <p className="text-muted-foreground">{ts("name")}</p>
                       <p className="font-medium">
                         {selectedSurvey.supplier?.name || "-"}
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">E-posta</p>
+                      <p className="text-muted-foreground">{ts("email")}</p>
                       <p className="font-medium">
                         {selectedSurvey.supplier?.email || "-"}
                       </p>
@@ -388,19 +386,19 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Package className="h-4 w-4" />
-                    Mal Bilgileri
+                    {t("goodsInfo")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <p className="text-muted-foreground">Mal</p>
+                      <p className="text-muted-foreground">{t("good")}</p>
                       <p className="font-medium">
-                        {selectedSurvey.supplierGood?.name || "Genel"}
+                        {selectedSurvey.supplierGood?.name || t("general")}
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">CN Kodu</p>
+                      <p className="text-muted-foreground">{t("cnCode")}</p>
                       <p className="font-medium">
                         {selectedSurvey.supplierGood?.cnCode || "-"}
                       </p>
@@ -414,19 +412,19 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
-                    Raporlama Dönemi
+                    {t("reportingPeriod")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <p className="text-muted-foreground">Başlangıç</p>
+                      <p className="text-muted-foreground">{t("start")}</p>
                       <p className="font-medium">
                         {formatDate(selectedSurvey.reportingPeriodStart)}
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Bitiş</p>
+                      <p className="text-muted-foreground">{t("end")}</p>
                       <p className="font-medium">
                         {formatDate(selectedSurvey.reportingPeriodEnd)}
                       </p>
@@ -440,14 +438,14 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Flame className="h-4 w-4" />
-                    Emisyon Verileri
+                    {t("emissionData")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <p className="text-muted-foreground">
-                        Spesifik Gömülü Emisyonlar
+                        {ts("survey.specificEmissions")}
                       </p>
                       <p className="font-medium">
                         {formatNumber(
@@ -460,7 +458,7 @@ export default function SupplierSurveyPage() {
                     </div>
                     <div>
                       <p className="text-muted-foreground">
-                        Doğrudan Emisyonlar
+                        {ts("survey.directEmissions")}
                       </p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.directEmissions)}{" "}
@@ -469,7 +467,7 @@ export default function SupplierSurveyPage() {
                     </div>
                     <div>
                       <p className="text-muted-foreground">
-                        Dolaylı Emisyonlar
+                        {ts("survey.indirectEmissions")}
                       </p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.indirectEmissions)}{" "}
@@ -477,7 +475,7 @@ export default function SupplierSurveyPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Üretim Hacmi</p>
+                      <p className="text-muted-foreground">{ts("survey.productionVolume")}</p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.productionVolume, 2)}{" "}
                         {selectedSurvey.productionVolume ? "t" : ""}
@@ -492,14 +490,14 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Zap className="h-4 w-4" />
-                    Enerji Tüketimi
+                    {t("energyConsumption")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <p className="text-muted-foreground">
-                        Elektrik Tüketimi
+                        {ts("survey.electricityConsumption")}
                       </p>
                       <p className="font-medium">
                         {formatNumber(
@@ -510,7 +508,7 @@ export default function SupplierSurveyPage() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Isı Tüketimi</p>
+                      <p className="text-muted-foreground">{ts("survey.heatConsumption")}</p>
                       <p className="font-medium">
                         {formatNumber(selectedSurvey.heatConsumption, 2)}{" "}
                         {selectedSurvey.heatConsumption ? "MWh" : ""}
@@ -525,14 +523,14 @@ export default function SupplierSurveyPage() {
                 <CardHeader className="py-3">
                   <CardTitle className="text-sm font-medium flex items-center gap-2">
                     <Factory className="h-4 w-4" />
-                    Metodoloji
+                    {t("methodology")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="py-0 pb-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <p className="text-muted-foreground">
-                        Emisyon Faktörü Kaynağı
+                        {ts("survey.emissionFactorSource")}
                       </p>
                       <p className="font-medium">
                         {selectedSurvey.emissionFactorSource || "-"}
@@ -540,7 +538,7 @@ export default function SupplierSurveyPage() {
                     </div>
                     <div>
                       <p className="text-muted-foreground">
-                        İzleme Metodolojisi
+                        {ts("survey.monitoringMethodology")}
                       </p>
                       <p className="font-medium">
                         {selectedSurvey.monitoringMethodology || "-"}
@@ -556,7 +554,7 @@ export default function SupplierSurveyPage() {
                   <CardHeader className="py-3">
                     <CardTitle className="text-sm font-medium flex items-center gap-2">
                       <FileText className="h-4 w-4" />
-                      Notlar
+                      {tc("notes")}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="py-0 pb-3">
@@ -570,15 +568,15 @@ export default function SupplierSurveyPage() {
               {/* Timestamps */}
               <div className="flex gap-4 text-xs text-muted-foreground border-t pt-3">
                 <span>
-                  Oluşturulma: {formatDate(selectedSurvey.createdAt)}
+                  {tc("createdAt")}: {formatDate(selectedSurvey.createdAt)}
                 </span>
                 {selectedSurvey.submittedAt && (
                   <span>
-                    Gönderilme: {formatDate(selectedSurvey.submittedAt)}
+                    {tc("submittedAt")}: {formatDate(selectedSurvey.submittedAt)}
                   </span>
                 )}
                 <span>
-                  Güncelleme: {formatDate(selectedSurvey.updatedAt)}
+                  {tc("updatedAt")}: {formatDate(selectedSurvey.updatedAt)}
                 </span>
               </div>
             </div>
@@ -595,14 +593,14 @@ export default function SupplierSurveyPage() {
                 ) : (
                   <CheckCircle2 className="h-4 w-4 mr-2" />
                 )}
-                Onayla
+                {tc("approve")}
               </Button>
             )}
             <Button
               variant="outline"
               onClick={() => setSelectedSurvey(null)}
             >
-              Kapat
+              {tc("close")}
             </Button>
           </DialogFooter>
         </DialogContent>
