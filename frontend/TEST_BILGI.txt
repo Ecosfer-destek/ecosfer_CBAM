@@ -1,0 +1,72 @@
+═══════════════════════════════════════════════════════════
+  ECOSFER SKDM v2.0 - CBAM Surdurulebilirlik Yonetim Paneli
+  Test Surumu (SQLite)
+═══════════════════════════════════════════════════════════
+
+ONKOSULLAR
+───────────────────────────────
+  - Node.js 22+ : https://nodejs.org/en/download (LTS secin)
+
+  NOT: PostgreSQL gerekmez! Veritabani olarak SQLite
+  kullanilmaktadir (otomatik olusturulur, ek kurulum yok).
+
+  Kontrol icin: ONKOSULLER_KONTROL.bat cift tiklayin.
+
+
+KURULUM ADIMLARI (Tek seferlik)
+───────────────────────────────
+1. ONKOSULLER_KONTROL.bat cift tiklayin (Node.js kontrolu)
+2. KURULUM.bat cift tiklayin (~5 dakika surer)
+3. BASLAT.bat cift tiklayin
+   Tarayici otomatik acilacak: http://localhost:3000
+
+
+GIRIS BILGILERI
+───────────────────────────────
+  E-posta : info@ecosfer.com
+  Sifre   : Ankara3406.
+  Rol     : SUPER_ADMIN (tum sayfalara erisim)
+
+
+TEST EDILECEK MODULLER
+───────────────────────────────
+  Dashboard         - Istatistik kartlari, grafikler
+  Sirketler         - Olustur, duzenle, sil (CRUD)
+  Tesisler          - Olustur, duzenle, sil (CRUD)
+  Tesis Verileri    - 5 sekmeli detay (A-E)
+  Emisyonlar        - SS/PFC/ES formlari
+  Beyannameler      - Liste + 7 adimli sihirbaz
+  Tedarikciler      - CRUD + anket yonetimi
+  Raporlar          - Rapor olustur, bolum ekle
+  CBAM Referans     - 6 sektor referans tablolari
+  Kullanici Yonetimi- Rol ve yetki sistemi
+  Dil Destegi       - Turkce / English / Deutsch
+
+  Excel Import/PDF  - .NET servisi gerekli (sonraki asama)
+  AI Analiz         - Python servisi gerekli (sonraki asama)
+
+
+SORUN GIDERME
+───────────────────────────────
+- "Port kullanimda": BASLAT.bat yerine terminalde calistirin:
+  npm run dev -- -p 3001
+
+- Veritabani sifirlama:
+  npx prisma db push --force-reset
+  npm run db:seed
+
+- Veritabani dosyasi: prisma\ecosfer.db
+  (Silip KURULUM.bat tekrar calistirarak sifirlanabilir)
+
+
+TEKNOLOJI ALTYAPISI
+───────────────────────────────
+Frontend : Next.js 15 + React 19
+UI       : shadcn/ui + Tailwind CSS
+ORM      : Prisma 7 + SQLite (test ortami)
+Auth     : NextAuth v5 (rol tabanli, tenant izolasyonlu)
+i18n     : next-intl (TR/EN/DE)
+
+═══════════════════════════════════════════════════════════
+  (c) 2026 Ecosfer Cevre Danismanlık
+═══════════════════════════════════════════════════════════
