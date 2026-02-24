@@ -54,6 +54,8 @@ prisma/*.db
 # Test
 coverage/
 .playwright/
+test-results/
+playwright-report/
 
 # Backups
 backups/
@@ -65,6 +67,11 @@ docker/nginx/ssl/
 
 # Playwright auth state
 e2e/.auth/
+**/e2e/.auth/
 
 # Misc
 *.log
+nul
+
+# Claude Code
+.claude/
