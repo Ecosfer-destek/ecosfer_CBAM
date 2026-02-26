@@ -120,7 +120,11 @@
       "VERIFIER": "Verifizierer"
     },
     "profile": "Profil",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "brandTagline": "Nachhaltigkeits-Datenmanagement",
+    "brandDescription": "Verwalten Sie Ihren CBAM-Compliance-Prozess digital",
+    "welcomeBack": "Willkommen zurück",
+    "secureLogin": "Sicher anmelden"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -155,7 +159,24 @@
     "createReportTitle": "Bericht erstellen",
     "createReportDesc": "CBAM-Erklärungen und PDF-Berichte erstellen.",
     "aiAnalysisTitle": "KI-Analyse",
-    "aiAnalysisDesc": "KI-gestützte Emissionsanalyse und Prognosen anzeigen."
+    "aiAnalysisDesc": "KI-gestützte Emissionsanalyse und Prognosen anzeigen.",
+    "scopeDistributionTitle": "Emissionsverteilung (Scope)",
+    "scopeDistributionDesc": "Verteilung der Scope 1, 2 und 3 Emissionen",
+    "monthlyEmissionsTitle": "Monatliche Emissionen",
+    "monthlyEmissionsDesc": "Emissionstrend der letzten 12 Monate (tCO2e)",
+    "complianceScoreTitle": "Konformitätswert",
+    "complianceScoreDesc": "CBAM-Konformitätsstatus",
+    "complianceLabel": "Konformität",
+    "targetProgressTitle": "Zielfortschritt",
+    "targetProgressDesc": "Jährliches Emissionsreduktionsziel",
+    "targetCompletionLabel": "Zielerreichung",
+    "recentActivitiesTitle": "Letzte Aktivitäten",
+    "recentActivitiesDesc": "Erklärungs- und Berichtsaktivitäten",
+    "noActivities": "Noch keine Aktivitäten.",
+    "timeJustNow": "Gerade eben",
+    "timeMinutesAgo": "vor {count} Min.",
+    "timeHoursAgo": "vor {count} Std.",
+    "timeDaysAgo": "vor {count} Tagen"
   },
   "company": {
     "title": "Unternehmen",

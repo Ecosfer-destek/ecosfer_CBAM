@@ -120,7 +120,11 @@
       "VERIFIER": "Doğrulayıcı"
     },
     "profile": "Profil",
-    "settings": "Ayarlar"
+    "settings": "Ayarlar",
+    "brandTagline": "Sürdürülebilirlik Veri Yönetimi",
+    "brandDescription": "CBAM uyumluluk sürecinizi dijital olarak yönetin",
+    "welcomeBack": "Tekrar Hoş Geldiniz",
+    "secureLogin": "Güvenli giriş yapın"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -155,7 +159,24 @@
     "createReportTitle": "Rapor Oluştur",
     "createReportDesc": "CBAM beyannameleri ve PDF raporları oluşturun.",
     "aiAnalysisTitle": "AI Analiz",
-    "aiAnalysisDesc": "Yapay zeka destekli emisyon analizi ve tahminleri görün."
+    "aiAnalysisDesc": "Yapay zeka destekli emisyon analizi ve tahminleri görün.",
+    "scopeDistributionTitle": "Emisyon Dağılımı (Scope)",
+    "scopeDistributionDesc": "Scope 1, 2 ve 3 emisyon dağılımı",
+    "monthlyEmissionsTitle": "Aylık Emisyonlar",
+    "monthlyEmissionsDesc": "Son 12 aylık emisyon trendi (tCO2e)",
+    "complianceScoreTitle": "Uyumluluk Skoru",
+    "complianceScoreDesc": "CBAM uyumluluk durumu",
+    "complianceLabel": "Uyumluluk",
+    "targetProgressTitle": "Hedef İlerleme",
+    "targetProgressDesc": "Yıllık emisyon azaltma hedefi",
+    "targetCompletionLabel": "Hedef Tamamlama",
+    "recentActivitiesTitle": "Son Aktiviteler",
+    "recentActivitiesDesc": "Beyanname ve rapor aktiviteleri",
+    "noActivities": "Henüz aktivite yok.",
+    "timeJustNow": "Az önce",
+    "timeMinutesAgo": "{count} dk önce",
+    "timeHoursAgo": "{count} saat önce",
+    "timeDaysAgo": "{count} gün önce"
   },
   "company": {
     "title": "Şirketler",

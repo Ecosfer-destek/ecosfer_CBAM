@@ -22,6 +22,9 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-chart-6: var(--chart-6);
+  --color-chart-7: var(--chart-7);
+  --color-chart-8: var(--chart-8);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -38,6 +41,15 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-ecosfer-sky: var(--ecosfer-sky);
+  --color-ecosfer-navy: var(--ecosfer-navy);
+  --color-ecosfer-teal: var(--ecosfer-teal);
+  --color-ecosfer-leaf: var(--ecosfer-leaf);
+  --color-ecosfer-forest: var(--ecosfer-forest);
+  --color-ecosfer-success: var(--ecosfer-success);
+  --color-ecosfer-warning: var(--ecosfer-warning);
+  --color-ecosfer-info: var(--ecosfer-info);
+  --color-ecosfer-danger: var(--ecosfer-danger);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -45,6 +57,57 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-gradient-shift: gradient-shift 8s ease infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in-up: fade-in-up 0.5s ease-out both;
+  --animate-scale-in: scale-in 0.3s ease-out both;
+  --animate-slide-in-right: slide-in-right 0.4s ease-out both;
+  --animate-wave: wave 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.6), 0 0 40px rgba(76, 175, 80, 0.2); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(-5px) translateY(-3px); }
+  50% { transform: translateX(0) translateY(-5px); }
+  75% { transform: translateX(5px) translateY(-3px); }
 }
 
 /* ═══════════════════════════════════════════
@@ -97,6 +160,20 @@ html:root {
   --chart-3: oklch(0.65 0.15 85);
   --chart-4: oklch(0.60 0.13 160);
   --chart-5: oklch(0.55 0.08 140);
+  --chart-6: #2196F3;
+  --chart-7: #0097A7;
+  --chart-8: #1A237E;
+
+  /* Ecosfer brand colors */
+  --ecosfer-forest: #1B5E20;
+  --ecosfer-leaf: #4CAF50;
+  --ecosfer-sky: #2196F3;
+  --ecosfer-navy: #1A237E;
+  --ecosfer-teal: #0097A7;
+  --ecosfer-success: #4CAF50;
+  --ecosfer-warning: #FF9800;
+  --ecosfer-info: #2196F3;
+  --ecosfer-danger: #F44336;
 
   /* Sidebar: dark forest */
   --sidebar: oklch(0.25 0.06 150);
@@ -152,6 +229,20 @@ html:root.dark {
   --chart-3: oklch(0.70 0.16 85);
   --chart-4: oklch(0.55 0.12 160);
   --chart-5: oklch(0.60 0.10 140);
+  --chart-6: #42A5F5;
+  --chart-7: #26C6DA;
+  --chart-8: #5C6BC0;
+
+  /* Ecosfer brand colors (brighter for dark mode) */
+  --ecosfer-forest: #2E7D32;
+  --ecosfer-leaf: #66BB6A;
+  --ecosfer-sky: #42A5F5;
+  --ecosfer-navy: #5C6BC0;
+  --ecosfer-teal: #26C6DA;
+  --ecosfer-success: #66BB6A;
+  --ecosfer-warning: #FFB74D;
+  --ecosfer-info: #42A5F5;
+  --ecosfer-danger: #EF5350;
 
   /* Sidebar: deeper forest */
   --sidebar: oklch(0.18 0.03 155);
@@ -177,13 +268,37 @@ html:root.dark {
    Ecosfer Utility Classes (@utility for TW v4)
    ═══════════════════════════════════════════ */
 
+/* --- Gradient Utilities --- */
+
 @utility bg-hero-gradient {
-  background: linear-gradient(135deg, #1B5E20 0%, #0D7377 100%);
+  background: linear-gradient(135deg, #1B5E20 0%, #0097A7 50%, #2196F3 100%);
+  background-size: 200% 200%;
 }
+
+@utility bg-gradient-forest-navy {
+  background: linear-gradient(135deg, #1B5E20 0%, #1A237E 100%);
+}
+
+@utility bg-gradient-teal-sky {
+  background: linear-gradient(135deg, #0097A7 0%, #2196F3 100%);
+}
+
+@utility bg-gradient-ocean {
+  background: linear-gradient(135deg, #1A237E 0%, #0097A7 50%, #2196F3 100%);
+  background-size: 200% 200%;
+}
+
+@utility bg-gradient-subtle {
+  background: linear-gradient(135deg, oklch(0.97 0.01 155) 0%, oklch(0.97 0.01 200) 100%);
+}
+
+/* --- Shadow --- */
 
 @utility shadow-green {
   box-shadow: 0 4px 14px -2px oklch(0.396 0.12 148 / 0.12);
 }
+
+/* --- Border Left Utilities --- */
 
 @utility border-l-forest {
   border-left: 4px solid #1B5E20;
@@ -204,6 +319,16 @@ html:root.dark {
 @utility border-l-sage {
   border-left: 4px solid #6B8F71;
 }
+
+@utility border-l-navy {
+  border-left: 4px solid #1A237E;
+}
+
+@utility border-l-ocean {
+  border-left: 4px solid #0097A7;
+}
+
+/* --- Subtle Background Utilities --- */
 
 @utility bg-forest-subtle {
   background-color: oklch(0.396 0.12 148 / 0.1);
@@ -230,17 +355,63 @@ html:root.dark {
   color: #6B8F71;
 }
 
+@utility bg-navy-subtle {
+  background-color: rgba(26, 35, 126, 0.08);
+  color: #1A237E;
+}
+
+@utility bg-ocean-subtle {
+  background-color: rgba(0, 151, 167, 0.08);
+  color: #0097A7;
+}
+
+/* --- Glassmorphism --- */
+
+@utility glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@utility glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Card Hover --- */
+
 @utility card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px -4px oklch(0.396 0.12 148 / 0.18), 0 4px 8px -2px oklch(0.396 0.12 148 / 0.08);
+    border-color: oklch(0.396 0.12 148 / 0.2);
+  }
+}
+
+@utility card-gradient-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px -4px oklch(0.396 0.12 148 / 0.15);
+    box-shadow: 0 8px 24px -4px rgba(0, 151, 167, 0.15), 0 4px 8px -2px rgba(26, 35, 126, 0.08);
+  }
+}
+
+@utility input-focus-lift {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  &:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px -2px oklch(0.396 0.12 148 / 0.15);
   }
 }
 
 /* Active sidebar item left accent (non-utility, plain CSS) */
 [data-active="true"] > a,
 [data-active="true"] > button {
-  border-left: 3px solid #4CAF50;
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(to bottom, #4CAF50, #0097A7) 1;
   padding-left: calc(0.5rem - 3px);
 }

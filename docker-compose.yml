@@ -48,6 +48,7 @@ services:
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: ecosfer-skdm-dev-secret-change-in-production-2026
       AUTH_SECRET: ecosfer-skdm-dev-secret-change-in-production-2026
+      AUTH_TRUST_HOST: "true"
       DOTNET_SERVICE_URL: http://dotnet:5100
       AI_SERVICE_URL: http://ai:8000
     depends_on:

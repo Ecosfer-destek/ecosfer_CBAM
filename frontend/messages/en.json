@@ -120,7 +120,11 @@
       "VERIFIER": "Verifier"
     },
     "profile": "Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "brandTagline": "Sustainability Data Management",
+    "brandDescription": "Manage your CBAM compliance process digitally",
+    "welcomeBack": "Welcome Back",
+    "secureLogin": "Sign in securely"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -155,7 +159,24 @@
     "createReportTitle": "Create Report",
     "createReportDesc": "Create CBAM declarations and PDF reports.",
     "aiAnalysisTitle": "AI Analysis",
-    "aiAnalysisDesc": "View AI-powered emission analysis and forecasts."
+    "aiAnalysisDesc": "View AI-powered emission analysis and forecasts.",
+    "scopeDistributionTitle": "Emission Distribution (Scope)",
+    "scopeDistributionDesc": "Scope 1, 2 and 3 emission distribution",
+    "monthlyEmissionsTitle": "Monthly Emissions",
+    "monthlyEmissionsDesc": "Last 12 months emission trend (tCO2e)",
+    "complianceScoreTitle": "Compliance Score",
+    "complianceScoreDesc": "CBAM compliance status",
+    "complianceLabel": "Compliance",
+    "targetProgressTitle": "Target Progress",
+    "targetProgressDesc": "Annual emission reduction target",
+    "targetCompletionLabel": "Target Completion",
+    "recentActivitiesTitle": "Recent Activities",
+    "recentActivitiesDesc": "Declaration and report activities",
+    "noActivities": "No activities yet.",
+    "timeJustNow": "Just now",
+    "timeMinutesAgo": "{count} min ago",
+    "timeHoursAgo": "{count} hours ago",
+    "timeDaysAgo": "{count} days ago"
   },
   "company": {
     "title": "Companies",
