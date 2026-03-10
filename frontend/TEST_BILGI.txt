@@ -1,22 +1,27 @@
 ═══════════════════════════════════════════════════════════
   ECOSFER SKDM v2.0 - CBAM Surdurulebilirlik Yonetim Paneli
-  Test Surumu (SQLite)
+  Test Surumu (PostgreSQL + Docker)
 ═══════════════════════════════════════════════════════════
 
 ONKOSULLAR
 ───────────────────────────────
   - Node.js 22+ : https://nodejs.org/en/download (LTS secin)
+  - Docker Desktop : https://www.docker.com/products/docker-desktop
 
-  NOT: PostgreSQL gerekmez! Veritabani olarak SQLite
-  kullanilmaktadir (otomatik olusturulur, ek kurulum yok).
+  NOT: PostgreSQL otomatik olarak Docker container icinde
+  calistirilir. Ayrica PostgreSQL kurmaniz gerekmez.
 
   Kontrol icin: ONKOSULLER_KONTROL.bat cift tiklayin.
 
 
 KURULUM ADIMLARI (Tek seferlik)
 ───────────────────────────────
-1. ONKOSULLER_KONTROL.bat cift tiklayin (Node.js kontrolu)
+1. ONKOSULLER_KONTROL.bat cift tiklayin (Node.js + Docker kontrolu)
 2. KURULUM.bat cift tiklayin (~5 dakika surer)
+   - PostgreSQL container otomatik olusturulur
+   - Bagimliliklar yuklenir
+   - Veritabani tablolari olusturulur
+   - Test verileri yuklenir
 3. BASLAT.bat cift tiklayin
    Tarayici otomatik acilacak: http://localhost:3000
 
@@ -51,19 +56,22 @@ SORUN GIDERME
 - "Port kullanimda": BASLAT.bat yerine terminalde calistirin:
   npm run dev -- -p 3001
 
+- Docker Desktop calismiyor:
+  Docker Desktop uygulamasini acin ve bekleyin.
+
+- PostgreSQL container bulunamadi:
+  KURULUM.bat tekrar calistirin (container yeniden olusturulur).
+
 - Veritabani sifirlama:
   npx prisma db push --force-reset
-  npm run db:seed
-
-- Veritabani dosyasi: prisma\ecosfer.db
-  (Silip KURULUM.bat tekrar calistirarak sifirlanabilir)
+  npx tsx prisma/seed.ts
 
 
 TEKNOLOJI ALTYAPISI
 ───────────────────────────────
-Frontend : Next.js 15 + React 19
+Frontend : Next.js 16 + React 19
 UI       : shadcn/ui + Tailwind CSS
-ORM      : Prisma 7 + SQLite (test ortami)
+ORM      : Prisma 7 + PostgreSQL 16 (Docker)
 Auth     : NextAuth v5 (rol tabanli, tenant izolasyonlu)
 i18n     : next-intl (TR/EN/DE)
 

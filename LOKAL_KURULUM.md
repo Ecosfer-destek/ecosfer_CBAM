@@ -1,39 +1,44 @@
 # Ecosfer SKDM v2.0 - Lokal Test Ortamı Kurulumu
 
 ## Bağlam
-Uygulama Ecosfer bünyesinde test edilecek. AI modülü şimdilik devre dışı. Amaç: en minimal kurulumla çalışan bir test ortamı (sadece Frontend + PostgreSQL). Feedback'lere göre iyileştirmeler yapılacak.
+Uygulama Ecosfer bünyesinde test edilecek. AI modülü şimdilik devre dışı. Amaç: en minimal kurulumla çalışan bir test ortamı (Frontend + PostgreSQL via Docker). Feedback'lere göre iyileştirmeler yapılacak.
 
-## Mevcut Durum
-- **Node.js v24.11.1**: MEVCUT
-- **PostgreSQL**: YOK (kurulması gerekiyor)
-- **Redis**: GEREKLI DEĞİL (frontend kodunda hiç kullanılmıyor)
-- **Docker**: YOK (bu yaklaşımda gerekli değil)
-- **node_modules**: YOK (`npm install` gerekli)
-- **.env**: VAR ama DB URL'i eski WSL IP'sine işaret ediyor, güncellenecek
+## Ön Gereksinimler
+- **Node.js v22+**: https://nodejs.org/en/download (LTS)
+- **Docker Desktop**: https://www.docker.com/products/docker-desktop
 
-## Kurulum Adımları
+> **Not:** PostgreSQL ayrıca kurulmasına gerek yok. Docker container olarak otomatik başlatılır.
 
-### Adım 1: PostgreSQL 16 Kur (Windows Installer)
-- https://www.postgresql.org/download/windows/ adresinden PostgreSQL 16 indir
-- Kurulum sırasında:
-  - **Şifre:** `postgres123` (veya istediğin bir şifre)
-  - **Port:** `5432` (varsayılan)
-  - **Locale:** Turkish, Turkey (veya default)
-  - Stack Builder'ı atla (gerek yok)
-- Kurulumdan sonra pgAdmin veya psql ile DB oluştur:
+## Hızlı Kurulum (Batch Dosyaları ile)
 
-```sql
-CREATE DATABASE ecosfer_skdm;
+1. `frontend/ONKOSULLER_KONTROL.bat` çalıştırın (Node.js + Docker kontrolü)
+2. `frontend/KURULUM.bat` çalıştırın (~5 dakika)
+   - PostgreSQL Docker container otomatik oluşturulur
+   - npm install, Prisma generate, db push, seed otomatik çalışır
+3. `frontend/BASLAT.bat` çalıştırın
+   - Tarayıcı otomatik açılır: http://localhost:3000
+
+## Manuel Kurulum Adımları
+
+### Adım 1: PostgreSQL Docker Container Başlat
+
+```bash
+docker run -d --name ecosfer-postgres \
+  -e POSTGRES_USER=ecosfer \
+  -e POSTGRES_PASSWORD=ecosfer_dev_2026 \
+  -e POSTGRES_DB=ecosfer_skdm \
+  -p 5432:5432 \
+  postgres:16-alpine
 ```
 
-### Adım 2: Frontend .env Dosyasını Güncelle
-`ecosfer-skdm-v2/frontend/.env` dosyasını localhost'a çevir:
+### Adım 2: Frontend .env Dosyasını Oluştur/Güncelle
+`frontend/.env` dosyası:
 
 ```env
-# Database (localhost PostgreSQL)
-DATABASE_URL="postgresql://postgres:postgres123@localhost:5432/ecosfer_skdm?schema=public"
+# Database (Docker PostgreSQL)
+DATABASE_URL="postgresql://ecosfer:ecosfer_dev_2026@localhost:5432/ecosfer_skdm?schema=public"
 
-# Redis - boş bırakılabilir, frontend kullanmıyor
+# Redis - frontend kullanmiyor, bos birakilabilir
 REDIS_URL=""
 
 # NextAuth
@@ -41,32 +46,26 @@ NEXTAUTH_URL="http://localhost:3000"
 NEXTAUTH_SECRET="ecosfer-skdm-dev-secret-change-in-production-2026"
 AUTH_SECRET="ecosfer-skdm-dev-secret-change-in-production-2026"
 
-# .NET ve AI - şimdilik devre dışı (boş bırak)
+# .NET ve AI - test ortaminda devre disi
 DOTNET_SERVICE_URL=""
 AI_SERVICE_URL=""
 ```
 
-**NOT:** `postgres123` yerine kurulumda verdiğin şifreyi yaz.
-
 ### Adım 3: Bağımlılıkları Yükle
-```powershell
-cd C:\Users\90544\Desktop\Ecosfer.SKDM.Panel\ecosfer-skdm-v2\frontend
+```bash
+cd frontend
 npm install
 ```
-Bu ~2-3 dakika sürebilir (ilk kurulum).
 
-### Adım 4: Prisma Client Oluştur + DB Şemasını Yükle
-```powershell
-# Prisma client generate
+### Adım 4: Prisma Client + DB Tablolarını Oluştur
+```bash
 npx prisma generate
-
-# DB tablolarını oluştur (82 model)
 npx prisma db push
 ```
 
 ### Adım 5: Seed Data Yükle
-```powershell
-npm run db:seed
+```bash
+npx tsx prisma/seed.ts
 ```
 Bu komut 12 adımda şunları yükler:
 - 3 tenant (Ecosfer, Roder, Borubar)
@@ -76,7 +75,7 @@ Bu komut 12 adımda şunları yükler:
 - Örnek şirket ve tesis verileri
 
 ### Adım 6: Uygulamayı Başlat
-```powershell
+```bash
 npm run dev
 ```
 Tarayıcıda **http://localhost:3000** aç.
@@ -114,8 +113,29 @@ Tarayıcıda **http://localhost:3000** aç.
 6. Tesisler ve emisyon formları açılıyor mu?
 7. Dil değiştirme (TR/EN/DE) çalışıyor mu?
 
+## Docker Container Yönetimi
+
+```bash
+# PostgreSQL container durumu
+docker ps -a --filter "name=ecosfer-postgres"
+
+# Container durdurma
+docker stop ecosfer-postgres
+
+# Container başlatma
+docker start ecosfer-postgres
+
+# Container silme (veri kaybolur)
+docker rm -f ecosfer-postgres
+
+# Container logları
+docker logs ecosfer-postgres
+```
+
 ## Sorun Giderme
-- **DB bağlantı hatası:** PostgreSQL servisinin çalıştığını kontrol et (`services.msc` > postgresql-x64-16)
-- **Prisma hatası:** `npx prisma generate` tekrar çalıştır
+- **Docker Desktop çalışmıyor:** Docker Desktop uygulamasını açın ve çalışır duruma gelene kadar bekleyin.
+- **DB bağlantı hatası:** `docker start ecosfer-postgres` komutu ile container'ın çalıştığından emin olun.
+- **Prisma hatası:** `npx prisma generate` tekrar çalıştırın
 - **Port çakışması:** 3000 portu başka uygulama kullanıyorsa `npm run dev -- -p 3001`
-- **Seed hatası:** DB'yi sıfırla: `npx prisma db push --force-reset` sonra tekrar `npm run db:seed`
+- **Seed hatası:** DB'yi sıfırlayın: `npx prisma db push --force-reset` sonra tekrar `npx tsx prisma/seed.ts`
+- **Port 5432 çakışması:** Yerel PostgreSQL kurulu ve çalışıyorsa durdurun: `services.msc > postgresql-x64-16 > Durdur`

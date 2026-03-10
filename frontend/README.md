@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ecosfer SKDM v2.0 - Frontend
 
-## Getting Started
+[Next.js](https://nextjs.org) 16 + React 19 + TypeScript + Prisma 7 + PostgreSQL 16
 
-First, run the development server:
+## Ön Gereksinimler
+
+- **Node.js** v22+ (LTS): https://nodejs.org/en/download
+- **Docker Desktop**: https://www.docker.com/products/docker-desktop
+
+## Hızlı Başlangıç
+
+### Windows (Batch dosyaları ile)
+
+1. `ONKOSULLER_KONTROL.bat` - Ön gereksinimleri kontrol edin
+2. `KURULUM.bat` - Tek seferlik kurulum (PostgreSQL Docker + npm install + Prisma + seed)
+3. `BASLAT.bat` - Uygulamayı başlatın
+
+### Manuel Kurulum
 
 ```bash
+# 1. PostgreSQL Docker container başlat
+docker run -d --name ecosfer-postgres \
+  -e POSTGRES_USER=ecosfer \
+  -e POSTGRES_PASSWORD=ecosfer_dev_2026 \
+  -e POSTGRES_DB=ecosfer_skdm \
+  -p 5432:5432 \
+  postgres:16-alpine
+
+# 2. Bağımlılıkları yükle
+npm install
+
+# 3. .env dosyası oluştur (KURULUM.bat otomatik oluşturur)
+# DATABASE_URL="postgresql://ecosfer:ecosfer_dev_2026@localhost:5432/ecosfer_skdm?schema=public"
+
+# 4. Prisma client + veritabanı tablolarını oluştur
+npx prisma generate
+npx prisma db push
+
+# 5. Seed verileri yükle
+npx tsx prisma/seed.ts
+
+# 6. Geliştirme sunucusunu başlat
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tarayıcıda [http://localhost:3000](http://localhost:3000) adresini açın.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Giriş Bilgileri
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| E-posta | Şifre | Rol |
+|---------|-------|-----|
+| info@ecosfer.com | Ankara3406. | SUPER_ADMIN |
+| admin@roder.com | Ankara3406. | COMPANY_ADMIN |
+| admin@borubar.com | Ankara3406. | COMPANY_ADMIN |
 
-## Learn More
+## Teknoloji Altyapısı
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Katman | Teknoloji |
+|--------|-----------|
+| Framework | Next.js 16.1.6 |
+| UI | shadcn/ui + Tailwind CSS 4 |
+| ORM | Prisma 7 + PostgreSQL 16 |
+| Auth | NextAuth v5 |
+| i18n | next-intl (TR/EN/DE) |
+| State | Zustand |
+| Test | Vitest + Playwright |

@@ -8,15 +8,6 @@ echo  ╔═══════════════════════�
 echo  ║   Ecosfer SKDM v2.0 - Uygulama Baslatiliyor         ║
 echo  ╚══════════════════════════════════════════════════════╝
 echo.
-echo  Tarayici otomatik acilacak: http://localhost:3000
-echo.
-echo  Giris Bilgileri:
-echo    E-posta: info@ecosfer.com
-echo    Sifre:   Ankara3406.
-echo.
-echo  Durdurmak icin bu pencereyi kapatin veya Ctrl+C basin.
-echo  ──────────────────────────────────────────────────────
-echo.
 
 cd /d "%~dp0"
 
@@ -35,6 +26,36 @@ if not exist ".env" (
     pause
     exit /b 1
 )
+
+REM Docker kontrolu ve PostgreSQL baslatma
+docker --version >nul 2>&1
+if errorlevel 1 (
+    echo  HATA: Docker bulunamadi! Docker Desktop kurun.
+    pause
+    exit /b 1
+)
+
+echo  PostgreSQL container kontrol ediliyor...
+docker start ecosfer-db >nul 2>&1 || docker start ecosfer-postgres >nul 2>&1
+if errorlevel 1 (
+    echo  HATA: PostgreSQL container bulunamadi!
+    echo  Once KURULUM.bat dosyasini calistirin.
+    pause
+    exit /b 1
+)
+echo  PostgreSQL container calisiyor.
+timeout /t 3 /nobreak >nul
+
+echo.
+echo  Tarayici otomatik acilacak: http://localhost:3000
+echo.
+echo  Giris Bilgileri:
+echo    E-posta: info@ecosfer.com
+echo    Sifre:   Ankara3406.
+echo.
+echo  Durdurmak icin bu pencereyi kapatin veya Ctrl+C basin.
+echo  ──────────────────────────────────────────────────────
+echo.
 
 REM 2 saniye bekle, sonra tarayici ac
 start "" cmd /c "timeout /t 4 /nobreak >nul && start http://localhost:3000"

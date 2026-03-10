@@ -11,7 +11,7 @@ echo.
 
 set HATA=0
 
-echo  [1/1] Node.js kontrol ediliyor...
+echo  [1/2] Node.js kontrol ediliyor...
 node --version >nul 2>&1
 if errorlevel 1 (
     echo         BASARISIZ - Node.js bulunamadi!
@@ -23,13 +23,24 @@ if errorlevel 1 (
 )
 
 echo.
-echo  Not: PostgreSQL gerekmez. Veritabani olarak SQLite
-echo  kullanilmaktadir (otomatik olusturulur).
+echo  [2/2] Docker kontrol ediliyor...
+docker --version >nul 2>&1
+if errorlevel 1 (
+    echo         BASARISIZ - Docker bulunamadi!
+    echo         Lutfen yukleyin: https://www.docker.com/products/docker-desktop
+    set HATA=1
+) else (
+    for /f "tokens=*" %%v in ('docker --version') do echo         TAMAM - %%v
+)
+
+echo.
+echo  Not: PostgreSQL, Docker container olarak otomatik kurulacaktir.
+echo  Ayrica kurulum yapmaniz gerekmez.
 echo.
 echo  ──────────────────────────────────────────────────────
 if %HATA%==1 (
     echo.
-    echo  UYARI: Node.js bulunamadi! Yukardaki adresi ziyaret
+    echo  UYARI: Eksik onkosullar var! Yukardaki adresleri ziyaret
     echo  edip kurulum yapin, sonra bu kontrolu tekrar calistirin.
     echo.
 ) else (
